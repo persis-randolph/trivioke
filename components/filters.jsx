@@ -24,11 +24,15 @@ class Filters extends Component {
         <MenuItem name="category" id="27" onClick={click}>Animals</MenuItem>
       </DropdownButton>
     );
-
     const buttonsInstance = (
-      <ButtonToolbar>{BUTTONS.map(renderDropdownButton)}</ButtonToolbar>
+      <ButtonToolbar
+        style={{
+          display: 'flex', justifyContent: 'center', alignItems: 'center',
+        }}
+      >
+        {BUTTONS.map(renderDropdownButton)}
+      </ButtonToolbar>
     );
-
     return buttonsInstance;
   }
 }

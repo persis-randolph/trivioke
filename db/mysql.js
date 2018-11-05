@@ -22,6 +22,7 @@ const save = (data) => {
   const q = `insert into songs(song, uri) values ('${data.snippet.title}', '${data.id.videoId}')`;
   connection.query(q, (err, results) => {
     if (err) {
+      res.sendStatus(500);
       console.log(err);
     } else {
       console.log('songs saved to db');

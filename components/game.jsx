@@ -32,7 +32,7 @@ class Game extends React.Component {
     fetch(url)
       .then(res => res.json())
       .then(data => this.setState({ question: data.results[0] }))
-      .catch((err) => { console.error(err); });  
+      .catch((err) => { console.error(err); });
   }
 
   changeCat() {
@@ -58,19 +58,17 @@ class Game extends React.Component {
   }
 
   increaseScore() {
-    const { currTeam, team1, team2 } = this.state;
+    const { currTeam } = this.state;
     if (currTeam === 'team1') {
-      this.setState(prevState => ({
-        team1: prevState.team1 + 1,
+      sessionStorage.setItem('score1', (Number(sessionStorage.score1) + 1));
+      this.setState(() => ({
         visibility: true,
       }));
-      // sessionStorage.setItem('score1', team1);
     } else {
-      this.setState(prevState => ({
-        team2: prevState.team2 + 1,
+      sessionStorage.setItem('score2', (Number(sessionStorage.score2) + 1));
+      this.setState(() => ({
         visibility: true,
       }));
-      // sessionStorage.setItem('score2', team2);
     }
   }
 
@@ -90,24 +88,32 @@ class Game extends React.Component {
     const { name1, name2 } = this.props;
     if (!video) {
       return (
-        <div>
-          <Lifelines
-            handleChange={this.handleChange}
-            triviaRequest={this.triviaRequest}
-            handleClick={this.handleClick}
-            changeCat={this.changeCat}
-          />
-          <Trivia
-            triviaRequest={this.triviaRequest}
-            handleChange={this.handleChange}
-            question={question}
-            hidden={visibility}
-            nextTeam={this.nextTeam}
-            increaseScore={this.increaseScore}
-            trigger={this.triggerVideo}
-          />
-          <Scoreboard currTeam={currTeam} team1={team1} team2={team2} name1={name1} name2={name2} />
-        </div>
+        <center>
+          <div>
+            <Lifelines
+              handleChange={this.handleChange}
+              triviaRequest={this.triviaRequest}
+              handleClick={this.handleClick}
+              changeCat={this.changeCat}
+            />
+            <Trivia
+              triviaRequest={this.triviaRequest}
+              handleChange={this.handleChange}
+              question={question}
+              hidden={visibility}
+              nextTeam={this.nextTeam}
+              increaseScore={this.increaseScore}
+              trigger={this.triggerVideo}
+            />
+            <Scoreboard
+              currTeam={currTeam}
+              team1={team1}
+              team2={team2}
+              name1={name1}
+              name2={name2}
+            />
+          </div>
+        </center>
       );
     }
     return (

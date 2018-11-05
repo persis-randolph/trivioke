@@ -29,6 +29,8 @@ class Load extends Component {
     sessionStorage.setItem('category', category);
     sessionStorage.setItem('team1', team1);
     sessionStorage.setItem('team2', team2);
+    sessionStorage.setItem('score1', 0);
+    sessionStorage.setItem('score2', 0);
     this.setState({ trivia: true });
   }
 
@@ -50,31 +52,34 @@ class Load extends Component {
     } = this.state;
     if (!trivia) {
       return (
-        <div>
-          <div key="team">
-            <Team handleChange={this.handleChange} />
-          </div>
-          <div key="filters">
+        <center>
+          <div>
+            <div key="team">
+              <Team handleChange={this.handleChange} />
+            </div>
             <Filters click={this.handeleClick} />
+            <table style={{
+              alignItems: 'center', width: '400px', display: 'flex', justifyContent: 'center',
+            }}
+            >
+              <thead>
+                <tr style={{ cellpadding: 8, cellspacing: 8 }}>
+                  <td><button type="button" name="diff" id="easy" onClick={this.handeleClick}><h5>Easy</h5></button></td>
+                  <td><button type="button" name="diff" id="medium" onClick={this.handeleClick}><h5>Medium</h5></button></td>
+                  <td><button type="button" name="diff" id="hard" onClick={this.handeleClick}><h5>Hard</h5></button></td>
+                </tr>
+              </thead>
+            </table>
+            <div key="begin">
+              <button type="button" onClick={this.begin}><h5>Begin Game</h5></button>
+            </div>
           </div>
-          <div key="diff">
-            <button type="button" name="diff" id="easy" onClick={this.handeleClick}>Easy</button>
-            <button type="button" name="diff" id="medium" onClick={this.handeleClick}>Medium</button>
-            <button type="button" name="diff" id="hard" onClick={this.handeleClick}>Hard</button>
-          </div>
-          <div key="begin">
-            <button type="button" onClick={this.begin}>Begin Game</button>
-          </div>
-        </div>
+        </center>
+
       );
     }
     return (
-      <div
-        key="game"
-        style={{
-          display: 'flex', justifyContent: 'center', alignItems: 'center', height: '70vh',
-        }}
-      >
+      <div>
         <Game category={category} diff={diff} name1={team1} name2={team2} />
       </div>
     );

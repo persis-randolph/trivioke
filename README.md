@@ -7,7 +7,7 @@ Youtube API is used for karaoke.
 
 React v16.6.0,
 Webpack v4.23.1,
-Bootstrap v3.3.7
+Bootstrap v3.3.7,
 MySql database v5.7
 
 Sign Up/Login leads to trivia page where user can input team names, trivia category and difficulty.

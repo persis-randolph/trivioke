@@ -13,7 +13,6 @@ import './index.css';
 
 const Front = () => (
   <div>
-    Welcome to Trivioke!
     <SignUp />
     <Login />
   </div>
@@ -25,9 +24,12 @@ const routing = (
       <div>
         <Link to="/">SignUp/Login</Link>
       </div>
-      <div>
-        <Link to="/trivia">Trivia</Link>
-      </div>
+      <center>
+        <img
+          src="/logo.png"
+          alt="logo"
+        />
+      </center>
       <Route exact path="/" component={Front} />
       <Route exact path="/signup" component={SignUp} />
       <Route exact path="/login" component={Login} />

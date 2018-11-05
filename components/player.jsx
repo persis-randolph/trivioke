@@ -18,10 +18,11 @@ class VideoPlayer extends React.Component {
   }
 
   componentDidMount() {
+    const rand = Math.floor(Math.random() * 43) + 1;
     axios({ method: 'GET', url: '/songs', headers: { 'Access-Control-Allow-Origin': '*' } })
       .then((res) => {
         this.setState({
-          video: res.data[3],
+          video: res.data[rand],
           videos: res.data,
         });
       })
@@ -41,33 +42,37 @@ class VideoPlayer extends React.Component {
   render() {
     const { video } = this.state;
     return (
-      <div>
-        <button
-          onClick={this.changeVideo}
-          type="button"
-          style={{
-            justifyContent: 'center', alignItems: 'center', height: '3vh',
-          }}
-        >
-          Change Song
-        </button>
-        <button
-          type="button"
-          style={{
-            justifyContent: 'center', alignItems: 'center', height: '3vh',
-          }}
-        >
-          <Link to="/game">Game</Link>
-        </button>
-        <Iframe
-          fluid="true"
-          className="embed-responsive-item"
-          url={`https://www.youtube.com/embed/${video.uri}`}
-          width="500px"
-          height="350px"
-          allowFullScreen
-        />
-      </div>
+      <center>
+        <div>
+          <button
+            onClick={this.changeVideo}
+            type="button"
+            style={{
+              justifyContent: 'center', alignItems: 'center', height: '3vh',
+            }}
+          >
+            Change Song
+          </button>
+          <button
+            type="button"
+            onClick={this.goBack}
+            style={{
+              justifyContent: 'center', alignItems: 'center', height: '3vh',
+            }}
+          >
+            <Link to="/game">Back</Link>
+          </button>
+          <Iframe
+            fluid="true"
+            className="embed-responsive-item"
+            url={`https://www.youtube.com/embed/${video.uri}`}
+            position="relative"
+            width="500px"
+            height="350px"
+            allowFullScreen
+          />
+        </div>
+      </center>
     );
   }
 }

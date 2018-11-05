@@ -37,7 +37,7 @@ class SignUp extends React.Component {
     if (!redirect) {
       return (
         <div style={{
-          display: 'flex', justifyContent: 'center', alignItems: 'center', height: '20vh',
+          display: 'flex', justifyContent: 'center', alignItems: 'center', height: '35vh',
         }}
         >
           <div>
