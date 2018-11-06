@@ -19,10 +19,9 @@ connection.connect((err) => {
 // this should only happen once;
 const save = (data) => {
   console.log(data);
-  const q = `insert into songs(song, uri) values ('${data.snippet.title}', '${data.id.videoId}')`;
+  const q = `insert into songs(song, uri) values ('${data.snippet.title}', '${data.id.videoId}') on duplicate key update uri=uri`;
   connection.query(q, (err, results) => {
     if (err) {
-      res.sendStatus(500);
       console.log(err);
     } else {
       console.log('songs saved to db');

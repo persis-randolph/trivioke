@@ -2,7 +2,7 @@ DROP DATABASE IF EXISTS trivioke;
 
 CREATE DATABASE trivioke;
 
-GRANT ALL ON *.* TO 'root'@'68.183.130.101' WITH GRANT OPTION;
+GRANT ALL ON *.* TO 'root'@'localhost' WITH GRANT OPTION;
 
 USE trivioke;
 
@@ -16,7 +16,7 @@ CREATE TABLE users (
 
 CREATE TABLE songs (
   id int NOT NULL AUTO_INCREMENT,
-  song varchar(100) NOT NULL,
+  song varchar(100) NOT NULL UNIQUE,
   uri varchar(100) NOT NULL,
   PRIMARY KEY (ID)
 );

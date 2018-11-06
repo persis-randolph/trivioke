@@ -18,7 +18,8 @@ class VideoPlayer extends React.Component {
   }
 
   componentDidMount() {
-    const rand = Math.floor(Math.random() * 43) + 1;
+    const { videos } = this.state;
+    const rand = Math.floor(Math.random() * (videos.length - 1)) + 1;
     axios({ method: 'GET', url: '/songs', headers: { 'Access-Control-Allow-Origin': '*' } })
       .then((res) => {
         this.setState({
@@ -33,7 +34,7 @@ class VideoPlayer extends React.Component {
 
   changeVideo() {
     const { videos } = this.state;
-    const rand = Math.floor(Math.random() * 43) + 1;
+    const rand = Math.floor(Math.random() * (videos.length - 1)) + 1;
     this.setState({
       video: videos[rand],
     });
