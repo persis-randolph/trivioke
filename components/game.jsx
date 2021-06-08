@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 /* eslint-disable import/extensions */
@@ -30,8 +31,8 @@ class Game extends React.Component {
   triviaRequest() {
     const url = `https://opentdb.com/api.php?amount=1&category=${sessionStorage.category}&difficulty=${sessionStorage.diff}&type=multiple`;
     fetch(url)
-      .then(res => res.json())
-      .then(data => this.setState({ question: data.results[0] }))
+      .then((res) => res.json())
+      .then((data) => this.setState({ question: data.results[0] }))
       .catch((err) => { console.error(err); });
   }
 
@@ -40,7 +41,7 @@ class Game extends React.Component {
     const rand = cats[Math.floor(Math.random() * cats.length)];
     const url = `https://opentdb.com/api.php?amount=1&category=${rand}&difficulty=${sessionStorage.diff}&type=multiple`;
     fetch(url)
-      .then(res => res.json())
+      .then((res) => res.json())
       .then((data) => {
         this.setState({ question: data.results[0] });
         sessionStorage.setItem('category', rand);
@@ -54,7 +55,7 @@ class Game extends React.Component {
   }
 
   triggerVideo() {
-    this.setState(prevState => ({ video: !prevState.video }));
+    this.setState((prevState) => ({ video: !prevState.video }));
   }
 
   increaseScore() {
