@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
-import { FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import { FormGroup, FormLabel, FormControl } from 'react-bootstrap';
 
 class Table extends Component {
   render() {
@@ -12,7 +12,7 @@ class Table extends Component {
           <FormGroup
             controlId="formBasicText"
           >
-            <ControlLabel>Team 1 Name</ControlLabel>
+            <FormLabel>Team 1 Name</FormLabel>
             <FormControl
               type="text"
               name="team1"
@@ -25,7 +25,7 @@ class Table extends Component {
           <FormGroup
             controlId="formBasicText"
           >
-            <ControlLabel>Team 2 Name</ControlLabel>
+            <FormLabel>Team 2 Name</FormLabel>
             <FormControl
               type="text"
               name="team2"
