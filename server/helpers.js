@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-vars */
 const axios = require('axios');
 const bcrypt = require('bcrypt');
-const db = require('../db/mysql.js');
-const key = require('../config.js');
+const db = require('../db/mysql');
+const key = require('../config');
 
 require('dotenv').config();
 
@@ -57,7 +58,6 @@ const checkPassword = (req, res) => {
     }
   });
 };
-
 
 const getSongs = () => {
   const options = {
