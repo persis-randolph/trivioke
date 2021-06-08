@@ -3,6 +3,8 @@ const bcrypt = require('bcrypt');
 const db = require('../db/mysql.js');
 const key = require('../config.js');
 
+require('dotenv').config();
+
 const createSession = (req, res, user) => {
   req.session.regenerate(() => {
     req.session.user = user;
@@ -63,7 +65,7 @@ const getSongs = () => {
       part: 'snippet',
       chart: 'mostPopular',
       type: 'video',
-      key: key.youtube,
+      key: process.env.YOUTUBEAPI,
       channelId: 'UCXosPWESPuLZoG66YuHKX9Q',
       maxResults: 50,
     },
