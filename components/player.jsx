@@ -1,4 +1,7 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-console */
 /* eslint-disable import/extensions */
+
 import React from 'react';
 import axios from 'axios';
 import Iframe from 'react-iframe';
@@ -10,25 +13,39 @@ class VideoPlayer extends React.Component {
     this.state = {
       videos: [],
       video: {
-        song: 'Dolly Parton - Jolene Karaoke Lyrics',
-        uri: '8ff0szPBM2M',
+        song: 'Peggy Lee - Fever Karaoke Lyrics',
+        uri: 'sdERebFYnrE',
       },
     };
     this.changeVideo = this.changeVideo.bind(this);
   }
 
   componentDidMount() {
-    const { videos } = this.state;
-    const rand = Math.floor(Math.random() * (videos.length - 1)) + 1;
+    // make a get request to see if there are videos in the db or not
     axios({ method: 'GET', url: '/songs', headers: { 'Access-Control-Allow-Origin': '*' } })
-      .then((res) => {
-        this.setState({
-          video: res.data[rand],
-          videos: res.data,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
+      .then(({ data }) => {
+        // if there are videos, set state
+        if (data.length) {
+          console.log('DATA!', data);
+          const rand = Math.floor(Math.random() * (data.length - 1)) + 1;
+          this.setState({
+            video: data[rand],
+            videos: data,
+          });
+        } else {
+          // if no videos, make a post request to add them
+          axios({ method: 'POST', url: '/songs', headers: { 'Access-Control-Allow-Origin': '*' } })
+            .then(axios({ method: 'GET', url: '/songs', headers: { 'Access-Control-Allow-Origin': '*' } })
+              .then((res) => {
+                const { data } = res;
+                const rand = Math.floor(Math.random() * (data.length - 1)) + 1;
+                // then set state
+                this.setState({
+                  video: data[rand],
+                  videos: data,
+                });
+              }));
+        }
       });
   }
 
@@ -43,6 +60,13 @@ class VideoPlayer extends React.Component {
   render() {
     const { video } = this.state;
     return (
+      // <div>
+      //   <p>
+      //     current state video:
+      //     {video.song}
+      //     {video.uri}
+      //   </p>
+      // </div>
       <center>
         <div>
           <button

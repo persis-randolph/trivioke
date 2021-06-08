@@ -48,7 +48,7 @@
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
     "dom": "0.0.3",
-    "express": "^4.16.4",
+    "express": "4.17.1",
     "express-session": "^1.15.6",
     "mysql": "^2.16.0",
     "nodemon": "^1.18.5",
