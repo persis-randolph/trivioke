@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable react/no-unused-state */
 /* eslint-disable no-undef */
 /* eslint-disable no-restricted-globals */
@@ -36,18 +37,15 @@ class SignUp extends React.Component {
     const { redirect } = this.state;
     if (!redirect) {
       return (
-        <div style={{
-          display: 'flex', justifyContent: 'center', alignItems: 'center', height: '35vh',
-        }}
-        >
-          <div>
+        <div>
+          {/* <div>
             <p><strong>Sign Up</strong></p>
             Username:
             <input type="text" name="name" onChange={this.handleChange} />
             Password:
             <input type="text" name="pw" autoComplete="off" onChange={this.handleChange} />
             <input type="submit" value="Submit" onClick={this.handleSubmit} />
-          </div>
+          </div> */}
         </div>
       );
     }

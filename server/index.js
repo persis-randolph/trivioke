@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -42,6 +43,29 @@ app.post('/signup', (req, res) => {
 
 app.get('/login', (req, res) => {
   util.checkPassword(req, res);
+});
+
+app.get('/users', async (req, res) => {
+  const { googleId, username } = req.query;
+  // this will need to be a call to get the user from the db
+  // const existingUser = await getUser(googleId);
+
+  // if (existingUser.length) {
+  //   res.status(201).send(existingUser[0]);
+  // } else if (!existingUser.length) {
+  //   createUser(req.query)
+  //     .then((user) => {
+  //       res.status(200)
+  //         .send(user);
+  //     })
+  //     .catch((err) => {
+  //       // console.log('error creating user', err);
+  //       res.sendStatus(500);
+  //     });
+  // } else {
+  //   console.log('user not found');
+  //   res.sendStatus(404);
+  // }
 });
 
 const port = 8080;
