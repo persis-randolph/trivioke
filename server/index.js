@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
 const session = require('express-session');
+const axios = require('axios');
 const db = require('../db/mysql');
 const util = require('./helpers');
 
@@ -42,6 +43,27 @@ app.post('/signup', (req, res) => {
 
 app.get('/login', (req, res) => {
   util.checkPassword(req, res);
+});
+
+app.get('/trivia/multi', (req, res) => {
+  axios.get('https://opentdb.com/api.php?amount=1&category=19&difficulty=easy&type=multiple')
+    .then(({ data }) => {
+      res.status(200).send(data);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(404);
+    });
+});
+app.get('/trivia/bool', (req, res) => {
+  axios.get('https://opentdb.com/api.php?amount=1&category=19&difficulty=easy&type=boolean')
+    .then(({ data }) => {
+      res.status(200).send(data);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(404);
+    });
 });
 
 const port = 8080;
