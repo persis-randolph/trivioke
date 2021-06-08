@@ -56,7 +56,6 @@ const checkPassword = (req, res) => {
   });
 };
 
-
 const getSongs = () => {
   const options = {
     params: {

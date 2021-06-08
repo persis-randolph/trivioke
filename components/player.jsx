@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 /* eslint-disable import/extensions */
@@ -26,7 +27,7 @@ class VideoPlayer extends React.Component {
       .then(({ data }) => {
         // if there are videos, set state
         if (data.length) {
-          console.log('DATA!', data);
+          // console.log('DATA!', data);
           const rand = Math.floor(Math.random() * (data.length - 1)) + 1;
           this.setState({
             video: data[rand],
