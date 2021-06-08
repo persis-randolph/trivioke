@@ -13,10 +13,7 @@ class VideoPlayer extends React.Component {
     super(props);
     this.state = {
       videos: [],
-      video: {
-        song: 'Peggy Lee - Fever Karaoke Lyrics',
-        uri: 'sdERebFYnrE',
-      },
+      video: null,
     };
     this.changeVideo = this.changeVideo.bind(this);
   }
@@ -28,7 +25,7 @@ class VideoPlayer extends React.Component {
         // if there are videos, set state
         // console.log(data);
         if (data.length) {
-          // console.log('DATA!', data);
+          console.log('DATA!', data);
           const rand = Math.floor(Math.random() * (data.length - 1)) + 1;
           this.setState({
             video: data[rand],
@@ -38,8 +35,7 @@ class VideoPlayer extends React.Component {
           // if no videos, make a post request to add them
           axios({ method: 'POST', url: '/songs', headers: { 'Access-Control-Allow-Origin': '*' } })
             .then(axios({ method: 'GET', url: '/songs', headers: { 'Access-Control-Allow-Origin': '*' } })
-              .then((res) => {
-                const { data } = res;
+              .then(({ data }) => {
                 const rand = Math.floor(Math.random() * (data.length - 1)) + 1;
                 // then set state
                 this.setState({
@@ -62,13 +58,6 @@ class VideoPlayer extends React.Component {
   render() {
     const { video } = this.state;
     return (
-      // <div>
-      //   <p>
-      //     current state video:
-      //     {video.song}
-      //     {video.uri}
-      //   </p>
-      // </div>
       <center>
         <div>
           <button
