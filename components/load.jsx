@@ -17,8 +17,20 @@ class Load extends Component {
       team2: '',
     };
     this.begin = this.begin.bind(this);
-    this.handeleClick = this.handeleClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleClick() {
+    this.setState({
+      [event.target.name]: event.target.id,
+    });
+  }
+
+  handleChange() {
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
   }
 
   begin() {
@@ -34,22 +46,23 @@ class Load extends Component {
     this.setState({ trivia: true });
   }
 
-  handeleClick() {
-    this.setState({
-      [event.target.name]: event.target.id,
-    });
-  }
-
-  handleChange() {
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
-  }
-
   render() {
     const {
       category, diff, team1, team2, trivia,
     } = this.state;
+    const categories = {
+      9: 'General',
+      11: 'Movies',
+      14: 'TV',
+      15: 'Video Games',
+      17: 'Science',
+      22: 'Geography',
+      23: 'History',
+      26: 'Celebs',
+      27: 'Animals',
+    };
+    const categoryName = categories[category];
+
     if (!trivia) {
       return (
         <center>
@@ -57,16 +70,21 @@ class Load extends Component {
             <div key="team">
               <Team handleChange={this.handleChange} />
             </div>
-            <Filters click={this.handeleClick} />
+            <Filters click={this.handleClick} />
+            <h5>
+              Selected Category:
+              {' '}
+              {categoryName}
+            </h5>
             <table style={{
               alignItems: 'center', width: '400px', display: 'flex', justifyContent: 'center',
             }}
             >
               <thead>
                 <tr style={{ cellpadding: 8, cellspacing: 8 }}>
-                  <td><button type="button" name="diff" id="easy" onClick={this.handeleClick}><h5>Easy</h5></button></td>
-                  <td><button type="button" name="diff" id="medium" onClick={this.handeleClick}><h5>Medium</h5></button></td>
-                  <td><button type="button" name="diff" id="hard" onClick={this.handeleClick}><h5>Hard</h5></button></td>
+                  <td><button type="button" name="diff" id="easy" onClick={this.handleClick}><h5>Easy</h5></button></td>
+                  <td><button type="button" name="diff" id="medium" onClick={this.handleClick}><h5>Medium</h5></button></td>
+                  <td><button type="button" name="diff" id="hard" onClick={this.handleClick}><h5>Hard</h5></button></td>
                 </tr>
               </thead>
             </table>

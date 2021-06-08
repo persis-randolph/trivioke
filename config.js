@@ -1,3 +1,3 @@
 module.exports = {
-  youtube: 'AIzaSyBwYF-5hnQAtvcHEx3B9hTnoCKrk5_qFok',
+  youtube: 'AIzaSyAnE9Iusaw_jQNgE1COcNT3yJG3R0tv3CQ',
 };

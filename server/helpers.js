@@ -1,4 +1,6 @@
+/* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
+
 const axios = require('axios');
 const bcrypt = require('bcrypt');
 const db = require('../db/mysql');
@@ -20,7 +22,7 @@ const createPassword = (req, res, salt) => {
       const args = [req.query.name, hash];
       db.connection.query(q, args, (error, results) => {
         if (error) {
-          res.send(500);
+          res.sendStatus(500);
         } else {
           createSession(req, res, req.query.name);
           console.log(req.session);
@@ -43,10 +45,10 @@ const checkPassword = (req, res) => {
         if (result === true) {
           console.log('passwords match');
           createSession(req, res, req.query.name);
-          res.send(200);
+          res.sendStatus(200);
         } else {
           console.log('passwords don\'t match');
-          res.send(404);
+          res.sendStatus(404);
           res.end();
         }
       });
