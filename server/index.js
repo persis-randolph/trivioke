@@ -4,8 +4,8 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
 const session = require('express-session');
-const db = require('../db/mysql.js');
-const util = require('./helpers.js');
+const db = require('../db/mysql');
+const util = require('./helpers');
 
 const saltRounds = 10;
 const app = express();

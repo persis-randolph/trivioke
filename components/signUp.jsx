@@ -29,7 +29,7 @@ class SignUp extends React.Component {
       .then(() => {
         this.setState({ redirect: true });
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   }
 
   render() {
