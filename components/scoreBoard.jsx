@@ -25,6 +25,7 @@ class Scoreboard extends React.Component {
             </tr>
           </thead>
           <tbody>
+            {/* another place where the amount of teams needs to be changed */}
             <tr id="team1" style={{ background: currTeam === 'team1' ? 'lightgreen' : 'transparent' }}>
               <td>{sessionStorage.team1}</td>
               <td>{sessionStorage.score1}</td>
