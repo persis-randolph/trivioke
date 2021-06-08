@@ -16,6 +16,7 @@ class Game extends React.Component {
       visibility: true,
       question: null,
       currTeam: 'team1',
+      //maybe change teams to array to enable multiple teams
       team1: 0,
       team2: 0,
     };
@@ -50,6 +51,8 @@ class Game extends React.Component {
 
   nextTeam() {
     const { currTeam } = this.state;
+    //if we change team to an array rather than two we'll have to change this//
+    //currTeam can be random//
     return currTeam === 'team1' ? this.setState({ currTeam: 'team2' }) : this.setState({ currTeam: 'team1' });
   }
 
@@ -107,6 +110,7 @@ class Game extends React.Component {
             />
             <Scoreboard
               currTeam={currTeam}
+              //for when we add an array of teams 
               team1={team1}
               team2={team2}
               name1={name1}
