@@ -31,6 +31,7 @@ const Login = () => {
     console.log('[Login Success] currentUser:', res.profileObj);
     setShowLoginButton(false);
     setShowLogoutButton(true);
+    setRedirect(true);
 
     // do something to check the db for the user
     // add if does not exist
