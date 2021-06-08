@@ -19,7 +19,10 @@ const createPassword = (req, res, salt) => {
       const args = [req.query.name, hash];
       db.connection.query(q, args, (error, results) => {
         if (error) {
-          res.send(500);
+          console.log('this is q', q);
+          console.log('these are args', args)
+          console.log('Here is Error', error)
+          res.sendStatus(500);
         } else {
           createSession(req, res, req.query.name);
           console.log(req.session);
