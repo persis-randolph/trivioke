@@ -4,10 +4,11 @@
 /* eslint-disable react/no-unused-state */
 /* eslint-disable no-undef */
 /* eslint-disable no-restricted-globals */
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import { UserContext } from '../pages/userContext';
 
 const clientId = '385117283096-qa4t4ncd1714jpeq26hbkig65pbntd7h.apps.googleusercontent.com';
 
@@ -17,15 +18,7 @@ const Login = () => {
   const [redirect, setRedirect] = useState(false);
   const [userInfo, setUserInfo] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const loginUser = (userData) => {
-    axios({ method: 'get', url: 'http://localhost:8080/users', params: userData })
-      .then(({ data }) => {
-        const { googleId, username } = data;
-        setUserInfo({ googleId, username });
-        setIsLoggedIn(true);
-      });
-  };
+  const { loginUser, logoutUser } = useContext(UserContext);
 
   const onLoginSuccess = (res) => {
     console.log('[Login Success] currentUser:', res.profileObj);
