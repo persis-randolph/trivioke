@@ -20,7 +20,7 @@ const createSession = (req, res, user) => {
 const getUser = async (id) => {
   const q = 'SELECT * FROM users WHERE googleId=?;';
   const user = await db.connection.query(q, id);
-  console.log('query result: ', user[0]);
+  // console.log('query result: ', user[0]);
   return user[0][0];
 };
 
@@ -48,7 +48,7 @@ const getSongs = () => {
   };
   axios.get('https://www.googleapis.com/youtube/v3/search', options)
     .then((data) => {
-      console.log('getSongs data: ', data.data.items)
+      console.log('getSongs data: ', data.data.items);
       data.data.items.forEach((song) => {
         db.save(song);
       });

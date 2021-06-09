@@ -9,6 +9,5 @@
     "ecmaFeatures": {
       "jsx": true
     }
-  },
-  "error": { "allow": ["warn"] }
+  }
 }

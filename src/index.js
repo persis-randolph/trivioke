@@ -4,7 +4,9 @@
 /* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
+import {
+  Switch, Route, Link, BrowserRouter as Router,
+} from 'react-router-dom';
 import Login from '../components/login.jsx';
 import VideoPlayer from '../components/player.jsx';
 import Load from '../components/load.jsx';
@@ -27,13 +29,14 @@ const routing = (
               alt="logo"
             />
           </center>
-          <Route exact path="/" component={Login} />
-          {/* <Route exact path="/signup" component={SignUp} /> */}
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/trivia" component={Load} />
-          <Route exact path="/video" component={VideoPlayer} />
-          <Route exact path="/game" component={Game} />
-          <Route exact path="/profile" component={Profile} />
+          <Switch>
+            <Route exact path="/" component={Login} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/trivia" component={Load} />
+            <Route exact path="/video" component={VideoPlayer} />
+            <Route exact path="/game" component={Game} />
+            <Route exact path="/profile" component={Profile} />
+          </Switch>
         </div>
       </Router>
     </GameContextProvider>

@@ -1,6 +1,5 @@
 /* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
-/* eslint-disable no-console */
 /* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 /* eslint-disable import/extensions */
@@ -20,15 +19,14 @@ function Game(props) {
     triviaRequest,
     changeCat,
     nextTeam,
-    triggerVideo,
+    // triggerVideo,
     increaseScore,
     handleClick,
     addSongsToState,
   } = useContext(GameContext);
 
   const {
-    videoBool,
-    visibility,
+    // videoBool,
     question,
     currTeam,
     team1,
@@ -41,39 +39,38 @@ function Game(props) {
   }, []);
 
   const { name1, name2 } = props;
-  if (!videoBool) {
-    return (
-      <center>
-        <div>
-          <Lifelines
-            // handleChange={this.handleChange}
-            triviaRequest={triviaRequest}
-            handleClick={handleClick}
-            changeCat={changeCat}
-          />
-          <Trivia
-            triviaRequest={triviaRequest}
-            // handleChange={handleChange}
-            question={question}
-            hidden={visibility}
-            nextTeam={nextTeam}
-            increaseScore={increaseScore}
-            trigger={triggerVideo}
-          />
-          <Scoreboard
-            currTeam={currTeam}
-            team1={team1}
-            team2={team2}
-            name1={name1}
-            name2={name2}
-          />
-        </div>
-      </center>
-    );
-  }
+  // if (!videoBool) {
   return (
-    <VideoPlayer />
+    <center>
+      <div>
+        <Lifelines
+            // handleChange={this.handleChange}
+          triviaRequest={triviaRequest}
+          handleClick={handleClick}
+          changeCat={changeCat}
+        />
+        <Trivia
+          triviaRequest={triviaRequest}
+            // handleChange={handleChange}
+          question={question}
+          nextTeam={nextTeam}
+          increaseScore={increaseScore}
+          // trigger={triggerVideo}
+        />
+        <Scoreboard
+          currTeam={currTeam}
+          team1={team1}
+          team2={team2}
+          name1={name1}
+          name2={name2}
+        />
+      </div>
+    </center>
   );
+  // }
+  // return (
+  //   <VideoPlayer />
+  // );
 }
 
 // triviaRequest() {

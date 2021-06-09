@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable no-unused-vars */
 /* eslint-disable import/extensions */
 /* eslint-disable no-undef */
 /* eslint-disable no-restricted-globals */
@@ -13,7 +15,7 @@ const Load = () => {
   const [diff, setDiff] = useState('medium');
   const [category, setCategory] = useState(9);
   const [trivia, setTrivia] = useState(false);
-  //this is the hub setTeam should come Teams Component
+  // this is the hub setTeam should come Teams Component
   const [team1, setTeam1] = useState('bloke');
   const [team2, setTeam2] = useState('anotherBloke');
 
@@ -83,10 +85,7 @@ const Load = () => {
 
 export default Load;
 
-
-
-
-//original
+// original
 
 // import React, { Component, useState } from 'react';
 // import Filters from './filters.jsx';

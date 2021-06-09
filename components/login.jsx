@@ -7,7 +7,7 @@
 
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
-import { Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { UserContext } from '../context/userContext';
 
@@ -16,7 +16,6 @@ const clientId = '385117283096-qa4t4ncd1714jpeq26hbkig65pbntd7h.apps.googleuserc
 const Login = () => {
   const [showLoginButton, setShowLoginButton] = useState(true);
   const [showLogoutButton, setShowLogoutButton] = useState(false);
-  const [redirect, setRedirect] = useState(false);
   const [userInfo, setUserInfo] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { loginUser, logoutUser } = useContext(UserContext);
@@ -26,7 +25,6 @@ const Login = () => {
     loginUser(res.profileObj);
     setShowLoginButton(false);
     setShowLogoutButton(true);
-    setRedirect(true);
   };
 
   const onLoginFailure = (res) => {
@@ -43,30 +41,41 @@ const Login = () => {
 
   return (
     <div>
-      {redirect ? <div><Redirect to="/trivia" /></div> : (
-        <div style={{
-          display: 'flex', justifyContent: 'space-evenly', alignItems: 'center',
-        }}
-        >
-          {showLoginButton ? (
-            <GoogleLogin
-              clientId={clientId}
-              buttonText="Login"
-              onSuccess={onLoginSuccess}
-              onFailure={onLoginFailure}
-              cookiePolicy="single_host_origin"
-              isSignedIn
-            />
-          ) : null}
-          {showLogoutButton ? (
+      <div style={{
+        display: 'flex', justifyContent: 'space-evenly', alignItems: 'center',
+      }}
+      >
+        {showLoginButton ? (
+          <GoogleLogin
+            clientId={clientId}
+            buttonText="Login"
+            onSuccess={onLoginSuccess}
+            onFailure={onLoginFailure}
+            cookiePolicy="single_host_origin"
+            isSignedIn
+          />
+        ) : null}
+        {showLogoutButton ? (
+          <div>
             <GoogleLogout
               clientId={clientId}
               buttonText="Sign Out"
               onLogoutSuccess={onSignoutSuccess}
             />
-          ) : null}
-        </div>
-      )}
+            <br />
+            <Link to="/game">
+              <button
+                type="button"
+                style={{
+                  justifyContent: 'center', alignItems: 'center',
+                }}
+              >
+                Go To Game
+              </button>
+            </Link>
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 };
