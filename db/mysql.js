@@ -3,11 +3,10 @@
 const mysql = require('mysql2/promise');
 require('dotenv').config();
 
-
 const connection = mysql.createPool({
   host: 'localhost',
   user: 'root',
-  password: process.env.pass,
+  password: process.env.DB_PASS,
   database: 'trivioke',
   port: '3307',
 });
