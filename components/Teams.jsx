@@ -36,7 +36,7 @@ const Teams = () => {
         }}
         href={`#/action-${n}`}
       >
-        {n}
+        {`${n} `}
       </Dropdown.Item>
     ));
   };
@@ -56,7 +56,7 @@ const Teams = () => {
               placeholder="Enter text"
               value={teamNames[`team${count}`]}
               onChange={(e) => {
-                console.log('HERE ARE THE TEAM NAMES', teamNames);
+                // console.log('HERE ARE THE TEAM NAMES', teamNames);
                 setTeamNames({ ...teamNames, [`team${count}`]: e.target.value });
               }}
             />
