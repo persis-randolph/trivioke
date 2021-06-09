@@ -4,7 +4,6 @@ import axios from 'axios';
 const GameContext = createContext();
 
 function GameContextProvider({ children }) {
-
   const [videoBool, setVideoBool] = useState(false);
   const [video, setVideo] = useState({ song: 'Frankie Valli - Can\'t Take My Eyes Off Of You Karaoke Lyrics', uri: 'UXYjQa_osMI' });
   const [videos, setVideos] = useState([]);
@@ -13,13 +12,20 @@ function GameContextProvider({ children }) {
   const [currTeam, setCurrTeam] = useState('team1');
   const [team1, setTeam1] = useState(0);
   const [team2, setTeam2] = useState(0);
+  const [triviaBool, setTriviaBool] = useState(false);
 
   const triviaRequest = () => {
-    const url = `https://opentdb.com/api.php?amount=1&category=${sessionStorage.category}&difficulty=${sessionStorage.diff}&type=multiple`;
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => setQuestion(data.results[0]))
-      .catch((err) => { console.error(err); });
+    const uri = !triviaBool ? '/trivia/multi' : '/trivia/bool';
+    axios.get(uri, {
+      params: {
+        categoryID: sessionStorage.category,
+        diff: sessionStorage.diff,
+      },
+    }).then(({ data }) => {
+     setQuestion(data);
+    }).catch((err) => {
+      console.error(err);
+    });
   };
 
   const changeCat = () => {
@@ -35,12 +41,10 @@ function GameContextProvider({ children }) {
       .catch((err) => { console.error(err); });
   };
 
-  const nextTeam = () => {
-    return currTeam === 'team1' ? setCurrTeam('team2') : setCurrTeam('team1');
-  };
+  const nextTeam = () => (currTeam === 'team1' ? setCurrTeam('team2') : setCurrTeam('team1'));
 
   const triggerVideo = () => {
-    setVideoBool(prevVid => !prevVid)
+    setVideoBool((prevVid) => !prevVid);
     // this.setState((prevState) => ({ video: !prevState.video }));
   };
 
@@ -57,7 +61,7 @@ function GameContextProvider({ children }) {
 
   // add songs from database to state. Should only run on start of a new game
   const addSongsToState = () => {
-    console.log('hits addsongs')
+    console.log('hits addsongs');
     axios.get('/songs')
       .then(({ data }) => {
         if (data.length) {
@@ -77,13 +81,12 @@ function GameContextProvider({ children }) {
                 });
             });
         }
-      })
-  }
+      });
+  };
 
   const handleClick = () => {
-    setVisibility(prevVis => !prevVis);
-  }
-
+    setVisibility((prevVis) => !prevVis);
+  };
 
   const state = {
     videoBool,
@@ -95,7 +98,7 @@ function GameContextProvider({ children }) {
     currTeam,
     team1,
     team2,
-  }
+  };
 
   const gameProps = {
     state,
@@ -105,14 +108,14 @@ function GameContextProvider({ children }) {
     triggerVideo,
     increaseScore,
     handleClick,
-    addSongsToState
+    addSongsToState,
   };
 
   return (
     <GameContext.Provider value={gameProps}>
       {children}
     </GameContext.Provider>
-  )
+  );
 }
 
-export { GameContextProvider, GameContext }
+export { GameContextProvider, GameContext };
