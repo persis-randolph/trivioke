@@ -14,26 +14,22 @@ const createSession = (req, res, user) => {
 };
 
 // get user req is just the googleId
-const getUser = (req, res) => {
+const getUser = async (id) => {
   const q = 'SELECT * FROM users WHERE googleId=?';
-  const args = [req];
-  db.connection.query(q, args, (err, results) => {
-    if (err) {
-      return console.log('error is: ', err.message);
-    }
-    console.log('results are: ', results);
-    res.status(200).send(results);
-  });
+  const user = await db.connection.query(q, id)
+  console.log('query result: ', user[0]);
+  return user[0][0];
 };
 
-const createUser = (userObj) => {
+const createUser = async (userObj) => {
   const { googleId, givenName: username } = userObj;
-  const q = 'INSERT INTO users (googleId, username) VALUES (?, ?);';
+  const q = 'INSERT IGNORE INTO users (googleId, username) VALUES (?, ?);';
   const args = [googleId, username];
-  db.connection.query(q, args, (err, results) => {
-    if (err) console.log(err);
-    console.log('RESULTS!', results);
-  });
+  try {
+    db.connection.query(q, args)
+  } catch (err) {
+    console.log(err);
+  }
 
   // try {
   //   const { googleId, givenName: username } = userObj;
