@@ -7,18 +7,17 @@ GRANT ALL ON *.* TO 'root'@'localhost' WITH GRANT OPTION;
 USE trivioke;
 
 CREATE TABLE users (
-  id int NOT NULL AUTO_INCREMENT,
+  googleId varchar(21) NOT NULL,
   username varchar(15) NOT NULL UNIQUE,
-  pw varchar(60) NOT NULL,
   score int(3) NULL,
-  PRIMARY KEY (ID)
+  PRIMARY KEY (googleId)
 );
 
 CREATE TABLE songs (
   id int NOT NULL AUTO_INCREMENT,
   song varchar(100) NOT NULL UNIQUE,
   uri varchar(100) NOT NULL,
-  PRIMARY KEY (ID)
+  PRIMARY KEY (id)
 );
 
 

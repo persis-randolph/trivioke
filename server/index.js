@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -36,12 +37,30 @@ app.post('/songs', (req, res) => {
   res.sendStatus(200);
 });
 
-app.post('/signup', (req, res) => {
-  util.createPassword(req, res, saltRounds);
-});
+// app.post('/signup', (req, res) => {
+//   util.createPassword(req, res, saltRounds);
+// });
 
-app.get('/login', (req, res) => {
-  util.checkPassword(req, res);
+// app.get('/login', (req, res) => {
+//   util.checkPassword(req, res);
+// });
+
+app.get('/users', async (req, res) => {
+  const { googleId, username } = req.query;
+
+  const existingUser = await util.getUser(googleId);
+
+  console.log('existing user ==>', existingUser)
+  if (existingUser) {
+    res.status(201).send(existingUser);
+  } else if (!existingUser) {
+    util.createUser(req.query);
+    const newUser = await util.getUser(googleId);
+    res.status(200).send(newUser);
+  } else {
+    console.log('user not found');
+    res.sendStatus(404);
+  }
 });
 
 const port = 8080;
