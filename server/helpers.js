@@ -79,18 +79,18 @@ const getSongs = () => {
     });
 };
 
-const escapeQuotes = (string) => string.replace(/"/g, '\\"');
+const escapeQuotes = (string) => string.split('/').join(',');
 const escapeHTML = (trivia) => {
   const decodedQuestion = {
     category: trivia.category,
     type: trivia.type,
-    question: decode(escapeQuotes(trivia.question)),
-    correct_answer: decode(escapeQuotes(trivia.correct_answer)),
+    question: escapeQuotes(decode(trivia.question)),
+    correct_answer: decode(trivia.correct_answer),
     incorrect_answers: trivia.incorrect_answers.length === 1
-      ? [decode(escapeQuotes(trivia.incorrect_answers[0]))]
-      : [decode(escapeQuotes(trivia.incorrect_answers[0])),
-        decode(escapeQuotes(trivia.incorrect_answers[1])),
-        decode(escapeQuotes(trivia.incorrect_answers[2]))],
+      ? [decode(trivia.incorrect_answers[0])]
+      : [decode(trivia.incorrect_answers[0]),
+        decode(trivia.incorrect_answers[1]),
+        decode(trivia.incorrect_answers[2])],
   };
   return decodedQuestion;
 };
@@ -100,5 +100,4 @@ module.exports = {
   checkPassword,
   createPassword,
   escapeHTML,
-  escapeQuotes,
 };
