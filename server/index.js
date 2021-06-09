@@ -22,14 +22,15 @@ app.use(session({
   saveUninitialized: true,
 }));
 
-app.get('/songs', (req, res) => {
-  db.connection.query('select * from songs', (err, results) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.send(results);
-    }
-  });
+app.get('/songs', async (req, res) => {
+  try {
+    const songs = await db.connection.query('select * from songs');
+    console.log('songs from db: ', songs[0])
+    res.send(songs);
+  }
+  catch (err) {
+    console.log(err);
+  }
 });
 
 app.post('/songs', (req, res) => {
@@ -50,7 +51,7 @@ app.get('/users', async (req, res) => {
 
   const existingUser = await util.getUser(googleId);
 
-  console.log('existing user ==>', existingUser)
+  // console.log('existing user ==>', existingUser)
   if (existingUser) {
     res.status(201).send(existingUser);
   } else if (!existingUser) {
