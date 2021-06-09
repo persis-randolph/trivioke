@@ -21,6 +21,7 @@ class Game extends React.Component {
       currTeam: 'team1',
       //maybe change teams to array to enable multiple teams
       //teams = [];
+      //these are the scores
       team1: 0,
       team2: 0,
     };
