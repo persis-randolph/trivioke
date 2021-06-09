@@ -2,18 +2,19 @@
 
 Trivia quiz game made with React.
 
+## Team
+
+  - __Product Owner__: Dario El-Badry
+  - __Scrum Master__: Josh Nguyen
+  - __Development Team Members__: Dario El-Badry, Josh Nguyen
+
 ## Table of Contents
 
 1. [Team](#team)
-2. [Usage](#Usage)
-3. [Requirements](#requirements)
-4. [Development](#development)
+1. [Usage](#Usage)
+1. [Requirements](#requirements)
+1. [Development](#development)
     1. [Installing Dependencies](#installing-dependencies)
-
-## Team
-
-  - __Development Team Members__: Berhane Cole, Bilal Hankins, James Thomason, & Persis Randolph
-
 
 ## Usage
 
@@ -35,3 +36,7 @@ From within the root directory:
 ```sh
 npm install
 ```
+
+### Roadmap
+
+View the project roadmap [here](https://waffle.io/CainDomain/trivioke)

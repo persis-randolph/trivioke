@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 /* eslint-disable import/extensions */
@@ -29,6 +30,7 @@ class Game extends React.Component {
   }
 
   triviaRequest() {
+<<<<<<< HEAD
     axios.get('/trivia/multi', {
       params: {
         categoryID: sessionStorage.category,
@@ -52,6 +54,13 @@ class Game extends React.Component {
     }).catch((err) => {
       console.error(err);
     });
+=======
+    const url = `https://opentdb.com/api.php?amount=1&category=${sessionStorage.category}&difficulty=${sessionStorage.diff}&type=multiple`;
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => this.setState({ question: data.results[0] }))
+      .catch((err) => { console.error(err); });
+>>>>>>> be2943dab8efcba436fd3894ee881bec54e61cc7
   }
 
   changeCat() {
