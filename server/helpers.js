@@ -3,6 +3,7 @@
 
 const axios = require('axios');
 const bcrypt = require('bcrypt');
+const { decode } = require('html-entities');
 const db = require('../db/mysql');
 const key = require('../config');
 
@@ -78,9 +79,24 @@ const getSongs = () => {
     });
 };
 
+const escapeHTML = (trivia) => {
+  const decodedQuestion = {
+    category: trivia.category,
+    type: trivia.type,
+    question: decode(trivia.question),
+    correct_answer: decode(trivia.correct_answer),
+    incorrect_answers: trivia.incorrect_answers.length === 1
+      ? [decode(trivia.incorrect_answers[0])]
+      : [decode(trivia.incorrect_answers[0]),
+        decode(trivia.incorrect_answers[1]),
+        decode(trivia.incorrect_answers[2])],
+  };
+  return decodedQuestion;
+};
 module.exports = {
   getSongs,
   createSession,
   checkPassword,
   createPassword,
+  escapeHTML,
 };
