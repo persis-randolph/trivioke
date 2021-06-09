@@ -4,40 +4,37 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
-import SignUp from '../components/signUp.jsx';
+// import SignUp from '../components/signUp.jsx';
 import Login from '../components/login.jsx';
 import VideoPlayer from '../components/player.jsx';
 import Load from '../components/load.jsx';
 import Game from '../components/game.jsx';
+import Profile from '../components/Profile.jsx';
+import Navbar from '../components/Nav.jsx';
 import './index.css';
-
-const Front = () => (
-  <div>
-    <SignUp />
-    <Login />
-  </div>
-);
+import { UserContextProvider } from '../pages/userContext';
 
 const routing = (
-  <Router>
-    <div>
+  <UserContextProvider>
+    <Router>
       <div>
-        <Link to="/">SignUp/Login</Link>
+        <Navbar />
+        <center>
+          <img
+            src="/logo.png"
+            alt="logo"
+          />
+        </center>
+        <Route exact path="/" component={Login} />
+        {/* <Route exact path="/signup" component={SignUp} /> */}
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/trivia" component={Load} />
+        <Route exact path="/video" component={VideoPlayer} />
+        <Route exact path="/game" component={Game} />
+        <Route exact path="/profile" component={Profile} />
       </div>
-      <center>
-        <img
-          src="/logo.png"
-          alt="logo"
-        />
-      </center>
-      <Route exact path="/" component={Front} />
-      <Route exact path="/signup" component={SignUp} />
-      <Route exact path="/login" component={Login} />
-      <Route exact path="/trivia" component={Load} />
-      <Route exact path="/video" component={VideoPlayer} />
-      <Route exact path="/game" component={Game} />
-    </div>
-  </Router>
+    </Router>
+  </UserContextProvider>
 );
 
 ReactDOM.render(routing, document.getElementById('index'));
