@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 const express = require('express');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
 const session = require('express-session');
@@ -11,40 +11,47 @@ const util = require('./helpers');
 const saltRounds = 10;
 const app = express();
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
 app.use(express.static(path.join(__dirname, '../dist')));
 app.use(express.static(path.join(__dirname, '../images')));
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 app.use(session({
   secret: 'supersecret',
   resave: false,
   saveUninitialized: true,
 }));
 
-app.get('/songs', async (req, res) => {
+app.get('/songs:id', async (req, res) => {
+  console.log('params from song request', req.query[0])
+
   try {
-    const songs = await db.connection.query('select * from songs');
-    console.log('songs from db: ', songs[0])
-    res.send(songs);
-  }
-  catch (err) {
+    const id = req.query[0];
+    const q = 'SELECT * FROM songs WHERE id=?'
+    const song = await db.connection.query(q, id)
+    console.log('song from db: ', song[0][0])
+    res.status(200).send(song[0][0]);
+  } catch (err) {
     console.log(err);
+    res.sendStatus(500);
+  }
+  // try {
+  //   const songs = await db.connection.query('SELECT * FROM songs;');
+  //   // console.log(songs[0]);
+  //   res.status(200).send(songs[0]);
+  // } catch (err) {
+  //   console.log(err);
+  // }
+});
+
+app.post('/songs', async (req, res) => {
+  try {
+    await util.getSongs(req, res);
+    res.sendStatus(201);
+  } catch (err) {
+    res.sendStatus(500);
   }
 });
-
-app.post('/songs', (req, res) => {
-  util.getSongs(req, res);
-  res.sendStatus(200);
-});
-
-// app.post('/signup', (req, res) => {
-//   util.createPassword(req, res, saltRounds);
-// });
-
-// app.get('/login', (req, res) => {
-//   util.checkPassword(req, res);
-// });
 
 app.get('/users', async (req, res) => {
   const { googleId, username } = req.query;
