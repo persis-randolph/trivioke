@@ -3,14 +3,14 @@
 const express = require('express');
 // const bodyParser = require('body-parser');
 const path = require('path');
-const cors = require('cors');
+// const cors = require('cors');
 const session = require('express-session');
 const db = require('../db/mysql');
 const util = require('./helpers');
 
 const saltRounds = 10;
 const app = express();
-app.use(cors());
+// app.use(cors());
 app.use(express.json());
 
 app.use(express.static(path.join(__dirname, '../dist')));
@@ -25,7 +25,7 @@ app.use(session({
 app.get('/songs', async (req, res) => {
   try {
     const songs = await db.connection.query('SELECT * FROM songs;');
-    console.log(songs[0]);
+    // console.log(songs[0]);
     res.status(200).send(songs[0]);
   } catch (err) {
     console.log(err);

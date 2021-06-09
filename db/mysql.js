@@ -10,14 +10,6 @@ const connection = mysql.createPool({
   database: 'trivioke',
 });
 
-// connection.connect((err) => {
-//   if (err) {
-//     console.log(err);
-//   } else {
-//     console.log('Connected to trivioke db');
-//   }
-// });
-
 // this should only happen once;
 const save = async (data) => {
   const q = 'INSERT IGNORE songs (song, uri) VALUES (?, ?);';

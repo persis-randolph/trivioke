@@ -15,7 +15,7 @@ const VideoPlayer = () => {
       .then(({ data }) => {
         if (data.length) {
           console.log('PATH: there is existing data in the db');
-          const rand = Math.floor(Math.random() * (videos.length - 1)) + 1;
+          const rand = Math.floor(Math.random() * (data.length));
           setVideo(data[rand]);
           setVideos(data);
         } else {
@@ -24,7 +24,7 @@ const VideoPlayer = () => {
             .then(() => {
               axios.get('/songs')
                 .then(({ data }) => {
-                  const rand = Math.floor(Math.random() * (videos.length - 1)) + 1;
+                  const rand = Math.floor(Math.random() * (data.length - 1)) + 1;
                   setVideo(data[rand]);
                   setVideos(data);
                 });
