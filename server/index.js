@@ -47,10 +47,12 @@ app.post('/songs', (req, res) => {
 
 app.get('/users', async (req, res) => {
   const { googleId, username } = req.query;
+
   const existingUser = await util.getUser(googleId);
 
+  console.log('existing user ==>', existingUser)
   if (existingUser) {
-    res.status(201).send(existingUser[0]);
+    res.status(201).send(existingUser);
   } else if (!existingUser) {
     util.createUser(req.query);
     const newUser = await util.getUser(googleId);
