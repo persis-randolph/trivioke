@@ -5,6 +5,7 @@
 const dotenv = require('dotenv').config();
 const axios = require('axios');
 // const bcrypt = require('bcrypt');
+const { decode } = require('he');
 const db = require('../db/mysql');
 
 require('dotenv').config();
@@ -17,8 +18,8 @@ const createSession = (req, res, user) => {
 
 // get user req is just the googleId
 const getUser = async (id) => {
-  const q = 'SELECT * FROM users WHERE googleId=?';
-  const user = await db.connection.query(q, id)
+  const q = 'SELECT * FROM users WHERE googleId=?;';
+  const user = await db.connection.query(q, id);
   console.log('query result: ', user[0]);
   return user[0][0];
 };
@@ -28,7 +29,7 @@ const createUser = async (userObj) => {
   const q = 'INSERT IGNORE INTO users (googleId, username) VALUES (?, ?);';
   const args = [googleId, username];
   try {
-    db.connection.query(q, args)
+    await db.connection.query(q, args);
   } catch (err) {
     console.log(err);
   }
@@ -46,8 +47,8 @@ const getSongs = () => {
     },
   };
   axios.get('https://www.googleapis.com/youtube/v3/search', options)
-    .then((data) => {
-      data.data.items.forEach((song) => {
+    .then(({ data }) => {
+      data.items.forEach((song) => {
         db.save(song);
       });
     })
@@ -56,9 +57,25 @@ const getSongs = () => {
     });
 };
 
+const escapeQuotes = (string) => string.split('/').join(',');
+const escapeHTML = (trivia) => {
+  const decodedQuestion = {
+    category: trivia.category,
+    type: trivia.type,
+    question: escapeQuotes(decode(trivia.question)),
+    correct_answer: decode(trivia.correct_answer),
+    incorrect_answers: trivia.incorrect_answers.length === 1
+      ? [decode(trivia.incorrect_answers[0])]
+      : [decode(trivia.incorrect_answers[0]),
+        decode(trivia.incorrect_answers[1]),
+        decode(trivia.incorrect_answers[2])],
+  };
+  return decodedQuestion;
+};
 module.exports = {
   getSongs,
   createSession,
+  escapeHTML,
   getUser,
   createUser,
 };

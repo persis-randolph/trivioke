@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 // const mysql = require('mysql2');
 const mysql = require('mysql2/promise');
@@ -11,24 +12,15 @@ const connection = mysql.createPool({
   port: process.env.DB_PORT,
 });
 
-// connection.connect((err) => {
-//   if (err) {
-//     console.log(err);
-//   } else {
-//     console.log('Connected to trivioke db');
-//   }
-// });
-
 // this should only happen once;
-const save = (data) => {
-  const q = `insert into songs(song, uri) values ('${data.snippet.title}', '${data.id.videoId}') on duplicate key update uri=uri`;
-  connection.query(q, (err, results) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log('songs saved to db');
-    }
-  });
+const save = async (data) => {
+  const q = 'INSERT IGNORE songs (song, uri) VALUES (?, ?);';
+  const args = [data.snippet.title, data.id.videoId];
+  try {
+    await connection.query(q, args);
+  } catch (err) {
+    console.log('save error', err);
+  }
 };
 
 module.exports.save = save;
