@@ -67,7 +67,7 @@ const getSongs = () => {
       part: 'snippet',
       chart: 'mostPopular',
       type: 'video',
-      key: process.env.YOUTUBE_API,
+      key: 'AIzaSyAnE9Iusaw_jQNgE1COcNT3yJG3R0tv3CQ',
       channelId: 'UCXosPWESPuLZoG66YuHKX9Q',
       maxResults: 50,
     },
