@@ -27,9 +27,7 @@ const Login = () => {
     setShowLogoutButton(true);
     setRedirect(true);
 
-    // do something to check the db for the user
-    // add if does not exist
-    // return user info if existing user
+    loginUser(res.profileObj);
   };
 
   const onLoginFailure = (res) => {
