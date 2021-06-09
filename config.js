@@ -1,3 +1,5 @@
+const { YOUTUBE_API_KEY } = process.env;
+
 module.exports = {
-  youtube: 'AIzaSyDX9j0_cy_4YO1preGR7-1UXRcTwdQO6aM',
+  YOUTUBE_API_KEY,
 };

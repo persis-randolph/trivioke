@@ -52,6 +52,7 @@ const VideoPlayer = () => {
           style={{
             justifyContent: 'center', alignItems: 'center', height: '3vh',
           }}
+          // onClick={this.goBack}
         >
           <Link to="/game">Back</Link>
         </button>
