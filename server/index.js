@@ -28,22 +28,6 @@ app.use(session({
   saveUninitialized: true,
 }));
 
-app.get('/songs', (req, res) => {
-  db.connection.query('select * from songs', (err, results) => {
-    console.log(results);
-    if (err) {
-      console.error(err);
-    } else {
-      res.send(results);
-    }
-  });
-});
-
-app.post('/songs', (req, res) => {
-  getSongs(req, res);
-  res.sendStatus(200);
-});
-
 app.get('/trivia/multi', (req, res) => {
   axios.get(`https://opentdb.com/api.php?amount=1&category=${req.query.categoryID}&difficulty=${req.query.diff}&type=multiple&token=de2a56bef025d1dfb49914b3fc45f656a8679f01c56bbc04837d3aa34eb1ae3c`)
     .then(({ data }) => {
@@ -71,7 +55,6 @@ app.get('/trivia/bool', (req, res) => {
 app.get('/songs', async (req, res) => {
   try {
     const songs = await db.connection.query('SELECT * FROM songs;');
-    // console.log(songs[0]);
     res.status(200).send(songs[0]);
   } catch (err) {
     console.log(err);
