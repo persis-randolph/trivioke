@@ -7,6 +7,8 @@ const axios = require('axios');
 // const bcrypt = require('bcrypt');
 const db = require('../db/mysql');
 
+require('dotenv').config();
+
 const createSession = (req, res, user) => {
   req.session.regenerate(() => {
     req.session.user = user;

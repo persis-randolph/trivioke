@@ -16,7 +16,13 @@ class Game extends React.Component {
       video: false,
       visibility: true,
       question: null,
+      //maybe set current team to null to start off with
+      //or we can default to 1 as the first team all of the
+      //time
       currTeam: 'team1',
+      //maybe change teams to array to enable multiple teams
+      //teams = [];
+      //these are the scores
       team1: 0,
       team2: 0,
     };
@@ -27,6 +33,11 @@ class Game extends React.Component {
     this.triggerVideo = this.triggerVideo.bind(this);
     this.changeCat = this.changeCat.bind(this);
   }
+
+  //We need a setTeams function that 
+  // setTeams(){
+
+  // }
 
   triviaRequest() {
     const url = `https://opentdb.com/api.php?amount=1&category=${sessionStorage.category}&difficulty=${sessionStorage.diff}&type=multiple`;
@@ -51,6 +62,11 @@ class Game extends React.Component {
 
   nextTeam() {
     const { currTeam } = this.state;
+    //if we change team to an array rather than two we'll have to change this//
+    //currTeam can be random//
+
+
+
     return currTeam === 'team1' ? this.setState({ currTeam: 'team2' }) : this.setState({ currTeam: 'team1' });
   }
 
@@ -60,6 +76,7 @@ class Game extends React.Component {
 
   increaseScore() {
     const { currTeam } = this.state;
+    //have to change the score for multiple teams as well;
     if (currTeam === 'team1') {
       sessionStorage.setItem('score1', (Number(sessionStorage.score1) + 1));
       this.setState(() => ({
@@ -108,6 +125,7 @@ class Game extends React.Component {
             />
             <Scoreboard
               currTeam={currTeam}
+              //for when we add an array of teams 
               team1={team1}
               team2={team2}
               name1={name1}
