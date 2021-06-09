@@ -7,7 +7,7 @@ function GameContextProvider({ children }) {
 
   const [videoBool, setVideoBool] = useState(false);
   const [video, setVideo] = useState({ song: 'Frankie Valli - Can\'t Take My Eyes Off Of You Karaoke Lyrics', uri: 'UXYjQa_osMI' });
-  const [videoBank, setVideoBank] = useState([]);
+  const [videos, setVideos] = useState([]);
   const [visibility, setVisibility] = useState(true);
   const [question, setQuestion] = useState(null);
   const [currTeam, setCurrTeam] = useState('team1');
@@ -55,6 +55,7 @@ function GameContextProvider({ children }) {
     }
   };
 
+  // add songs from database to state. Should only run on start of a new game
   const addSongsToState = () => {
     console.log('hits addsongs')
     axios.get('/songs')
@@ -62,9 +63,8 @@ function GameContextProvider({ children }) {
         if (data.length) {
           console.log('PATH: there is existing data in the db');
           const rand = Math.floor(Math.random() * (data.length));
+          setVideos(data);
           setVideo(data[rand]);
-          setVideoBank(data);
-          console.log('video data: ', data, 'videoBank state: ', videoBank)
         } else {
           console.log('PATH: there is nothing in the db');
           axios.post('/songs')
@@ -73,11 +73,11 @@ function GameContextProvider({ children }) {
                 .then(({ data }) => {
                   const rand = Math.floor(Math.random() * (data.length - 1)) + 1;
                   setVideo(data[rand]);
-                  setVideoBank(data);
+                  setVideos(data);
                 });
             });
         }
-      });
+      })
   }
 
   const handleClick = () => {
@@ -85,19 +85,18 @@ function GameContextProvider({ children }) {
   }
 
 
-
   const state = {
     videoBool,
     video,
     setVideo,
-    videoBank,
+    videos,
     visibility,
     question,
     currTeam,
     team1,
     team2,
   }
-  
+
   const gameProps = {
     state,
     triviaRequest,
@@ -116,4 +115,4 @@ function GameContextProvider({ children }) {
   )
 }
 
-export {GameContextProvider, GameContext}
+export { GameContextProvider, GameContext }
