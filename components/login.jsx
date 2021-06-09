@@ -22,6 +22,7 @@ const Login = () => {
 
   const onLoginSuccess = (res) => {
     console.log('[Login Success] currentUser:', res.profileObj);
+    loginUser(res.profileObj);
     setShowLoginButton(false);
     setShowLogoutButton(true);
     setRedirect(true);

@@ -46,7 +46,11 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/users', async (req, res) => {
-  const { googleId, username } = req.query;
+  // const { googleId, username } = req.query.userData;
+
+  console.log(req.query)
+
+  const q = 'insert ignore into users(username) values(?)';
   // this will need to be a call to get the user from the db
   // const existingUser = await getUser(googleId);
 
