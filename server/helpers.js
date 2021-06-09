@@ -2,10 +2,10 @@
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 
+const dotenv = require('dotenv').config();
 const axios = require('axios');
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 const db = require('../db/mysql');
-const key = require('../config');
 
 require('dotenv').config();
 
@@ -32,20 +32,6 @@ const createUser = async (userObj) => {
   } catch (err) {
     console.log(err);
   }
-
-  // try {
-  //   const { googleId, givenName: username } = userObj;
-  //   let q = 'INSERT INTO users (googleId, username) VALUES (?, ?);';
-  //   const args = [googleId, username];
-  //   await db.connection.query(q, args);
-  //   q = 'select * from users where googleId=?';
-  //   const args2 = [googleId];
-  //   await db.connection.query(q, args2, (err, results) =>
-  //     // console.log('RESULTS!', results);
-  //     results);
-  // } catch (err) {
-  //   console.log(err);
-  // }
 };
 
 const getSongs = () => {
@@ -54,7 +40,7 @@ const getSongs = () => {
       part: 'snippet',
       chart: 'mostPopular',
       type: 'video',
-      key: 'AIzaSyAnE9Iusaw_jQNgE1COcNT3yJG3R0tv3CQ',
+      key: process.env.YOUTUBE_API_KEY,
       channelId: 'UCXosPWESPuLZoG66YuHKX9Q',
       maxResults: 50,
     },
@@ -75,50 +61,4 @@ module.exports = {
   createSession,
   getUser,
   createUser,
-  // checkPassword,
-  // createPassword,
 };
-
-// const createPassword = (req, res, salt) => {
-//   bcrypt.hash(req.query.pw, salt, (err, hash) => {
-//     if (err || !hash) {
-//       res.sendStatus(500).send('signuperror');
-//       console.log(err);
-//     } else {
-//       const q = 'insert into users(username, pw) values(?, ?)';
-//       const args = [req.query.name, hash];
-//       db.connection.query(q, args, (error, results) => {
-//         if (error) {
-//           res.sendStatus(500);
-//         } else {
-//           createSession(req, res, req.query.name);
-//           console.log(req.session);
-//           res.end();
-//           console.log('user added to db');
-//         }
-//       });
-//     }
-//   });
-// };
-
-// const checkPassword = (req, res) => {
-//   const q = 'select * from users where username=?';
-//   const args = [req.query.name];
-//   db.connection.query(q, args, (err, results) => {
-//     if (err || !results) {
-//       res.send(err);
-//     } else {
-//       bcrypt.compare(req.query.pw, results[0].pw, (error, result) => {
-//         if (result === true) {
-//           console.log('passwords match');
-//           createSession(req, res, req.query.name);
-//           res.sendStatus(200);
-//         } else {
-//           console.log('passwords don\'t match');
-//           res.sendStatus(404);
-//           res.end();
-//         }
-//       });
-//     }
-//   });
-// };
