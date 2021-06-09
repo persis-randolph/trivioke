@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 
@@ -14,15 +15,14 @@ const createSession = (req, res, user) => {
 
 // get user req is just the googleId
 const getUser = (req, res) => {
-  const q = 'select * from users where googleId=?';
+  const q = 'SELECT * FROM users WHERE googleId=?';
   const args = [req];
   db.connection.query(q, args, (err, results) => {
-    if (err || !results) {
-      res.status(500).send(err);
-    } else {
-      // console.log('RESULTS!', results);
-      res.status(200).send(results);
+    if (err) {
+      return console.log('error is: ', err.message);
     }
+    console.log('results are: ', results);
+    res.status(200).send(results);
   });
 };
 
