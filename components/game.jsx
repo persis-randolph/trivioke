@@ -17,13 +17,7 @@ class Game extends React.Component {
       video: false,
       visibility: true,
       question: null,
-      //maybe set current team to null to start off with
-      //or we can default to 1 as the first team all of the
-      //time
       currTeam: 'team1',
-      //maybe change teams to array to enable multiple teams
-      //teams = [];
-      //these are the scores
       team1: 0,
       team2: 0,
     };
@@ -35,13 +29,7 @@ class Game extends React.Component {
     this.changeCat = this.changeCat.bind(this);
   }
 
-  //We need a setTeams function that 
-  // setTeams(){
-
-  // }
-
   triviaRequest() {
-<<<<<<< HEAD
     axios.get('/trivia/multi', {
       params: {
         categoryID: sessionStorage.category,
@@ -65,13 +53,6 @@ class Game extends React.Component {
     }).catch((err) => {
       console.error(err);
     });
-=======
-    const url = `https://opentdb.com/api.php?amount=1&category=${sessionStorage.category}&difficulty=${sessionStorage.diff}&type=multiple`;
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => this.setState({ question: data.results[0] }))
-      .catch((err) => { console.error(err); });
->>>>>>> be2943dab8efcba436fd3894ee881bec54e61cc7
   }
 
   changeCat() {
@@ -89,11 +70,6 @@ class Game extends React.Component {
 
   nextTeam() {
     const { currTeam } = this.state;
-    //if we change team to an array rather than two we'll have to change this//
-    //currTeam can be random//
-
-
-
     return currTeam === 'team1' ? this.setState({ currTeam: 'team2' }) : this.setState({ currTeam: 'team1' });
   }
 
@@ -103,7 +79,6 @@ class Game extends React.Component {
 
   increaseScore() {
     const { currTeam } = this.state;
-    //have to change the score for multiple teams as well;
     if (currTeam === 'team1') {
       sessionStorage.setItem('score1', (Number(sessionStorage.score1) + 1));
       this.setState(() => ({
@@ -154,7 +129,6 @@ class Game extends React.Component {
             />
             <Scoreboard
               currTeam={currTeam}
-              //for when we add an array of teams 
               team1={team1}
               team2={team2}
               name1={name1}
