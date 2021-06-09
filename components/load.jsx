@@ -1,210 +1,216 @@
 /* eslint-disable import/extensions */
 /* eslint-disable no-undef */
 /* eslint-disable no-restricted-globals */
-import React, { Component, useState } from 'react';
+
+// Load Refactor
+
+import React, { useState } from 'react';
 import Filters from './filters.jsx';
 import Teams from './Teams.jsx';
 import Game from './game.jsx';
 
-class Load extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      diff: 'medium',
-      category: 9,
-      trivia: false,
-      // change the amount of teams here as well
-      // teams: []
-      team1: '',
-      team2: '',
-    };
-    this.begin = this.begin.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-  }
+const Load = () => {
+  const [diff, setDiff] = useState('medium');
+  const [category, setCategory] = useState(9);
+  const [trivia, setTrivia] = useState(false);
+  // dont really wanna setTeams Here
+  // const [teams, setTeams] = useState([])
+  const [team1, setTeam1] = useState('');
+  const [team2, setTeam2] = useState('');
 
-  handleClick() {
-    this.setState({
-      [event.target.name]: event.target.id,
-    });
-  }
+  // need to deal with these maybe need to be dealt with in
+  // context
 
-  handleChange() {
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
-  }
+  // const handleClick = () => {
+  //   this.setState({
+  //     [event.target.name]: event.target.id,
+  //   });
+  // };
 
-  begin() {
-    const {
-      diff, category, team1, team2,
-    } = this.state;
+  // const handleChange = () => {
+  //   this.setState({
+  //     [event.target.name]: event.target.value,
+  //   });
+  // }
+
+  const begin = () => {
     sessionStorage.setItem('diff', diff);
     sessionStorage.setItem('category', category);
     sessionStorage.setItem('team1', team1);
     sessionStorage.setItem('team2', team2);
     sessionStorage.setItem('score1', 0);
     sessionStorage.setItem('score2', 0);
-    this.setState({ trivia: true });
-  }
+    setTrivia(true);
+  };
 
-  render() {
-    const {
-      // change teams here as well//
-      category, diff, team1, team2, trivia,
-    } = this.state;
-    /**
-     * teams.forEach((team, i) => {sessionStorage.setItem(`team${i+1}`)})
-     */
-    const categories = {
-      9: 'General',
-      11: 'Movies',
-      14: 'TV',
-      15: 'Video Games',
-      17: 'Science',
-      22: 'Geography',
-      23: 'History',
-      26: 'Celebs',
-      27: 'Animals',
-    };
-    const categoryName = categories[category];
+  const categories = {
+    9: 'General',
+    11: 'Movies',
+    14: 'TV',
+    15: 'Video Games',
+    17: 'Science',
+    22: 'Geography',
+    23: 'History',
+    26: 'Celebs',
+    27: 'Animals',
+  };
 
-    if (!trivia) {
-      return (
-        <center>
-          <div>
-            <div key="team">
-              <Teams handleChange={this.handleChange} />
-            </div>
-            <Filters click={this.handleClick} />
-            <h5>
-              Selected Category:
-              {' '}
-              {categoryName}
-            </h5>
-            <table style={{
-              alignItems: 'center', width: '400px', display: 'flex', justifyContent: 'center',
-            }}
-            >
-              <thead>
-                <tr style={{ cellpadding: 8, cellspacing: 8 }}>
-                  <td><button type="button" name="diff" id="easy" onClick={this.handleClick}><h5>Easy</h5></button></td>
-                  <td><button type="button" name="diff" id="medium" onClick={this.handleClick}><h5>Medium</h5></button></td>
-                  <td><button type="button" name="diff" id="hard" onClick={this.handleClick}><h5>Hard</h5></button></td>
-                </tr>
-              </thead>
-            </table>
-            <div key="begin">
-              <button type="button" onClick={this.begin}><h5>Begin Game</h5></button>
-            </div>
-          </div>
-        </center>
+  const categoryName = categories[category];
 
-      );
-    }
+  if (!trivia) {
     return (
-      <div>
-        <Game category={category} diff={diff} name1={team1} name2={team2} />
-      </div>
+      <center>
+        <div>
+          <div key="team">
+            {/* I can deal with handle change in this element */}
+            <Teams />
+          </div>
+          <Filters />
+          <h5>
+            Selected Category:
+            {' '}
+            {categoryName}
+          </h5>
+          <table style={{
+            alignItems: 'center', width: '400px', display: 'flex', justifyContent: 'center',
+          }}
+          >
+            <thead>
+              <tr style={{ cellpadding: 8, cellspacing: 8 }}>
+                <td><button type="button" name="diff" id="easy" onClick={() => { setDiff('easy'); }}><h5>Easy</h5></button></td>
+                <td><button type="button" name="diff" id="medium" onClick={() => { setDiff('medium'); }}><h5>Medium</h5></button></td>
+                <td><button type="button" name="diff" id="hard" onClick={() => { setDiff('hard'); }}><h5>Hard</h5></button></td>
+              </tr>
+            </thead>
+          </table>
+          <div key="begin">
+            <button type="button" onClick={() => begin()}><h5>Begin Game</h5></button>
+          </div>
+        </div>
+      </center>
+
     );
   }
-}
+  return (
+    <div>
+      <Game category={category} diff={diff} name1={team1} name2={team2} />
+    </div>
+  );
+};
+
 export default Load;
 
-// Load Refactor
 
-// import React, { useState } from 'react';
+
+
+//original
+
+// import React, { Component, useState } from 'react';
 // import Filters from './filters.jsx';
 // import Teams from './Teams.jsx';
 // import Game from './game.jsx';
 
-// const Load = () => {
-//   const [diff, setDiff] = useState('medium');
-//   const [category, setCategory] = useState(9);
-//   const [trivia, setTrivia] = useState(false);
-//   // dont really wanna setTeams Here
-//   // const [teams, setTeams] = useState([])
-//   const [team1, setTeam1] = useState('');
-//   const [team2, setTeam2] = useState('');
+// class Load extends Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       diff: 'medium',
+//       category: 9,
+//       trivia: false,
+//       // change the amount of teams here as well
+//       // teams: []
+//       team1: '',
+//       team2: '',
+//     };
+//     this.begin = this.begin.bind(this);
+//     this.handleClick = this.handleClick.bind(this);
+//     this.handleChange = this.handleChange.bind(this);
+//   }
 
-//   // need to deal with these maybe need to be dealt with in
-//   // context
+//   handleClick() {
+//     this.setState({
+//       [event.target.name]: event.target.id,
+//     });
+//   }
 
-//   // const handleClick = () => {
-//   //   this.setState({
-//   //     [event.target.name]: event.target.id,
-//   //   });
-//   // };
+//   handleChange() {
+//     this.setState({
+//       [event.target.name]: event.target.value,
+//     });
+//   }
 
-//   // const handleChange = () => {
-//   //   this.setState({
-//   //     [event.target.name]: event.target.value,
-//   //   });
-//   // }
-
-//   const begin = () => {
+//   begin() {
+//     const {
+//       diff, category, team1, team2,
+//     } = this.state;
 //     sessionStorage.setItem('diff', diff);
 //     sessionStorage.setItem('category', category);
 //     sessionStorage.setItem('team1', team1);
 //     sessionStorage.setItem('team2', team2);
 //     sessionStorage.setItem('score1', 0);
 //     sessionStorage.setItem('score2', 0);
-//     setTrivia(true);
-//   };
+//     this.setState({ trivia: true });
+//   }
 
-//   const categories = {
-//     9: 'General',
-//     11: 'Movies',
-//     14: 'TV',
-//     15: 'Video Games',
-//     17: 'Science',
-//     22: 'Geography',
-//     23: 'History',
-//     26: 'Celebs',
-//     27: 'Animals',
-//   };
+//   render() {
+//     const {
+//       // change teams here as well//
+//       category, diff, team1, team2, trivia,
+//     } = this.state;
+//     /**
+//      * teams.forEach((team, i) => {sessionStorage.setItem(`team${i+1}`)})
+//      */
+//     const categories = {
+//       9: 'General',
+//       11: 'Movies',
+//       14: 'TV',
+//       15: 'Video Games',
+//       17: 'Science',
+//       22: 'Geography',
+//       23: 'History',
+//       26: 'Celebs',
+//       27: 'Animals',
+//     };
+//     const categoryName = categories[category];
 
-//   const categoryName = categories[category];
+//     if (!trivia) {
+//       return (
+//         <center>
+//           <div>
+//             <div key="team">
+//               <Teams handleChange={this.handleChange} />
+//             </div>
+//             <Filters click={this.handleClick} />
+//             <h5>
+//               Selected Category:
+//               {' '}
+//               {categoryName}
+//             </h5>
+//             <table style={{
+//               alignItems: 'center', width: '400px', display: 'flex', justifyContent: 'center',
+//             }}
+//             >
+//               <thead>
+//                 <tr style={{ cellpadding: 8, cellspacing: 8 }}>
+//                   <td><button type="button" name="diff" id="easy" onClick={this.handleClick}><h5>Easy</h5></button></td>
+//                   <td><button type="button" name="diff" id="medium" onClick={this.handleClick}><h5>Medium</h5></button></td>
+//                   <td><button type="button" name="diff" id="hard" onClick={this.handleClick}><h5>Hard</h5></button></td>
+//                 </tr>
+//               </thead>
+//             </table>
+//             <div key="begin">
+//               <button type="button" onClick={this.begin}><h5>Begin Game</h5></button>
+//             </div>
+//           </div>
+//         </center>
 
-//   if (!trivia) {
+//       );
+//     }
 //     return (
-//       <center>
-//         <div>
-//           <div key="team">
-//             {/* I can deal with handle change in this element */}
-//             <Teams />
-//           </div>
-//           <Filters />
-//           <h5>
-//             Selected Category:
-//             {' '}
-//             {categoryName}
-//           </h5>
-//           <table style={{
-//             alignItems: 'center', width: '400px', display: 'flex', justifyContent: 'center',
-//           }}
-//           >
-//             <thead>
-//               <tr style={{ cellpadding: 8, cellspacing: 8 }}>
-//                 <td><button type="button" name="diff" id="easy" onClick={() => { setDiff('easy'); }}><h5>Easy</h5></button></td>
-//                 <td><button type="button" name="diff" id="medium" onClick={() => { setDiff('medium'); }}><h5>Medium</h5></button></td>
-//                 <td><button type="button" name="diff" id="hard" onClick={() => { setDiff('hard'); }}><h5>Hard</h5></button></td>
-//               </tr>
-//             </thead>
-//           </table>
-//           <div key="begin">
-//             <button type="button" onClick={() => begin()}><h5>Begin Game</h5></button>
-//           </div>
-//         </div>
-//       </center>
-
+//       <div>
+//         <Game category={category} diff={diff} name1={team1} name2={team2} />
+//       </div>
 //     );
 //   }
-//   return (
-//     <div>
-//       <Game category={category} diff={diff} name1={team1} name2={team2} />
-//     </div>
-//   );
-// };
-
+// }
 // export default Load;
