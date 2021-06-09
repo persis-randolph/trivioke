@@ -98,6 +98,8 @@ function GameContextProvider({ children }) {
     currTeam,
     team1,
     team2,
+    triviaBool,
+    setTriviaBool
   };
 
   const gameProps = {
