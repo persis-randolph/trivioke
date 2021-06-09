@@ -7,7 +7,7 @@ GRANT ALL ON *.* TO 'root'@'localhost' WITH GRANT OPTION;
 USE trivioke;
 
 CREATE TABLE users (
-  googleId varchar(20) NOT NULL,
+  googleId varchar(21) NOT NULL,
   username varchar(15) NOT NULL UNIQUE,
   score int(3) NULL,
   PRIMARY KEY (googleId)
