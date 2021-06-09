@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-shadow */
 
 import React, { useState, useEffect } from 'react';
@@ -13,10 +14,12 @@ const VideoPlayer = () => {
     axios.get('/songs')
       .then(({ data }) => {
         if (data.length) {
+          console.log('PATH: there is existing data in the db');
           const rand = Math.floor(Math.random() * (videos.length - 1)) + 1;
           setVideo(data[rand]);
           setVideos(data);
         } else {
+          console.log('PATH: there is nothing in the db');
           axios.post('/songs')
             .then(() => {
               axios.get('/songs')

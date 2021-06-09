@@ -8,7 +8,7 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
-import { UserContext } from '../pages/userContext';
+import { UserContext } from '../context/userContext';
 
 const clientId = '385117283096-qa4t4ncd1714jpeq26hbkig65pbntd7h.apps.googleusercontent.com';
 
