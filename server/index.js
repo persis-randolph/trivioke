@@ -28,6 +28,20 @@ app.use(session({
   saveUninitialized: true,
 }));
 
+//? may not need, but this will return a song at a given id
+// app.get('/songs:id', async (req, res) => {
+//   console.log('params from song request', req.query[0])
+//   try {
+//     const id = req.query[0];
+//     const q = 'SELECT * FROM songs WHERE id=?'
+//     const song = await db.connection.query(q, id)
+//     console.log('song from db: ', song[0][0])
+//     res.status(200).send(song[0][0]);
+//   } catch (err) {
+//     console.log(err);
+//     res.sendStatus(500);
+//   }
+// });
 app.get('/trivia/multi', (req, res) => {
   axios.get(`https://opentdb.com/api.php?amount=1&category=${req.query.categoryID}&difficulty=${req.query.diff}&type=multiple`)
     .then(({ data }) => {
@@ -75,7 +89,7 @@ app.get('/users', async (req, res) => {
 
   const existingUser = await getUser(googleId);
 
-  console.log('existing user ==>', existingUser);
+  // console.log('existing user ==>', existingUser)
   if (existingUser) {
     res.status(201).send(existingUser);
   } else if (!existingUser) {

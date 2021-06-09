@@ -13,26 +13,30 @@ import Profile from '../components/Profile.jsx';
 import Navbar from '../components/Nav.jsx';
 import './index.css';
 import { UserContextProvider } from '../context/userContext';
+import { GameContextProvider } from '../context/gameContext';
 
 const routing = (
   <UserContextProvider>
-    <Router>
-      <div>
-        <Navbar />
-        <center>
-          <img
-            src="/logo.png"
-            alt="logo"
-          />
-        </center>
-        <Route exact path="/" component={Login} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/trivia" component={Load} />
-        <Route exact path="/video" component={VideoPlayer} />
-        <Route exact path="/game" component={Game} />
-        <Route exact path="/profile" component={Profile} />
-      </div>
-    </Router>
+    <GameContextProvider>
+      <Router>
+        <div>
+          <Navbar />
+          <center>
+            <img
+              src="/logo.png"
+              alt="logo"
+            />
+          </center>
+          <Route exact path="/" component={Login} />
+          {/* <Route exact path="/signup" component={SignUp} /> */}
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/trivia" component={Load} />
+          <Route exact path="/video" component={VideoPlayer} />
+          <Route exact path="/game" component={Game} />
+          <Route exact path="/profile" component={Profile} />
+        </div>
+      </Router>
+    </GameContextProvider>
   </UserContextProvider>
 );
 
