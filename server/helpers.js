@@ -12,48 +12,42 @@ const createSession = (req, res, user) => {
   });
 };
 
-const createPassword = (req, res, salt) => {
-  bcrypt.hash(req.query.pw, salt, (err, hash) => {
-    if (err || !hash) {
-      res.sendStatus(500).send('signuperror');
-      console.log(err);
+// get user req is just the googleId
+const getUser = (req, res) => {
+  const q = 'select * from users where googleId=?';
+  const args = [req];
+  db.connection.query(q, args, (err, results) => {
+    if (err || !results) {
+      res.status(500).send(err);
     } else {
-      const q = 'insert into users(username, pw) values(?, ?)';
-      const args = [req.query.name, hash];
-      db.connection.query(q, args, (error, results) => {
-        if (error) {
-          res.sendStatus(500);
-        } else {
-          createSession(req, res, req.query.name);
-          console.log(req.session);
-          res.end();
-          console.log('user added to db');
-        }
-      });
+      // console.log('RESULTS!', results);
+      res.status(200).send(results);
     }
   });
 };
 
-const checkPassword = (req, res) => {
-  const q = 'select * from users where username=?';
-  const args = [req.query.name];
+const createUser = (userObj) => {
+  const { googleId, givenName: username } = userObj;
+  const q = 'INSERT INTO users (googleId, username) VALUES (?, ?);';
+  const args = [googleId, username];
   db.connection.query(q, args, (err, results) => {
-    if (err || !results) {
-      res.send(err);
-    } else {
-      bcrypt.compare(req.query.pw, results[0].pw, (error, result) => {
-        if (result === true) {
-          console.log('passwords match');
-          createSession(req, res, req.query.name);
-          res.sendStatus(200);
-        } else {
-          console.log('passwords don\'t match');
-          res.sendStatus(404);
-          res.end();
-        }
-      });
-    }
+    if (err) console.log(err);
+    console.log('RESULTS!', results);
   });
+
+  // try {
+  //   const { googleId, givenName: username } = userObj;
+  //   let q = 'INSERT INTO users (googleId, username) VALUES (?, ?);';
+  //   const args = [googleId, username];
+  //   await db.connection.query(q, args);
+  //   q = 'select * from users where googleId=?';
+  //   const args2 = [googleId];
+  //   await db.connection.query(q, args2, (err, results) =>
+  //     // console.log('RESULTS!', results);
+  //     results);
+  // } catch (err) {
+  //   console.log(err);
+  // }
 };
 
 const getSongs = () => {
@@ -81,6 +75,52 @@ const getSongs = () => {
 module.exports = {
   getSongs,
   createSession,
-  checkPassword,
-  createPassword,
+  getUser,
+  createUser,
+  // checkPassword,
+  // createPassword,
 };
+
+// const createPassword = (req, res, salt) => {
+//   bcrypt.hash(req.query.pw, salt, (err, hash) => {
+//     if (err || !hash) {
+//       res.sendStatus(500).send('signuperror');
+//       console.log(err);
+//     } else {
+//       const q = 'insert into users(username, pw) values(?, ?)';
+//       const args = [req.query.name, hash];
+//       db.connection.query(q, args, (error, results) => {
+//         if (error) {
+//           res.sendStatus(500);
+//         } else {
+//           createSession(req, res, req.query.name);
+//           console.log(req.session);
+//           res.end();
+//           console.log('user added to db');
+//         }
+//       });
+//     }
+//   });
+// };
+
+// const checkPassword = (req, res) => {
+//   const q = 'select * from users where username=?';
+//   const args = [req.query.name];
+//   db.connection.query(q, args, (err, results) => {
+//     if (err || !results) {
+//       res.send(err);
+//     } else {
+//       bcrypt.compare(req.query.pw, results[0].pw, (error, result) => {
+//         if (result === true) {
+//           console.log('passwords match');
+//           createSession(req, res, req.query.name);
+//           res.sendStatus(200);
+//         } else {
+//           console.log('passwords don\'t match');
+//           res.sendStatus(404);
+//           res.end();
+//         }
+//       });
+//     }
+//   });
+// };

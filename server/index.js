@@ -37,35 +37,28 @@ app.post('/songs', (req, res) => {
   res.sendStatus(200);
 });
 
-app.post('/signup', (req, res) => {
-  util.createPassword(req, res, saltRounds);
-});
+// app.post('/signup', (req, res) => {
+//   util.createPassword(req, res, saltRounds);
+// });
 
-app.get('/login', (req, res) => {
-  util.checkPassword(req, res);
-});
+// app.get('/login', (req, res) => {
+//   util.checkPassword(req, res);
+// });
 
 app.get('/users', async (req, res) => {
   const { googleId, username } = req.query;
-  // this will need to be a call to get the user from the db
-  // const existingUser = await getUser(googleId);
+  const existingUser = await util.getUser(googleId);
 
-  // if (existingUser.length) {
-  //   res.status(201).send(existingUser[0]);
-  // } else if (!existingUser.length) {
-  //   createUser(req.query)
-  //     .then((user) => {
-  //       res.status(200)
-  //         .send(user);
-  //     })
-  //     .catch((err) => {
-  //       // console.log('error creating user', err);
-  //       res.sendStatus(500);
-  //     });
-  // } else {
-  //   console.log('user not found');
-  //   res.sendStatus(404);
-  // }
+  if (existingUser) {
+    res.status(201).send(existingUser[0]);
+  } else if (!existingUser) {
+    util.createUser(req.query);
+    const newUser = await util.getUser(googleId);
+    res.status(200).send(newUser);
+  } else {
+    console.log('user not found');
+    res.sendStatus(404);
+  }
 });
 
 const port = 8080;
