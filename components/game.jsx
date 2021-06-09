@@ -103,7 +103,7 @@ class Game extends React.Component {
 
   render() {
     const {
-      question, visibility, currTeam, team1, team2, video, bool,
+      question, visibility, currTeam, team1, team2, video,
     } = this.state;
     const { name1, name2 } = this.props;
     if (!video) {
@@ -115,7 +115,6 @@ class Game extends React.Component {
               triviaRequest={this.triviaRequest}
               handleClick={this.handleClick}
               changeCat={this.changeCat}
-              bool={bool}
             />
             <Trivia
               triviaRequest={this.triviaRequest}
@@ -125,7 +124,6 @@ class Game extends React.Component {
               nextTeam={this.nextTeam}
               increaseScore={this.increaseScore}
               trigger={this.triggerVideo}
-              bool={bool}
             />
             <Scoreboard
               currTeam={currTeam}
