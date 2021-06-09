@@ -34,6 +34,8 @@ class Trivia extends Component {
       return answerArr;
     }
     if (question) {
+      //when we have a question that is not answered within a certain amount of time
+      //
       const answers = [
         <button key="c" type="button" onClick={() => { triviaRequest(); nextTeam(); increaseScore(); }}>{escapeHtml(question.correct_answer)}</button>,
         <button key="i1" onClick={trigger} style={{ display: hidden ? 'block' : 'none' }} type="button">{escapeHtml(question.incorrect_answers[0])}</button>,

@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
+// const mysql = require('mysql2');
 const mysql = require('mysql2/promise');
 require('dotenv').config();
 
@@ -8,6 +9,7 @@ const connection = mysql.createPool({
   user: 'root',
   password: process.env.DB_PASS,
   database: 'trivioke',
+  // port: '3307',
 });
 
 // this should only happen once;
