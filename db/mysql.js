@@ -6,7 +6,7 @@ require('dotenv').config();
 const connection = mysql.createPool({
   host: 'localhost',
   user: 'root',
-  password: process.env.DB_PASS,
+  password: process.env.DB_PASS || '',
   database: 'trivioke',
 });
 

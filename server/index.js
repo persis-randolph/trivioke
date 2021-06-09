@@ -22,26 +22,29 @@ app.use(session({
   saveUninitialized: true,
 }));
 
-app.get('/songs:id', async (req, res) => {
-  console.log('params from song request', req.query[0])
+//? may not need, but this will return a song at a given id
+// app.get('/songs:id', async (req, res) => {
+//   console.log('params from song request', req.query[0])
+//   try {
+//     const id = req.query[0];
+//     const q = 'SELECT * FROM songs WHERE id=?'
+//     const song = await db.connection.query(q, id)
+//     console.log('song from db: ', song[0][0])
+//     res.status(200).send(song[0][0]);
+//   } catch (err) {
+//     console.log(err);
+//     res.sendStatus(500);
+//   }
+// });
 
+app.get('/songs', async (req, res) => {
   try {
-    const id = req.query[0];
-    const q = 'SELECT * FROM songs WHERE id=?'
-    const song = await db.connection.query(q, id)
-    console.log('song from db: ', song[0][0])
-    res.status(200).send(song[0][0]);
+    const songs = await db.connection.query('SELECT * FROM songs;');
+    // console.log(songs[0]);
+    res.status(200).send(songs[0]);
   } catch (err) {
     console.log(err);
-    res.sendStatus(500);
   }
-  // try {
-  //   const songs = await db.connection.query('SELECT * FROM songs;');
-  //   // console.log(songs[0]);
-  //   res.status(200).send(songs[0]);
-  // } catch (err) {
-  //   console.log(err);
-  // }
 });
 
 app.post('/songs', async (req, res) => {
