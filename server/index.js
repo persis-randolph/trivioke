@@ -52,6 +52,18 @@ app.get('/trivia/bool', (req, res) => {
     });
 });
 
+app.get('/categories', (req, res) => {
+  axios.get('https://opentdb.com/api_category.php')
+    .then(({ data }) => {
+      const categories = data.trivia_categories;
+      res.status(200).send(categories);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(404);
+    });
+});
+
 app.get('/songs', async (req, res) => {
   try {
     const songs = await db.connection.query('SELECT * FROM songs;');
