@@ -9,49 +9,13 @@ import { GameContext } from '../context/gameContext';
 import { UserContext } from '../context/userContext';
 
 const VideoPlayer = () => {
-  // const [video, setVideo] = useState({ song: 'Frankie Valli - Can\'t Take My Eyes Off Of You Karaoke Lyrics', uri: 'UXYjQa_osMI' });
-  // const [videos, setVideos] = useState([]);
 
-  const { video, videoBank, setVideo } = useContext(GameContext);
-
-  // useEffect(() => {
-  //   changeVideo();
-  // }, []);
-  // useEffect(() => {
-  //   axios.get('/songs')
-  //     .then(({ data }) => {
-  //       if (data.length) {
-  //         console.log('PATH: there is existing data in the db');
-  //         const rand = Math.floor(Math.random() * (data.length));
-  //         setVideo(data[rand]);
-  //         setVideos(data);
-  //       } else {
-  //         console.log('PATH: there is nothing in the db');
-  //         axios.post('/songs')
-  //           .then(() => {
-  //             axios.get('/songs')
-  //               .then(({ data }) => {
-  //                 const rand = Math.floor(Math.random() * (data.length - 1)) + 1;
-  //                 setVideo(data[rand]);
-  //                 setVideos(data);
-  //               });
-  //           });
-  //       }
-  //     });
-
-  //   //? if we want to retieve just one song at a random index
-  //   // const randomIndex = Math.round(Math.random() * 25) + 1;
-  //   // axios.get('/songs:id', { params: randomIndex })
-  //   //   .then(({data}) => {
-  //   //     console.log('SONG SELECTION ===> ', data)
-  //   //     setVideo(data);
-  //   //   })
-  //   //   .catch(err => console.log(err))
-  // }, []);
+  const { state } = useContext(GameContext);
+  const { video, setVideo, videos } = state;
 
   const changeVideo = () => {
-    const rand = Math.floor(Math.random() * (videoBank.length - 1)) + 1;
-    setVideo(videoBank[rand]);
+    const rand = Math.floor(Math.random() * (videos.length - 1)) + 1;
+    setVideo(videos[rand]);
   };
 
   return (
