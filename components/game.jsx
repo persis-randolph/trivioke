@@ -4,6 +4,7 @@
 /* eslint-disable import/extensions */
 /* eslint-disable react/sort-comp */
 import React from 'react';
+import axios from 'axios';
 import Lifelines from './lifelines.jsx';
 import Trivia from './trivia.jsx';
 import Scoreboard from './scoreBoard.jsx';
@@ -16,13 +17,7 @@ class Game extends React.Component {
       video: false,
       visibility: true,
       question: null,
-      //maybe set current team to null to start off with
-      //or we can default to 1 as the first team all of the
-      //time
       currTeam: 'team1',
-      //maybe change teams to array to enable multiple teams
-      //teams = [];
-      //these are the scores
       team1: 0,
       team2: 0,
     };
@@ -34,17 +29,30 @@ class Game extends React.Component {
     this.changeCat = this.changeCat.bind(this);
   }
 
-  //We need a setTeams function that 
-  // setTeams(){
-
-  // }
-
   triviaRequest() {
-    const url = `https://opentdb.com/api.php?amount=1&category=${sessionStorage.category}&difficulty=${sessionStorage.diff}&type=multiple`;
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => this.setState({ question: data.results[0] }))
-      .catch((err) => { console.error(err); });
+    axios.get('/trivia/multi', {
+      params: {
+        categoryID: sessionStorage.category,
+        diff: sessionStorage.diff,
+      },
+    }).then(({ data }) => {
+      this.setState({ question: data });
+    }).catch((err) => {
+      console.error(err);
+    });
+  }
+
+  boolRequest() {
+    axios.get('/trivia/bool', {
+      params: {
+        categoryID: sessionStorage.category,
+        diff: sessionStorage.diff,
+      },
+    }).then(({ data }) => {
+      this.setState({ question: data });
+    }).catch((err) => {
+      console.error(err);
+    });
   }
 
   changeCat() {
@@ -62,11 +70,6 @@ class Game extends React.Component {
 
   nextTeam() {
     const { currTeam } = this.state;
-    //if we change team to an array rather than two we'll have to change this//
-    //currTeam can be random//
-
-
-
     return currTeam === 'team1' ? this.setState({ currTeam: 'team2' }) : this.setState({ currTeam: 'team1' });
   }
 
@@ -76,7 +79,6 @@ class Game extends React.Component {
 
   increaseScore() {
     const { currTeam } = this.state;
-    //have to change the score for multiple teams as well;
     if (currTeam === 'team1') {
       sessionStorage.setItem('score1', (Number(sessionStorage.score1) + 1));
       this.setState(() => ({
@@ -101,7 +103,7 @@ class Game extends React.Component {
 
   render() {
     const {
-      question, visibility, currTeam, team1, team2, video,
+      question, visibility, currTeam, team1, team2, video, bool,
     } = this.state;
     const { name1, name2 } = this.props;
     if (!video) {
@@ -113,6 +115,7 @@ class Game extends React.Component {
               triviaRequest={this.triviaRequest}
               handleClick={this.handleClick}
               changeCat={this.changeCat}
+              bool={bool}
             />
             <Trivia
               triviaRequest={this.triviaRequest}
@@ -122,10 +125,10 @@ class Game extends React.Component {
               nextTeam={this.nextTeam}
               increaseScore={this.increaseScore}
               trigger={this.triggerVideo}
+              bool={bool}
             />
             <Scoreboard
               currTeam={currTeam}
-              //for when we add an array of teams 
               team1={team1}
               team2={team2}
               name1={name1}
