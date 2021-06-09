@@ -9,7 +9,6 @@ const axios = require('axios');
 const db = require('../db/mysql');
 const {
   getSongs,
-  createSession,
   checkPassword,
   createPassword,
   escapeHTML,
@@ -53,7 +52,7 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/trivia/multi', (req, res) => {
-  axios.get(`https://opentdb.com/api.php?amount=1&category=${req.query.categoryID}&difficulty=${req.query.diff}&type=multiple&token=874541a98769f47d0756f8ceae2ad68855a9cbb97eaecc177546e57e45c6689e`)
+  axios.get(`https://opentdb.com/api.php?amount=1&category=${req.query.categoryID}&difficulty=${req.query.diff}&type=multiple&token=de2a56bef025d1dfb49914b3fc45f656a8679f01c56bbc04837d3aa34eb1ae3c`)
     .then(({ data }) => {
       const question = escapeHTML(data.results[0]);
       res.status(200).send(question);
@@ -65,7 +64,7 @@ app.get('/trivia/multi', (req, res) => {
 });
 
 app.get('/trivia/bool', (req, res) => {
-  axios.get(`https://opentdb.com/api.php?amount=1&category=${req.query.categoryID}&difficulty=${req.query.diff}&type=boolean&token=874541a98769f47d0756f8ceae2ad68855a9cbb97eaecc177546e57e45c6689e`)
+  axios.get(`https://opentdb.com/api.php?amount=1&category=${req.query.categoryID}&difficulty=${req.query.diff}&type=boolean&token=de2a56bef025d1dfb49914b3fc45f656a8679f01c56bbc04837d3aa34eb1ae3c`)
     .then(({ data }) => {
       const question = escapeHTML(data.results[0]);
       res.status(200).send(question);
