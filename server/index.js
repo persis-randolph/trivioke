@@ -1,57 +1,52 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 const express = require('express');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 const path = require('path');
-const cors = require('cors');
+// const cors = require('cors');
 const session = require('express-session');
 const db = require('../db/mysql');
 const util = require('./helpers');
 
 const saltRounds = 10;
 const app = express();
-app.use(cors());
-app.use(bodyParser.json());
+// app.use(cors());
+app.use(express.json());
 
 app.use(express.static(path.join(__dirname, '../dist')));
 app.use(express.static(path.join(__dirname, '../images')));
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 app.use(session({
   secret: 'supersecret',
   resave: false,
   saveUninitialized: true,
 }));
 
-app.get('/songs', (req, res) => {
-  db.connection.query('select * from songs', (err, results) => {
-    console.log(results);
-    if (err) {
-      console.log(err);
-    } else {
-      res.send(results);
-    }
-  });
+app.get('/songs', async (req, res) => {
+  try {
+    const songs = await db.connection.query('SELECT * FROM songs;');
+    // console.log(songs[0]);
+    res.status(200).send(songs[0]);
+  } catch (err) {
+    console.log(err);
+  }
 });
 
-app.post('/songs', (req, res) => {
-  util.getSongs(req, res);
-  res.sendStatus(200);
+app.post('/songs', async (req, res) => {
+  try {
+    await util.getSongs(req, res);
+    res.sendStatus(201);
+  } catch (err) {
+    res.sendStatus(500);
+  }
 });
-
-// app.post('/signup', (req, res) => {
-//   util.createPassword(req, res, saltRounds);
-// });
-
-// app.get('/login', (req, res) => {
-//   util.checkPassword(req, res);
-// });
 
 app.get('/users', async (req, res) => {
   const { googleId, username } = req.query;
 
   const existingUser = await util.getUser(googleId);
 
-  console.log('existing user ==>', existingUser)
+  console.log('existing user ==>', existingUser);
   if (existingUser) {
     res.status(201).send(existingUser);
   } else if (!existingUser) {

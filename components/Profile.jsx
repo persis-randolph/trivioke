@@ -1,5 +1,6 @@
-import React, {useContext} from 'react';
-import { UserContext } from '../pages/userContext'
+/* eslint-disable no-console */
+import React, { useContext } from 'react';
+import { UserContext } from '../context/userContext';
 
 const Profile = () => {
   const { userInfo } = useContext(UserContext);
@@ -9,8 +10,8 @@ const Profile = () => {
     <div className="player-score-card">
       <h1>This will be player profile</h1>
     </div>
-    
-  )
-}
+
+  );
+};
 
 export default Profile;

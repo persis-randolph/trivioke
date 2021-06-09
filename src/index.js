@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 /* eslint-disable import/extensions */
 /* eslint-disable react/jsx-filename-extension */
@@ -12,7 +13,7 @@ import Game from '../components/game.jsx';
 import Profile from '../components/Profile.jsx';
 import Navbar from '../components/Nav.jsx';
 import './index.css';
-import { UserContextProvider } from '../pages/userContext';
+import { UserContextProvider } from '../context/userContext';
 
 const routing = (
   <UserContextProvider>
