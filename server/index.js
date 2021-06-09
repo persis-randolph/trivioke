@@ -52,7 +52,7 @@ app.get('/users', async (req, res) => {
 
   console.log('existing user ==>', existingUser)
   if (existingUser) {
-    res.status(201).send(existingUser[0]);
+    res.status(201).send(existingUser);
   } else if (!existingUser) {
     util.createUser(req.query);
     const newUser = await util.getUser(googleId);
