@@ -43,7 +43,7 @@ app.use(session({
 //   }
 // });
 app.get('/trivia/multi', (req, res) => {
-  axios.get(`https://opentdb.com/api.php?amount=1&category=${req.query.categoryID}&difficulty=${req.query.diff}&type=multiple&token=de2a56bef025d1dfb49914b3fc45f656a8679f01c56bbc04837d3aa34eb1ae3c`)
+  axios.get(`https://opentdb.com/api.php?amount=1&category=${req.query.categoryID}&difficulty=${req.query.diff}&type=multiple`)
     .then(({ data }) => {
       const question = escapeHTML(data.results[0]);
       res.status(200).send(question);
@@ -55,7 +55,7 @@ app.get('/trivia/multi', (req, res) => {
 });
 
 app.get('/trivia/bool', (req, res) => {
-  axios.get(`https://opentdb.com/api.php?amount=1&category=${req.query.categoryID}&difficulty=${req.query.diff}&type=boolean&token=de2a56bef025d1dfb49914b3fc45f656a8679f01c56bbc04837d3aa34eb1ae3c`)
+  axios.get(`https://opentdb.com/api.php?amount=1&category=${req.query.categoryID}&difficulty=${req.query.diff}&type=boolean`)
     .then(({ data }) => {
       const question = escapeHTML(data.results[0]);
       res.status(200).send(question);
