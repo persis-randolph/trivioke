@@ -5,7 +5,9 @@ const GameContext = createContext();
 
 function GameContextProvider({ children }) {
 
-  const [video, setVideo] = useState(false);
+  const [videoBool, setVideoBool] = useState(false);
+  const [video, setVideo] = useState({ song: 'Frankie Valli - Can\'t Take My Eyes Off Of You Karaoke Lyrics', uri: 'UXYjQa_osMI' });
+  const [videoBank, setVideoBank] = useState([]);
   const [visibility, setVisibility] = useState(true);
   const [question, setQuestion] = useState(null);
   const [currTeam, setCurrTeam] = useState('team1');
@@ -38,7 +40,7 @@ function GameContextProvider({ children }) {
   };
 
   const triggerVideo = () => {
-    setVideo(prevVid => !prevVid)
+    setVideoBool(prevVid => !prevVid)
     // this.setState((prevState) => ({ video: !prevState.video }));
   };
 
@@ -53,20 +55,58 @@ function GameContextProvider({ children }) {
     }
   };
 
+  const addSongsToState = () => {
+    console.log('hits addsongs')
+    axios.get('/songs')
+      .then(({ data }) => {
+        if (data.length) {
+          console.log('PATH: there is existing data in the db');
+          const rand = Math.floor(Math.random() * (data.length));
+          setVideo(data[rand]);
+          setVideoBank(data);
+          console.log('video data: ', data, 'videoBank state: ', videoBank)
+        } else {
+          console.log('PATH: there is nothing in the db');
+          axios.post('/songs')
+            .then(() => {
+              axios.get('/songs')
+                .then(({ data }) => {
+                  const rand = Math.floor(Math.random() * (data.length - 1)) + 1;
+                  setVideo(data[rand]);
+                  setVideoBank(data);
+                });
+            });
+        }
+      });
+  }
 
-  
-  const gameProps = {
-    video, 
+  const handleClick = () => {
+    setVisibility(prevVis => !prevVis);
+  }
+
+
+
+  const state = {
+    videoBool,
+    video,
+    setVideo,
+    videoBank,
     visibility,
     question,
     currTeam,
     team1,
     team2,
+  }
+  
+  const gameProps = {
+    state,
     triviaRequest,
     changeCat,
     nextTeam,
     triggerVideo,
-    increaseScore
+    increaseScore,
+    handleClick,
+    addSongsToState
   };
 
   return (
