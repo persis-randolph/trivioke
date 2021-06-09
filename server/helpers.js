@@ -18,7 +18,7 @@ const createSession = (req, res, user) => {
 
 // get user req is just the googleId
 const getUser = async (id) => {
-  const q = 'SELECT * FROM users WHERE googleId=?';
+  const q = 'SELECT * FROM users WHERE googleId=?;';
   const user = await db.connection.query(q, id);
   console.log('query result: ', user[0]);
   return user[0][0];
@@ -29,7 +29,7 @@ const createUser = async (userObj) => {
   const q = 'INSERT IGNORE INTO users (googleId, username) VALUES (?, ?);';
   const args = [googleId, username];
   try {
-    db.connection.query(q, args);
+    await db.connection.query(q, args);
   } catch (err) {
     console.log(err);
   }
@@ -47,8 +47,8 @@ const getSongs = () => {
     },
   };
   axios.get('https://www.googleapis.com/youtube/v3/search', options)
-    .then((data) => {
-      data.data.items.forEach((song) => {
+    .then(({ data }) => {
+      data.items.forEach((song) => {
         db.save(song);
       });
     })

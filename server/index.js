@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 const express = require('express');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 const path = require('path');
-const cors = require('cors');
+// const cors = require('cors');
 const session = require('express-session');
 const axios = require('axios');
 const db = require('../db/mysql');
@@ -16,12 +16,12 @@ const {
 
 const saltRounds = 10;
 const app = express();
-app.use(cors());
-app.use(bodyParser.json());
+// app.use(cors());
+app.use(express.json());
 
 app.use(express.static(path.join(__dirname, '../dist')));
 app.use(express.static(path.join(__dirname, '../images')));
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 app.use(session({
   secret: 'supersecret',
   resave: false,
@@ -43,14 +43,6 @@ app.post('/songs', (req, res) => {
   getSongs(req, res);
   res.sendStatus(200);
 });
-
-// app.post('/signup', (req, res) => {
-//   createPassword(req, res, saltRounds);
-// });
-
-// app.get('/login', (req, res) => {
-//   checkPassword(req, res);
-// });
 
 app.get('/trivia/multi', (req, res) => {
   axios.get(`https://opentdb.com/api.php?amount=1&category=${req.query.categoryID}&difficulty=${req.query.diff}&type=multiple&token=de2a56bef025d1dfb49914b3fc45f656a8679f01c56bbc04837d3aa34eb1ae3c`)
@@ -74,6 +66,25 @@ app.get('/trivia/bool', (req, res) => {
       console.error(err);
       res.sendStatus(404);
     });
+});
+
+app.get('/songs', async (req, res) => {
+  try {
+    const songs = await db.connection.query('SELECT * FROM songs;');
+    // console.log(songs[0]);
+    res.status(200).send(songs[0]);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.post('/songs', async (req, res) => {
+  try {
+    await getSongs(req, res);
+    res.sendStatus(201);
+  } catch (err) {
+    res.sendStatus(500);
+  }
 });
 
 app.get('/users', async (req, res) => {
