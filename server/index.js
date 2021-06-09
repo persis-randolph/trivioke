@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -6,7 +7,13 @@ const cors = require('cors');
 const session = require('express-session');
 const axios = require('axios');
 const db = require('../db/mysql');
-const util = require('./helpers');
+const {
+  getSongs,
+  createSession,
+  checkPassword,
+  createPassword,
+  escapeHTML,
+} = require('./helpers');
 
 const saltRounds = 10;
 const app = express();
@@ -25,7 +32,7 @@ app.use(session({
 app.get('/songs', (req, res) => {
   db.connection.query('select * from songs', (err, results) => {
     if (err) {
-      console.log(err);
+      console.error(err);
     } else {
       res.send(results);
     }
@@ -33,32 +40,35 @@ app.get('/songs', (req, res) => {
 });
 
 app.post('/songs', (req, res) => {
-  util.getSongs(req, res);
+  getSongs(req, res);
   res.sendStatus(200);
 });
 
 app.post('/signup', (req, res) => {
-  util.createPassword(req, res, saltRounds);
+  createPassword(req, res, saltRounds);
 });
 
 app.get('/login', (req, res) => {
-  util.checkPassword(req, res);
+  checkPassword(req, res);
 });
 
 app.get('/trivia/multi', (req, res) => {
-  axios.get('https://opentdb.com/api.php?amount=1&category=19&difficulty=easy&type=multiple')
+  axios.get(`https://opentdb.com/api.php?amount=1&category=${req.query.categoryID}&difficulty=${req.query.diff}&type=multiple&token=874541a98769f47d0756f8ceae2ad68855a9cbb97eaecc177546e57e45c6689e`)
     .then(({ data }) => {
-      res.status(200).send(data);
+      const question = escapeHTML(data.results[0]);
+      res.status(200).send(question);
     })
     .catch((err) => {
       console.error(err);
       res.sendStatus(404);
     });
 });
+
 app.get('/trivia/bool', (req, res) => {
-  axios.get('https://opentdb.com/api.php?amount=1&category=19&difficulty=easy&type=boolean')
+  axios.get(`https://opentdb.com/api.php?amount=1&category=${req.query.categoryID}&difficulty=${req.query.diff}&type=boolean&token=874541a98769f47d0756f8ceae2ad68855a9cbb97eaecc177546e57e45c6689e`)
     .then(({ data }) => {
-      res.status(200).send(data);
+      const question = escapeHTML(data.results[0]);
+      res.status(200).send(question);
     })
     .catch((err) => {
       console.error(err);
