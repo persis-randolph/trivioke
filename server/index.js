@@ -30,6 +30,7 @@ app.use(session({
 
 app.get('/songs', (req, res) => {
   db.connection.query('select * from songs', (err, results) => {
+    console.log(results);
     if (err) {
       console.error(err);
     } else {

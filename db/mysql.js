@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+// const mysql = require('mysql2');
 const mysql = require('mysql2/promise');
 require('dotenv').config();
 
@@ -6,8 +7,9 @@ require('dotenv').config();
 const connection = mysql.createPool({
   host: 'localhost',
   user: 'root',
-  password: process.env.DB_PASS,
+  password: process.env.pass,
   database: 'trivioke',
+  port: '3307',
 });
 
 // connection.connect((err) => {
@@ -20,7 +22,6 @@ const connection = mysql.createPool({
 
 // this should only happen once;
 const save = (data) => {
-  console.log(data);
   const q = `insert into songs(song, uri) values ('${data.snippet.title}', '${data.id.videoId}') on duplicate key update uri=uri`;
   connection.query(q, (err, results) => {
     if (err) {
