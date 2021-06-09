@@ -4,6 +4,7 @@
 /* eslint-disable import/extensions */
 /* eslint-disable react/sort-comp */
 import React from 'react';
+import axios from 'axios';
 import Lifelines from './lifelines.jsx';
 import Trivia from './trivia.jsx';
 import Scoreboard from './scoreBoard.jsx';
@@ -29,11 +30,29 @@ class Game extends React.Component {
   }
 
   triviaRequest() {
-    const url = `https://opentdb.com/api.php?amount=1&category=${sessionStorage.category}&difficulty=${sessionStorage.diff}&type=multiple`;
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => this.setState({ question: data.results[0] }))
-      .catch((err) => { console.error(err); });
+    axios.get('/trivia/multi', {
+      params: {
+        categoryID: sessionStorage.category,
+        diff: sessionStorage.diff,
+      },
+    }).then(({ data }) => {
+      this.setState({ question: data });
+    }).catch((err) => {
+      console.error(err);
+    });
+  }
+
+  boolRequest() {
+    axios.get('/trivia/bool', {
+      params: {
+        categoryID: sessionStorage.category,
+        diff: sessionStorage.diff,
+      },
+    }).then(({ data }) => {
+      this.setState({ question: data });
+    }).catch((err) => {
+      console.error(err);
+    });
   }
 
   changeCat() {
@@ -84,7 +103,7 @@ class Game extends React.Component {
 
   render() {
     const {
-      question, visibility, currTeam, team1, team2, video,
+      question, visibility, currTeam, team1, team2, video, bool,
     } = this.state;
     const { name1, name2 } = this.props;
     if (!video) {
@@ -96,6 +115,7 @@ class Game extends React.Component {
               triviaRequest={this.triviaRequest}
               handleClick={this.handleClick}
               changeCat={this.changeCat}
+              bool={bool}
             />
             <Trivia
               triviaRequest={this.triviaRequest}
@@ -105,6 +125,7 @@ class Game extends React.Component {
               nextTeam={this.nextTeam}
               increaseScore={this.increaseScore}
               trigger={this.triggerVideo}
+              bool={bool}
             />
             <Scoreboard
               currTeam={currTeam}

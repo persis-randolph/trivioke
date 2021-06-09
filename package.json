@@ -52,6 +52,7 @@
     "event-stream": "^4.0.1",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
+    "he": "^1.2.0",
     "html-loader": "^2.1.2",
     "mysql": "^2.18.1",
     "mysql2": "^2.2.5",
