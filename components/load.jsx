@@ -13,25 +13,9 @@ const Load = () => {
   const [diff, setDiff] = useState('medium');
   const [category, setCategory] = useState(9);
   const [trivia, setTrivia] = useState(false);
-  // dont really wanna setTeams Here
-  // const [teams, setTeams] = useState([])
-  const [team1, setTeam1] = useState('');
-  const [team2, setTeam2] = useState('');
-
-  // need to deal with these maybe need to be dealt with in
-  // context
-
-  // const handleClick = () => {
-  //   this.setState({
-  //     [event.target.name]: event.target.id,
-  //   });
-  // };
-
-  // const handleChange = () => {
-  //   this.setState({
-  //     [event.target.name]: event.target.value,
-  //   });
-  // }
+  //this is the hub setTeam should come Teams Component
+  const [team1, setTeam1] = useState('bloke');
+  const [team2, setTeam2] = useState('anotherBloke');
 
   const begin = () => {
     sessionStorage.setItem('diff', diff);
@@ -62,7 +46,6 @@ const Load = () => {
       <center>
         <div>
           <div key="team">
-            {/* I can deal with handle change in this element */}
             <Teams />
           </div>
           <Filters />
