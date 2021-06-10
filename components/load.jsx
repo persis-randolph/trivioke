@@ -6,28 +6,21 @@
 
 // Load Refactor
 
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import Filters from './filters.jsx';
 import Teams from './Teams.jsx';
 import Game from './game.jsx';
+import { GameContext } from '../context/gameContext';
 
 const Load = () => {
-  const [diff, setDiff] = useState('medium');
-  const [category, setCategory] = useState(9);
-  const [trivia, setTrivia] = useState(false);
   // this is the hub setTeam should come Teams Component
+  const { state, begin, triviaRequest } = useContext(GameContext);
+  const {
+    setDiff, category, trivia, question,
+  } = state;
   const [team1, setTeam1] = useState('bloke');
   const [team2, setTeam2] = useState('anotherBloke');
-
-  const begin = () => {
-    sessionStorage.setItem('diff', diff);
-    sessionStorage.setItem('category', category);
-    sessionStorage.setItem('team1', team1);
-    sessionStorage.setItem('team2', team2);
-    sessionStorage.setItem('score1', 0);
-    sessionStorage.setItem('score2', 0);
-    setTrivia(true);
-  };
 
   const categories = {
     9: 'General',
@@ -69,7 +62,9 @@ const Load = () => {
             </thead>
           </table>
           <div key="begin">
-            <button type="button" onClick={() => begin()}><h5>Begin Game</h5></button>
+            <Link to="/game">
+              <button type="button" onClick={() => { begin(); triviaRequest(); }}><h5>Begin Game</h5></button>
+            </Link>
           </div>
         </div>
       </center>
@@ -78,7 +73,7 @@ const Load = () => {
   }
   return (
     <div>
-      <Game category={category} diff={diff} name1={team1} name2={team2} />
+      <Game question={question} category={category} diff={diff} name1={team1} name2={team2} />
     </div>
   );
 };
