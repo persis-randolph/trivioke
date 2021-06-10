@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { GameContext } from '../context/gameContext';
 
 const EndGame = () => {
-  const { handleClick } = useContext(GameContext);
+  const { halveChoices } = useContext(GameContext);
 
   return (
     <h1>Placeholder for EndGame Component</h1>

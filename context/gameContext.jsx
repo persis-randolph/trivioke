@@ -18,6 +18,7 @@ function GameContextProvider({ children }) {
   const [team1, setTeam1] = useState(0);
   const [team2, setTeam2] = useState(0);
   const [triviaBool, setTriviaBool] = useState(false);
+  const [hidden] = useState(false);
 
   const triviaRequest = () => {
     const uri = !triviaBool ? '/trivia/multi' : '/trivia/bool';
@@ -89,7 +90,7 @@ function GameContextProvider({ children }) {
       });
   };
 
-  const handleClick = () => {
+  const halveChoices = () => {
     setVisibility((prevVis) => !prevVis);
   };
 
@@ -105,6 +106,7 @@ function GameContextProvider({ children }) {
     team2,
     triviaBool,
     setTriviaBool,
+    hidden,
   };
 
   const gameProps = {
@@ -114,7 +116,7 @@ function GameContextProvider({ children }) {
     nextTeam,
     // triggerVideo,
     increaseScore,
-    handleClick,
+    halveChoices,
     addSongsToState,
   };
 
