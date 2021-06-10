@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 /* eslint-disable no-console */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-shadow */
@@ -26,6 +27,9 @@ function GameContextProvider({ children }) {
   // const [currTeam, setCurrTeam] = useState('team1');
   // const [team1, setTeam1] = useState(0);
   // const [team2, setTeam2] = useState(0);
+
+  // Question Count - starts at 1
+  const [questionCount, setQuestionCount] = useState[1];
 
   const [triviaBool, setTriviaBool] = useState(false);
   const [hidden] = useState(false);

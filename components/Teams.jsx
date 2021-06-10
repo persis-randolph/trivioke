@@ -1,3 +1,8 @@
+/* eslint-disable no-console */
+/* eslint-disable no-shadow */
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable radix */
+/* eslint-disable no-plusplus */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 
@@ -37,6 +42,8 @@ const Teams = () => {
 
   const listTeamForms = (n) => [...Array(n)].map((e, i) => {
     const count = i + 1;
+    console.log('team names are: ', teamNames);
+    console.log('teams are: ', teams);
     return (
       <form key={i}>
         <FormGroup

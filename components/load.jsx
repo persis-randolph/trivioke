@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 /* eslint-disable import/extensions */
@@ -13,30 +14,29 @@ import Game from './game.jsx';
 import { GameContext } from '../context/gameContext';
 
 const Load = () => {
-  const { state } = useContext(GameContext)
-  const { 
+  const { state } = useContext(GameContext);
+  const {
     teams,
     diff,
     setDiff,
     category,
     setCategory,
     trivia,
-    setTrivia
-   } = state
-
+    setTrivia,
+  } = state;
 
   const begin = () => {
     sessionStorage.setItem('diff', diff);
     sessionStorage.setItem('category', category);
 
-    //as a mapping function
+    // as a mapping function
     teams.forEach((teamName, index) => {
-      sessionStorage.setItem(`team${index + 1}`, teamName)
-      sessionStorage.setItem(`score${index + 1}`, 0)
-    })
+      sessionStorage.setItem(`team${index + 1}`, teamName);
+      sessionStorage.setItem(`score${index + 1}`, 0);
+    });
     setTrivia(true);
-    console.log(teams)
-    console.log(sessionStorage)
+    console.log(teams);
+    console.log(sessionStorage);
   };
 
   const categories = {
@@ -60,7 +60,7 @@ const Load = () => {
           <div key="team">
             <Teams />
           </div>
-            <Filters />
+          <Filters />
           <h5>
             Selected Category:
             {' '}
