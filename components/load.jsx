@@ -22,19 +22,10 @@ const Load = () => {
     setTrivia
    } = state
 
-  //this is the hub setTeam should come Teams Component
-  // const [team1, setTeam1] = useState('bloke');
-  // const [team2, setTeam2] = useState('anotherBloke');
 
   const begin = () => {
     sessionStorage.setItem('diff', diff);
     sessionStorage.setItem('category', category);
-
-    //gotta redo all of this can comment out
-    // sessionStorage.setItem('team1', team1);
-    // sessionStorage.setItem('team2', team2);
-    // sessionStorage.setItem('score1', 0);
-    // sessionStorage.setItem('score2', 0);
 
     //as a mapping function
     teams.forEach((teamName, index) => {

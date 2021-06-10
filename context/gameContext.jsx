@@ -19,8 +19,6 @@ function GameContextProvider({ children }) {
   // Team State
   const [teams, setTeams] = useState([]);
   const [currTeam, setCurrTeam] = useState(teams[0]);
-  // const [team1, setTeam1] = useState(0);
-  // const [team2, setTeam2] = useState(0);
 
   const triviaRequest = () => {
     const url = `https://opentdb.com/api.php?amount=1&category=${sessionStorage.category}&difficulty=${sessionStorage.diff}&type=multiple`;
@@ -60,20 +58,10 @@ function GameContextProvider({ children }) {
 
   const triggerVideo = () => {
     setVideoBool(prevVid => !prevVid)
-    // this.setState((prevState) => ({ video: !prevState.video }));
   };
 
   const increaseScore = () => {
-    // const { currTeam } = this.state;
-    // need to fix this
     for(let i = 0; i < teams.length; i++){
-    // if (currTeam === 'team1') {
-    //   sessionStorage.setItem('score1', (Number(sessionStorage.score1) + 1));
-    //   setVisibility(true);
-    // } else {
-    //   sessionStorage.setItem('score2', (Number(sessionStorage.score2) + 1));
-    //   setVisibility(true);
-    // }
     if(currTeam === teams[i]){
       sessionStorage.setItem(`score${i + 1}`, (Number(sessionStorage[`score${i + 1}`]) + 1));
       setVisibility(true);
@@ -120,8 +108,6 @@ function GameContextProvider({ children }) {
     question,
     currTeam,
     setCurrTeam,
-    // team1,
-    // team2,
     teams,
     setTeams,
     diff,

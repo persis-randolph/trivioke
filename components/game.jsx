@@ -59,13 +59,7 @@ function Game(props) {
             increaseScore={increaseScore}
             trigger={triggerVideo}
           />
-          <Scoreboard
-            // currTeam={currTeam}
-            // team1={team1}
-            // team2={team2}
-            // name1={name1}
-            // name2={name2}
-          />
+          <Scoreboard/>
         </div>
       </center>
     );

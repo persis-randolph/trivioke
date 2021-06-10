@@ -68,7 +68,6 @@ const Teams = () => {
       </DropdownButton>
       {listTeamForms(teamNumber)}
     </div>
-    //  { setTeams(Object.values(teamNames)) }
   );
 };
 
