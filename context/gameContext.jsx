@@ -1,11 +1,15 @@
+/* eslint-disable no-console */
+/* eslint-disable react/prop-types */
+/* eslint-disable no-shadow */
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 import React, { useState, createContext } from 'react';
 import axios from 'axios';
 
 const GameContext = createContext();
 
 function GameContextProvider({ children }) {
-
-  const [videoBool, setVideoBool] = useState(false);
+  // const [videoBool, setVideoBool] = useState(false);
   const [video, setVideo] = useState({ song: 'Frankie Valli - Can\'t Take My Eyes Off Of You Karaoke Lyrics', uri: 'UXYjQa_osMI' });
   const [videos, setVideos] = useState([]);
   const [visibility, setVisibility] = useState(true);
@@ -35,14 +39,13 @@ function GameContextProvider({ children }) {
       .catch((err) => { console.error(err); });
   };
 
-  const nextTeam = () => {
-    return currTeam === 'team1' ? setCurrTeam('team2') : setCurrTeam('team1');
-  };
+  const nextTeam = () => (currTeam === 'team1' ? setCurrTeam('team2') : setCurrTeam('team1'));
 
-  const triggerVideo = () => {
-    setVideoBool(prevVid => !prevVid)
-    // this.setState((prevState) => ({ video: !prevState.video }));
-  };
+  // const triggerVideo = () => {
+
+  //   // setVideoBool(prevVid => !prevVid)
+  //   // this.setState((prevState) => ({ video: !prevState.video }));
+  // };
 
   const increaseScore = () => {
     // const { currTeam } = this.state;
@@ -57,7 +60,7 @@ function GameContextProvider({ children }) {
 
   // add songs from database to state. Should only run on start of a new game
   const addSongsToState = () => {
-    console.log('hits addsongs')
+    // console.log('hits addsongs')
     axios.get('/songs')
       .then(({ data }) => {
         if (data.length) {
@@ -77,16 +80,15 @@ function GameContextProvider({ children }) {
                 });
             });
         }
-      })
-  }
+      });
+  };
 
   const handleClick = () => {
-    setVisibility(prevVis => !prevVis);
-  }
-
+    setVisibility((prevVis) => !prevVis);
+  };
 
   const state = {
-    videoBool,
+    // videoBool,
     video,
     setVideo,
     videos,
@@ -95,24 +97,24 @@ function GameContextProvider({ children }) {
     currTeam,
     team1,
     team2,
-  }
+  };
 
   const gameProps = {
     state,
     triviaRequest,
     changeCat,
     nextTeam,
-    triggerVideo,
+    // triggerVideo,
     increaseScore,
     handleClick,
-    addSongsToState
+    addSongsToState,
   };
 
   return (
     <GameContext.Provider value={gameProps}>
       {children}
     </GameContext.Provider>
-  )
+  );
 }
 
-export { GameContextProvider, GameContext }
+export { GameContextProvider, GameContext };

@@ -95,6 +95,7 @@ app.get('/users', async (req, res) => {
   } else if (!existingUser) {
     createUser(req.query);
     const newUser = await getUser(googleId);
+    console.log('new user ==>', newUser);
     res.status(200).send(newUser);
   } else {
     console.log('user not found');

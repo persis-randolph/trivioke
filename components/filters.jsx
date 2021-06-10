@@ -1,6 +1,7 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 
-//Filters refactor
+// Filters refactor
 
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
@@ -53,7 +54,7 @@ const Filters = () => {
 
 export default Filters;
 
-//Original
+// Original
 
 // import React, { Component } from 'react';
 // import { DropdownButton, Dropdown, ButtonToolbar } from 'react-bootstrap';
