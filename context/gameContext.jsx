@@ -13,12 +13,11 @@ function GameContextProvider({ children }) {
   const [video, setVideo] = useState({ song: 'Frankie Valli - Can\'t Take My Eyes Off Of You Karaoke Lyrics', uri: 'UXYjQa_osMI' });
   const [videos, setVideos] = useState([]);
   const [visibility, setVisibility] = useState(true);
-  const [question, setQuestion] = useState(null);
+  const [question, setQuestion] = useState({});
   const [currTeam, setCurrTeam] = useState('team1');
   const [team1, setTeam1] = useState(0);
   const [team2, setTeam2] = useState(0);
   const [triviaBool, setTriviaBool] = useState(false);
-  const [hidden] = useState(false);
 
   const triviaRequest = () => {
     const uri = !triviaBool ? '/trivia/multi' : '/trivia/bool';
@@ -28,6 +27,7 @@ function GameContextProvider({ children }) {
         diff: sessionStorage.diff,
       },
     }).then(({ data }) => {
+      console.log(data);
       setQuestion(data);
     }).catch((err) => {
       console.error(err);
@@ -72,6 +72,7 @@ function GameContextProvider({ children }) {
     axios.get('/songs')
       .then(({ data }) => {
         if (data.length) {
+          console.log('PATH: there is existing data in the db');
           const rand = Math.floor(Math.random() * (data.length));
           setVideos(data);
           setVideo(data[rand]);
@@ -90,7 +91,7 @@ function GameContextProvider({ children }) {
       });
   };
 
-  const halveChoices = () => {
+  const handleClick = () => {
     setVisibility((prevVis) => !prevVis);
   };
 
@@ -106,7 +107,6 @@ function GameContextProvider({ children }) {
     team2,
     triviaBool,
     setTriviaBool,
-    hidden,
   };
 
   const gameProps = {
@@ -116,7 +116,7 @@ function GameContextProvider({ children }) {
     nextTeam,
     // triggerVideo,
     increaseScore,
-    halveChoices,
+    handleClick,
     addSongsToState,
   };
 
