@@ -4,15 +4,24 @@
 
 // Load Refactor
 
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Filters from './filters.jsx';
 import Teams from './Teams.jsx';
 import Game from './game.jsx';
+import { GameContext } from '../context/gameContext';
 
 const Load = () => {
-  const [diff, setDiff] = useState('medium');
-  const [category, setCategory] = useState(9);
-  const [trivia, setTrivia] = useState(false);
+  const { state } = useContext(GameContext)
+  const { 
+    teams,
+    diff,
+    setDiff,
+    category,
+    setCategory,
+    trivia,
+    setTrivia
+   } = state
+
   //this is the hub setTeam should come Teams Component
   const [team1, setTeam1] = useState('bloke');
   const [team2, setTeam2] = useState('anotherBloke');
@@ -20,11 +29,21 @@ const Load = () => {
   const begin = () => {
     sessionStorage.setItem('diff', diff);
     sessionStorage.setItem('category', category);
-    sessionStorage.setItem('team1', team1);
-    sessionStorage.setItem('team2', team2);
-    sessionStorage.setItem('score1', 0);
-    sessionStorage.setItem('score2', 0);
+
+    //gotta redo all of this can comment out
+    // sessionStorage.setItem('team1', team1);
+    // sessionStorage.setItem('team2', team2);
+    // sessionStorage.setItem('score1', 0);
+    // sessionStorage.setItem('score2', 0);
+
+    //as a mapping function
+    teams.forEach((teamName, index) => {
+      sessionStorage.setItem(`team${index + 1}`, teamName)
+      sessionStorage.setItem(`score${index + 1}`, 0)
+    })
     setTrivia(true);
+    console.log(teams)
+    console.log(sessionStorage)
   };
 
   const categories = {
@@ -48,7 +67,7 @@ const Load = () => {
           <div key="team">
             <Teams />
           </div>
-          <Filters />
+            <Filters />
           <h5>
             Selected Category:
             {' '}
@@ -76,12 +95,16 @@ const Load = () => {
   }
   return (
     <div>
-      <Game category={category} diff={diff} name1={team1} name2={team2} />
+      <Game category={category} diff={diff} />
     </div>
   );
 };
 
 export default Load;
+
+{/* <div>
+<Game category={category} diff={diff} name1={team1} name2={team2} />
+</div> */}
 
 
 

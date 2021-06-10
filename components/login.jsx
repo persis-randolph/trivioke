@@ -27,6 +27,9 @@ const Login = () => {
     setShowLogoutButton(true);
     setRedirect(true);
 
+    //clear sessions
+    sessionStorage.clear();
+
     loginUser(res.profileObj);
   };
 

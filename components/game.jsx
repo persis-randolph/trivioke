@@ -29,8 +29,8 @@ function Game(props) {
     visibility,
     question,
     currTeam,
-    team1,
-    team2
+    // team1,
+    // team2
   } = state;
 
 
@@ -39,7 +39,7 @@ function Game(props) {
     triviaRequest();
   }, []);
 
-  const { name1, name2 } = props;
+  // const { name1, name2 } = props;
   if (!videoBool) {
     return (
       <center>
@@ -61,10 +61,10 @@ function Game(props) {
           />
           <Scoreboard
             currTeam={currTeam}
-            team1={team1}
-            team2={team2}
-            name1={name1}
-            name2={name2}
+            // team1={team1}
+            // team2={team2}
+            // name1={name1}
+            // name2={name2}
           />
         </div>
       </center>

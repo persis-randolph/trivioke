@@ -10,9 +10,17 @@ function GameContextProvider({ children }) {
   const [videos, setVideos] = useState([]);
   const [visibility, setVisibility] = useState(true);
   const [question, setQuestion] = useState(null);
-  const [currTeam, setCurrTeam] = useState('team1');
-  const [team1, setTeam1] = useState(0);
-  const [team2, setTeam2] = useState(0);
+
+  // Game Options (Load.jsx) State
+  const [diff, setDiff] = useState('medium');
+  const [category, setCategory] = useState(9);
+  const [trivia, setTrivia] = useState(false);
+  
+  // Team State
+  const [teams, setTeams] = useState([]);
+  const [currTeam, setCurrTeam] = useState(teams[0]);
+  // const [team1, setTeam1] = useState(0);
+  // const [team2, setTeam2] = useState(0);
 
   const triviaRequest = () => {
     const url = `https://opentdb.com/api.php?amount=1&category=${sessionStorage.category}&difficulty=${sessionStorage.diff}&type=multiple`;
@@ -36,7 +44,18 @@ function GameContextProvider({ children }) {
   };
 
   const nextTeam = () => {
-    return currTeam === 'team1' ? setCurrTeam('team2') : setCurrTeam('team1');
+    //needs to be fixed
+    //right now it is curr team is team[0]
+    // return currTeam === 'team1' ? setCurrTeam('team2') : setCurrTeam('team1');
+    for(let i = 0; i < teams.length; i++){
+      if(currTeam === teams[i]){
+        if(i + 1 !== teams.length){
+          setCurrTeam(teams[i + 1])
+        } else {
+          setCurrTeam(teams[0])
+        }
+      }
+    }
   };
 
   const triggerVideo = () => {
@@ -93,8 +112,16 @@ function GameContextProvider({ children }) {
     visibility,
     question,
     currTeam,
-    team1,
-    team2,
+    // team1,
+    // team2,
+    teams,
+    setTeams,
+    diff,
+    setDiff,
+    category,
+    setCategory,
+    trivia,
+    setTrivia
   }
 
   const gameProps = {
