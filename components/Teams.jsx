@@ -49,7 +49,6 @@ const Teams = () => {
     setCurrTeam(teams[0]);
   }, [teamNames]);
 
-
   const listTeamForms = (n) => [...Array(n)].map((e, i) => {
     const count = i + 1;
     return (
@@ -64,14 +63,13 @@ const Teams = () => {
             placeholder="Enter text"
             value={teamNames[`team${count}`]}
             onChange={async (e) => {
-            await setTeamNames({ ...teamNames, [`team${count}`]: e.target.value });
+              await setTeamNames({ ...teamNames, [`team${count}`]: e.target.value });
             }}
           />
         </FormGroup>
       </form>
     );
   });
-
 
   return (
     <div>
