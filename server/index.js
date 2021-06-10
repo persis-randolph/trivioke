@@ -28,8 +28,22 @@ app.use(session({
   saveUninitialized: true,
 }));
 
+// ? may not need, but this will return a song at a given id
+// app.get('/songs:id', async (req, res) => {
+//   console.log('params from song request', req.query[0])
+//   try {
+//     const id = req.query[0];
+//     const q = 'SELECT * FROM songs WHERE id=?'
+//     const song = await db.connection.query(q, id)
+//     console.log('song from db: ', song[0][0])
+//     res.status(200).send(song[0][0]);
+//   } catch (err) {
+//     console.log(err);
+//     res.sendStatus(500);
+//   }
+// });
 app.get('/trivia/multi', (req, res) => {
-  axios.get(`https://opentdb.com/api.php?amount=1&category=${req.query.categoryID}&difficulty=${req.query.diff}&type=multiple&token=de2a56bef025d1dfb49914b3fc45f656a8679f01c56bbc04837d3aa34eb1ae3c`)
+  axios.get(`https://opentdb.com/api.php?amount=1&category=${req.query.categoryID}&difficulty=${req.query.diff}&type=multiple`)
     .then(({ data }) => {
       const question = escapeHTML(data.results[0]);
       res.status(200).send(question);
@@ -41,7 +55,7 @@ app.get('/trivia/multi', (req, res) => {
 });
 
 app.get('/trivia/bool', (req, res) => {
-  axios.get(`https://opentdb.com/api.php?amount=1&category=${req.query.categoryID}&difficulty=${req.query.diff}&type=boolean&token=de2a56bef025d1dfb49914b3fc45f656a8679f01c56bbc04837d3aa34eb1ae3c`)
+  axios.get(`https://opentdb.com/api.php?amount=1&category=${req.query.categoryID}&difficulty=${req.query.diff}&type=boolean`)
     .then(({ data }) => {
       const question = escapeHTML(data.results[0]);
       res.status(200).send(question);
@@ -87,12 +101,13 @@ app.get('/users', async (req, res) => {
 
   const existingUser = await getUser(googleId);
 
-  console.log('existing user ==>', existingUser);
+  // console.log('existing user ==>', existingUser)
   if (existingUser) {
     res.status(201).send(existingUser);
   } else if (!existingUser) {
     createUser(req.query);
     const newUser = await getUser(googleId);
+    // console.log('new user ==>', newUser);
     res.status(200).send(newUser);
   } else {
     console.log('user not found');

@@ -1,37 +1,17 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 /* eslint-disable no-shadow */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Iframe from 'react-iframe';
 import { Link } from 'react-router-dom';
+import { GameContext } from '../context/gameContext';
+import { UserContext } from '../context/userContext';
 
 const VideoPlayer = () => {
-  const [video, setVideo] = useState({ song: 'Frankie Valli - Can\'t Take My Eyes Off Of You Karaoke Lyrics', uri: 'UXYjQa_osMI' });
-  const [videos, setVideos] = useState([]);
-
-  useEffect(() => {
-    axios.get('/songs')
-      .then(({ data }) => {
-        if (data.length) {
-          console.log('PATH: there is existing data in the db');
-          const rand = Math.floor(Math.random() * (data.length));
-          setVideo(data[rand]);
-          setVideos(data);
-        } else {
-          console.log('PATH: there is nothing in the db');
-          axios.post('/songs')
-            .then(() => {
-              axios.get('/songs')
-                .then(({ data }) => {
-                  const rand = Math.floor(Math.random() * (data.length - 1)) + 1;
-                  setVideo(data[rand]);
-                  setVideos(data);
-                });
-            });
-        }
-      });
-  }, []);
+  const { state } = useContext(GameContext);
+  const { video, setVideo, videos } = state;
 
   const changeVideo = () => {
     const rand = Math.floor(Math.random() * (videos.length - 1)) + 1;
@@ -50,15 +30,16 @@ const VideoPlayer = () => {
         >
           Change Song
         </button>
-        <button
-          type="button"
-          style={{
-            justifyContent: 'center', alignItems: 'center', height: '3vh',
-          }}
-          // onClick={this.goBack}
-        >
-          <Link to="/game">Back</Link>
-        </button>
+        <Link to="/game">
+          <button
+            type="button"
+            style={{
+              justifyContent: 'center', alignItems: 'center', height: '3vh',
+            }}
+          >
+            Back to Game
+          </button>
+        </Link>
         <Iframe
           fluid="true"
           className="embed-responsive-item"
