@@ -23,8 +23,8 @@ const Load = () => {
    } = state
 
   //this is the hub setTeam should come Teams Component
-  const [team1, setTeam1] = useState('bloke');
-  const [team2, setTeam2] = useState('anotherBloke');
+  // const [team1, setTeam1] = useState('bloke');
+  // const [team2, setTeam2] = useState('anotherBloke');
 
   const begin = () => {
     sessionStorage.setItem('diff', diff);
@@ -90,7 +90,6 @@ const Load = () => {
           </div>
         </div>
       </center>
-
     );
   }
   return (

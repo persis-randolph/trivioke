@@ -11,7 +11,7 @@ import { GameContext } from '../context/gameContext';
 
 const Teams = () => {
   const { state } = useContext(GameContext)
-  const { teams, setTeams } = state
+  const { teams, setCurrTeam, setTeams } = state
 
   const [teamNumber, setTeamNumber] = useState(2);
   const [teamNames, setTeamNames] = useState({});
@@ -28,9 +28,9 @@ const Teams = () => {
         onClick={(e) => {
           console.log(e.target.text);
           setTeamNumber(parseInt(e.target.text));
-          setTeams({})
+          // setTeams({})
         }}
-        href={`#/action-${n}`}
+        href={`#/${n}-teams`}
       >
         {`${n} `}
       </Dropdown.Item>
@@ -54,6 +54,7 @@ const Teams = () => {
               onChange={(e) => {
                 setTeamNames({ ...teamNames, [`team${count}`]: e.target.value });
                 setTeams(Object.values(teamNames))
+                setCurrTeam(teams[0])
               }}
             />
           </FormGroup>
@@ -67,6 +68,7 @@ const Teams = () => {
       </DropdownButton>
       {listTeamForms(teamNumber)}
     </div>
+    //  { setTeams(Object.values(teamNames)) }
   );
 };
 

@@ -65,13 +65,20 @@ function GameContextProvider({ children }) {
 
   const increaseScore = () => {
     // const { currTeam } = this.state;
-    if (currTeam === 'team1') {
-      sessionStorage.setItem('score1', (Number(sessionStorage.score1) + 1));
-      setVisibility(true);
-    } else {
-      sessionStorage.setItem('score2', (Number(sessionStorage.score2) + 1));
+    // need to fix this
+    for(let i = 0; i < teams.length; i++){
+    // if (currTeam === 'team1') {
+    //   sessionStorage.setItem('score1', (Number(sessionStorage.score1) + 1));
+    //   setVisibility(true);
+    // } else {
+    //   sessionStorage.setItem('score2', (Number(sessionStorage.score2) + 1));
+    //   setVisibility(true);
+    // }
+    if(currTeam === teams[i]){
+      sessionStorage.setItem(`score${i + 1}`, (Number(sessionStorage[`score${i + 1}`]) + 1));
       setVisibility(true);
     }
+  }
   };
 
   // add songs from database to state. Should only run on start of a new game
@@ -112,6 +119,7 @@ function GameContextProvider({ children }) {
     visibility,
     question,
     currTeam,
+    setCurrTeam,
     // team1,
     // team2,
     teams,

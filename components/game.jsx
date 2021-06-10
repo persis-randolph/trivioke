@@ -60,7 +60,7 @@ function Game(props) {
             trigger={triggerVideo}
           />
           <Scoreboard
-            currTeam={currTeam}
+            // currTeam={currTeam}
             // team1={team1}
             // team2={team2}
             // name1={name1}
