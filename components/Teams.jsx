@@ -26,7 +26,7 @@ const Teams = () => {
         key={i}
         value={n}
         onClick={(e) => {
-          setTeamNumber(parseInt(e.target.text));
+          setTeamNumber(parseInt(e.target.text, 10));
         }}
         href={`#/${n}-teams`}
       >
@@ -36,7 +36,6 @@ const Teams = () => {
   };
 
   useEffect(() => {
-    // console.log('HERE ARE TEAM NAMES', teamNames);
     setTeams(Object.values(teamNames));
     setCurrTeam(teams[0]);
   }, [teamNames]);

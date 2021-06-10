@@ -12,6 +12,7 @@ import Trivia from './trivia.jsx';
 import Scoreboard from './scoreBoard.jsx';
 import VideoPlayer from './player.jsx';
 import { GameContext } from '../context/gameContext';
+import Countdown from './Countdown.jsx';
 
 function Game(props) {
   const {
@@ -38,9 +39,14 @@ function Game(props) {
     triviaRequest();
   }, []);
 
+  useEffect((() => (
+    <Countdown />
+  )), [currTeam]);
+
   return (
     <center>
       <div>
+        <Countdown />
         <Lifelines />
         {/* // handleChange={this.handleChange}
           // triviaRequest={triviaRequest}
