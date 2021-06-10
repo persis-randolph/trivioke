@@ -29,14 +29,14 @@ class Trivia extends Component {
     if (question) {
       const answers = [
         <button key="c" type="button" onClick={() => { triviaRequest(); nextTeam(); increaseScore(); }}>{question.correct_answer}</button>,
-        <Link to="/video">
-          <button key="i1" onClick={trigger} style={{ display: hidden ? 'inline block' : 'none' }} type="button">{question.incorrect_answers[0]}</button>
+        <Link to="/video" onClick={() => nextTeam()}>
+          <button key="i1" style={{ display: hidden ? 'inline block' : 'none' }} type="button">{question.incorrect_answers[0]}</button>
         </Link>,
-        <Link to="/video">
-          <button key="i2" onClick={trigger} style={{ display: hidden ? 'inline block' : 'none' }} type="button">{question.incorrect_answers[1]}</button>
+        <Link to="/video" onClick={() => nextTeam()}>
+          <button key="i2" style={{ display: hidden ? 'inline block' : 'none' }} type="button">{question.incorrect_answers[1]}</button>
         </Link>,
-        <Link to="/video">
-          <button key="i3" onClick={trigger} type="button">{question.incorrect_answers[2]}</button>
+        <Link to="/video" onClick={() => nextTeam()}>
+          <button key="i3" type="button">{question.incorrect_answers[2]}</button>
         </Link>,
       ];
       const shuffleArr = shuffle(answers);

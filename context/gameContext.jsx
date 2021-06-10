@@ -72,7 +72,6 @@ function GameContextProvider({ children }) {
     axios.get('/songs')
       .then(({ data }) => {
         if (data.length) {
-          console.log('PATH: there is existing data in the db');
           const rand = Math.floor(Math.random() * (data.length));
           setVideos(data);
           setVideo(data[rand]);

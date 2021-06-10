@@ -18,6 +18,10 @@ const VideoPlayer = () => {
     setVideo(videos[rand]);
   };
 
+  // useEffect(() => {
+  //   nextTeam()
+  // }, [])
+
   return (
     <center>
       <div>
