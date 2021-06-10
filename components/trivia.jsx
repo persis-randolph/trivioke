@@ -2,6 +2,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-param-reassign */
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class Trivia extends Component {
   constructor(props) {
@@ -24,9 +25,15 @@ class Trivia extends Component {
     if (question) {
       const answers = [
         <button key="c" type="button" onClick={() => { triviaRequest(); nextTeam(); increaseScore(); }}>{question.correct_answer}</button>,
-        <button key="i1" onClick={trigger} style={{ display: hidden ? 'block' : 'none' }} type="button">{question.incorrect_answers[0]}</button>,
-        <button key="i2" onClick={trigger} style={{ display: hidden ? 'block' : 'none' }} type="button">{question.incorrect_answers[1]}</button>,
-        <button key="i3" onClick={trigger} type="button">{question.incorrect_answers[2]}</button>,
+        <Link to="/video">
+          <button key="i1" onClick={trigger} style={{ display: hidden ? 'block' : 'none' }} type="button">{question.incorrect_answers[0]}</button>
+        </Link>,
+        <Link to="/video">
+          <button key="i2" onClick={trigger} style={{ display: hidden ? 'block' : 'none' }} type="button">{question.incorrect_answers[1]}</button>
+        </Link>,
+        <Link to="/video">
+          <button key="i3" onClick={trigger} type="button">{question.incorrect_answers[2]}</button>
+        </Link>,
       ];
       const shuffleArr = shuffle(answers);
       const multiChoice = [

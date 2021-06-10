@@ -1,8 +1,10 @@
-/* eslint-disable no-console */
+/* eslint-disable max-len */
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 /* eslint-disable import/extensions */
 /* eslint-disable react/sort-comp */
+
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Lifelines from './lifelines.jsx';
@@ -12,27 +14,24 @@ import VideoPlayer from './player.jsx';
 import { GameContext } from '../context/gameContext';
 
 function Game(props) {
-
   const {
     state,
     triviaRequest,
     changeCat,
     nextTeam,
-    triggerVideo,
+    // triggerVideo,
     increaseScore,
     handleClick,
-    addSongsToState
+    addSongsToState,
   } = useContext(GameContext);
 
   const {
-    videoBool,
-    visibility,
+    // videoBool,
     question,
     currTeam,
     team1,
-    team2
+    team2,
   } = state;
-
 
   useEffect(() => {
     addSongsToState();
@@ -40,40 +39,38 @@ function Game(props) {
   }, []);
 
   const { name1, name2 } = props;
-  if (!videoBool) {
-    return (
-      <center>
-        <div>
-          <Lifelines
-            // handleChange={this.handleChange}
-            triviaRequest={triviaRequest}
-            handleClick={handleClick}
-            changeCat={changeCat}
-          />
-          <Trivia
-            triviaRequest={triviaRequest}
-            // handleChange={handleChange}
-            question={question}
-            hidden={visibility}
-            nextTeam={nextTeam}
-            increaseScore={increaseScore}
-            trigger={triggerVideo}
-          />
-          <Scoreboard
-            currTeam={currTeam}
-            team1={team1}
-            team2={team2}
-            name1={name1}
-            name2={name2}
-          />
-        </div>
-      </center>
-    );
-  }
+  // if (!videoBool) {
   return (
-    <VideoPlayer />
+    <center>
+      <div>
+        <Lifelines
+            // handleChange={this.handleChange}
+          triviaRequest={triviaRequest}
+          handleClick={handleClick}
+          changeCat={changeCat}
+        />
+        <Trivia
+          triviaRequest={triviaRequest}
+            // handleChange={handleChange}
+          question={question}
+          nextTeam={nextTeam}
+          increaseScore={increaseScore}
+          // trigger={triggerVideo}
+        />
+        <Scoreboard
+          currTeam={currTeam}
+          team1={team1}
+          team2={team2}
+          name1={name1}
+          name2={name2}
+        />
+      </div>
+    </center>
   );
-
+  // }
+  // return (
+  //   <VideoPlayer />
+  // );
 }
 
 // triviaRequest() {

@@ -1,5 +1,5 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-/* eslint-disable react/prefer-stateless-function */
 
 // Teams Refactor
 
@@ -30,9 +30,9 @@ const Teams = () => {
         key={i}
         value={n}
         onClick={(e) => {
-          console.log(e.target.text);
+          // console.log(e.target.text);
           setTeamNumber(parseInt(e.target.text));
-          console.log(typeof teamNumber, teamNumber);
+          // console.log(typeof teamNumber, teamNumber);
         }}
         href={`#/action-${n}`}
       >
@@ -41,28 +41,27 @@ const Teams = () => {
     ));
   };
 
-  const listTeamForms = (n) =>
-    [...Array(n)].map((e, i) => {
-      const count = i + 1;
-      return (
-        <form key={i}>
-          <FormGroup
-            controlId="formBasicText"
-          >
-            <FormLabel>{`Team ${count.toString()} Name`}</FormLabel>
-            <FormControl
-              type="text"
-              name={`team${count.toString()}`}
-              placeholder="Enter text"
-              value={teamNames[`team${count}`]}
-              onChange={(e) => {
-                setTeamNames({ ...teamNames, [`team${count}`]: e.target.value });
-              }}
-            />
-          </FormGroup>
-        </form>
-      );
-    });
+  const listTeamForms = (n) => [...Array(n)].map((e, i) => {
+    const count = i + 1;
+    return (
+      <form key={i}>
+        <FormGroup
+          controlId="formBasicText"
+        >
+          <FormLabel>{`Team ${count.toString()} Name`}</FormLabel>
+          <FormControl
+            type="text"
+            name={`team${count.toString()}`}
+            placeholder="Enter text"
+            value={teamNames[`team${count}`]}
+            onChange={(e) => {
+              setTeamNames({ ...teamNames, [`team${count}`]: e.target.value });
+            }}
+          />
+        </FormGroup>
+      </form>
+    );
+  });
   return (
     <div>
       <DropdownButton id="dropdown-basic-button" title="Select number of Teams">
