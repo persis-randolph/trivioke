@@ -90,7 +90,7 @@ function GameContextProvider({ children }) {
       });
   };
 
-  const handleClick = () => {
+  const halveChoices = () => {
     setVisibility((prevVis) => !prevVis);
   };
 
@@ -115,7 +115,7 @@ function GameContextProvider({ children }) {
     nextTeam,
     // triggerVideo,
     increaseScore,
-    handleClick,
+    halveChoices,
     addSongsToState,
   };
 

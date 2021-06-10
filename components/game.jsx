@@ -21,7 +21,7 @@ function Game(props) {
     nextTeam,
     // triggerVideo,
     increaseScore,
-    handleClick,
+    halveChoices,
     addSongsToState,
   } = useContext(GameContext);
 
@@ -31,6 +31,7 @@ function Game(props) {
     currTeam,
     team1,
     team2,
+    visibility,
   } = state;
 
   useEffect(() => {
@@ -43,18 +44,18 @@ function Game(props) {
   return (
     <center>
       <div>
-        <Lifelines
-            // handleChange={this.handleChange}
-          triviaRequest={triviaRequest}
-          handleClick={handleClick}
-          changeCat={changeCat}
-        />
+        <Lifelines />
+        {/* // handleChange={this.handleChange}
+          // triviaRequest={triviaRequest}
+          // halveChoices={halveChoices}
+          // changeCat={changeCat} */}
         <Trivia
           triviaRequest={triviaRequest}
             // handleChange={handleChange}
           question={question}
           nextTeam={nextTeam}
           increaseScore={increaseScore}
+          hidden={visibility}
           // trigger={triggerVideo}
         />
         <Scoreboard
@@ -140,7 +141,7 @@ function Game(props) {
 //   this.triviaRequest();
 // }
 
-// handleClick() {
+// halveChoices() {
 //   const { visibility } = this.state;
 //   this.setState({ visibility: !visibility });
 // }
@@ -157,7 +158,7 @@ function Game(props) {
 //             <Lifelines
 //               handleChange={this.handleChange}
 //               triviaRequest={this.triviaRequest}
-//               handleClick={this.handleClick}
+//               halveChoices={this.halveChoices}
 //               changeCat={this.changeCat}
 //               bool={bool}
 //             />
