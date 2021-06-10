@@ -16,7 +16,7 @@ class Trivia extends Component {
 
   render() {
     const {
-      question, triviaRequest, hidden, nextTeam, increaseScore, trigger,
+      question, triviaRequest, hidden, nextTeam, increaseScore, trigger, count, increaseCount,
     } = this.props;
 
     function shuffle(answerArr) {
@@ -28,7 +28,7 @@ class Trivia extends Component {
     }
     if (question) {
       const answers = [
-        <button key="c" type="button" onClick={() => { triviaRequest(); nextTeam(); increaseScore(); }}>{question.correct_answer}</button>,
+        <button key="c" type="button" onClick={() => { triviaRequest(); nextTeam(); increaseScore(); increaseCount(); }}>{question.correct_answer}</button>,
         <Link to="/video" onClick={() => nextTeam()}>
           <button key="i1" style={{ display: hidden ? 'inline block' : 'none' }} type="button">{question.incorrect_answers[0]}</button>
         </Link>,
@@ -46,7 +46,16 @@ class Trivia extends Component {
           <div key="answers">{shuffleArr.map((answer, i) => <div key={i}>{answer}</div>)}</div>
         </div>,
       ];
-      return <div>{multiChoice}</div>;
+      return (
+        <div>
+          <h5>
+            Questions Answered:
+            {' '}
+            {count}
+          </h5>
+          <div>{multiChoice}</div>
+        </div>
+      );
     }
     return <div>Loading</div>;
   }

@@ -10,7 +10,7 @@ import { GameContext } from '../context/gameContext';
 import { UserContext } from '../context/userContext';
 
 const VideoPlayer = () => {
-  const { state } = useContext(GameContext);
+  const { state, increaseCount } = useContext(GameContext);
   const { video, setVideo, videos } = state;
 
   const changeVideo = () => {
@@ -40,6 +40,7 @@ const VideoPlayer = () => {
             style={{
               justifyContent: 'center', alignItems: 'center', height: '3vh',
             }}
+            onClick={() => { increaseCount(); }}
           >
             Back to Game
           </button>

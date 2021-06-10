@@ -1,16 +1,8 @@
-/* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
-/* eslint-disable no-undef */
-/* eslint-disable react/prop-types */
-/* eslint-disable import/extensions */
-/* eslint-disable react/sort-comp */
-
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
-import Lifelines from './lifelines.jsx';
-import Trivia from './trivia.jsx';
-import Scoreboard from './scoreBoard.jsx';
-import VideoPlayer from './player.jsx';
+import Lifelines from './lifelines';
+import Trivia from './trivia';
+import Scoreboard from './scoreBoard';
 import { GameContext } from '../context/gameContext';
 
 function Game(props) {
@@ -19,10 +11,9 @@ function Game(props) {
     triviaRequest,
     changeCat,
     nextTeam,
-    // triggerVideo,
     increaseScore,
-    halveChoices,
     addSongsToState,
+    increaseCount,
   } = useContext(GameContext);
 
   const {
@@ -31,6 +22,7 @@ function Game(props) {
     currTeam,
     visibility,
     hidden,
+    count,
   } = state;
 
   useEffect(() => {
@@ -42,10 +34,6 @@ function Game(props) {
     <center>
       <div>
         <Lifelines />
-        {/* // handleChange={this.handleChange}
-          // triviaRequest={triviaRequest}
-          // halveChoices={halveChoices}
-          // changeCat={changeCat} */}
         <Trivia
           triviaRequest={triviaRequest}
           // handleChange={handleChange}
@@ -54,6 +42,8 @@ function Game(props) {
           increaseScore={increaseScore}
           hidden={visibility}
           // trigger={triggerVideo}
+          count={count}
+          increaseCount={increaseCount}
         />
         <Scoreboard />
       </div>
@@ -102,7 +92,8 @@ function Game(props) {
 
 // nextTeam() {
 //   const { currTeam } = this.state;
-//   return currTeam === 'team1' ? this.setState({ currTeam: 'team2' }) : this.setState({ currTeam: 'team1' });
+//   return currTeam === 'team1' ? this.setState({ currTeam: 'team2' })
+// : this.setState({ currTeam: 'team1' });
 // }
 
 // triggerVideo() {
