@@ -47,14 +47,7 @@ class Trivia extends Component {
         </div>,
       ];
       return (
-        <div>
-          <h5>
-            Questions Answered:
-            {' '}
-            {count}
-          </h5>
-          <div>{multiChoice}</div>
-        </div>
+        <div>{multiChoice}</div>
       );
     }
     return <div>Loading</div>;

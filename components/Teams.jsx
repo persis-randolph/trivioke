@@ -46,7 +46,7 @@ const Teams = () => {
   // const [teamState, setTeamState] = useState([]);
 
   useEffect(() => {
-    console.log('HERE ARE TEAM NAMES', teamNames);
+    // console.log('HERE ARE TEAM NAMES', teamNames);
     setTeams(Object.values(teamNames));
     setCurrTeam(teams[0]);
   }, [teamNames]);

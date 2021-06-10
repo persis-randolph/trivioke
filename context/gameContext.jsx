@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
@@ -25,6 +26,8 @@ function GameContextProvider({ children }) {
 
   // Answered Questions Count - starts at 0, goes up each time a question is completed
   const [count, setCount] = useState(0);
+  // boolean for if the game should end
+  const [endGame, setEndGame] = useState(false);
 
   const [triviaBool, setTriviaBool] = useState(false);
   const [hidden] = useState(false);
@@ -134,6 +137,7 @@ function GameContextProvider({ children }) {
     hidden,
     count,
     setCount,
+    setEndGame,
   };
 
   const gameProps = {
