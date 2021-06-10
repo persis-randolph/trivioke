@@ -32,7 +32,7 @@ const routing = (
           <Switch>
             <Route exact path="/" component={Login} />
             <Route exact path="/login" component={Login} />
-            <Route exact path="/trivia" component={Load} />
+            <Route exact path="/load" component={Load} />
             <Route exact path="/video" component={VideoPlayer} />
             <Route exact path="/game" component={Game} />
             <Route exact path="/profile" component={Profile} />
