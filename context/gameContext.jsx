@@ -18,15 +18,18 @@ function GameContextProvider({ children }) {
   const [team1, setTeam1] = useState(0);
   const [team2, setTeam2] = useState(0);
   const [triviaBool, setTriviaBool] = useState(false);
+  const [hidden] = useState(false);
 
   const triviaRequest = () => {
-    const uri = !triviaBool ? '/trivia/multi' : '/trivia/bool';
+    // const uri = !triviaBool ? '/trivia/multi' : '/trivia/bool';
+    const uri = '/trivia/multi';
     axios.get(uri, {
       params: {
         categoryID: sessionStorage.category,
         diff: sessionStorage.diff,
       },
     }).then(({ data }) => {
+      console.log('question data: ', data);
       setQuestion(data);
     }).catch((err) => {
       console.error(err);
@@ -106,6 +109,7 @@ function GameContextProvider({ children }) {
     team2,
     triviaBool,
     setTriviaBool,
+    hidden,
   };
 
   const gameProps = {

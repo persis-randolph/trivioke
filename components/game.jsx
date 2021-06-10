@@ -32,11 +32,12 @@ function Game(props) {
     team1,
     team2,
     visibility,
+    hidden,
   } = state;
 
   useEffect(() => {
     addSongsToState();
-    triviaRequest();
+    // triviaRequest();
   }, []);
 
   const { name1, name2 } = props;
