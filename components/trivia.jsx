@@ -30,10 +30,10 @@ class Trivia extends Component {
       const answers = [
         <button key="c" type="button" onClick={() => { triviaRequest(); nextTeam(); increaseScore(); }}>{question.correct_answer}</button>,
         <Link to="/video" onClick={() => nextTeam()}>
-          <button key="i1" style={{ display: hidden ? 'block' : 'none' }} type="button">{question.incorrect_answers[0]}</button>
+          <button key="i1" style={{ display: hidden ? 'inline block' : 'none' }} type="button">{question.incorrect_answers[0]}</button>
         </Link>,
         <Link to="/video" onClick={() => nextTeam()}>
-          <button key="i2" style={{ display: hidden ? 'block' : 'none' }} type="button">{question.incorrect_answers[1]}</button>
+          <button key="i2" style={{ display: hidden ? 'inline block' : 'none' }} type="button">{question.incorrect_answers[1]}</button>
         </Link>,
         <Link to="/video" onClick={() => nextTeam()}>
           <button key="i3" type="button">{question.incorrect_answers[2]}</button>
