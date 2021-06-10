@@ -24,9 +24,6 @@ function GameContextProvider({ children }) {
   // Team State
   const [teams, setTeams] = useState([]);
   const [currTeam, setCurrTeam] = useState(teams[0]);
-  // const [currTeam, setCurrTeam] = useState('team1');
-  // const [team1, setTeam1] = useState(0);
-  // const [team2, setTeam2] = useState(0);
 
   // Question Count - starts at 1
   // const [questionCount, setQuestionCount] = useState[1];
@@ -62,9 +59,6 @@ function GameContextProvider({ children }) {
   };
 
   const nextTeam = () => {
-    // needs to be fixed
-    // right now it is curr team is team[0]
-    // return currTeam === 'team1' ? setCurrTeam('team2') : setCurrTeam('team1');
     for (let i = 0; i < teams.length; i++) {
       if (currTeam === teams[i]) {
         if (i + 1 !== teams.length) {
@@ -118,7 +112,6 @@ function GameContextProvider({ children }) {
   };
 
   const state = {
-    // videoBool,
     video,
     setVideo,
     videos,
@@ -134,8 +127,6 @@ function GameContextProvider({ children }) {
     setCategory,
     trivia,
     setTrivia,
-    // team1,
-    // team2,
     triviaBool,
     setTriviaBool,
     hidden,
