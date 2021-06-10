@@ -29,7 +29,7 @@ function GameContextProvider({ children }) {
   // const [team2, setTeam2] = useState(0);
 
   // Question Count - starts at 1
-  const [questionCount, setQuestionCount] = useState[1];
+  // const [questionCount, setQuestionCount] = useState[1];
 
   const [triviaBool, setTriviaBool] = useState(false);
   const [hidden] = useState(false);

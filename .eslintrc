@@ -9,5 +9,10 @@
     "ecmaFeatures": {
       "jsx": true
     }
+  },
+  "rules": {
+    "no-console": ["error", {
+      "allow": ["warn"]
+    }]
   }
 }
