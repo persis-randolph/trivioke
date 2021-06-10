@@ -103,6 +103,11 @@ app.get('/users', async (req, res) => {
   }
 });
 
+//? need to flesh this out, this will handle updates to a user's stats and update the db
+app.patch('/users/stats:id', async (req, res) => {
+
+})
+
 const port = 8080;
 app.listen(process.env.PORT || port, () => {
   console.log(`listening on port ${process.env.PORT || port}`);
