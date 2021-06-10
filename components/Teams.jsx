@@ -1,5 +1,5 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-/* eslint-disable react/prefer-stateless-function */
 
 // Teams Refactor
 
@@ -10,8 +10,8 @@ import {
 import { GameContext } from '../context/gameContext';
 
 const Teams = () => {
-  const { state } = useContext(GameContext)
-  const { teams, setCurrTeam, setTeams } = state
+  const { state } = useContext(GameContext);
+  const { teams, setCurrTeam, setTeams } = state;
 
   const [teamNumber, setTeamNumber] = useState(2);
   const [teamNames, setTeamNames] = useState({});
@@ -26,9 +26,7 @@ const Teams = () => {
         key={i}
         value={n}
         onClick={(e) => {
-          console.log(e.target.text);
           setTeamNumber(parseInt(e.target.text));
-          // setTeams({})
         }}
         href={`#/${n}-teams`}
       >
@@ -37,30 +35,29 @@ const Teams = () => {
     ));
   };
 
-  const listTeamForms = (n) =>
-    [...Array(n)].map((e, i) => {
-      const count = i + 1;
-      return (
-        <form key={i}>
-          <FormGroup
-            controlId="formBasicText"
-          >
-            <FormLabel>{`Team ${count.toString()} Name`}</FormLabel>
-            <FormControl
-              type="text"
-              name={`team${count.toString()}`}
-              placeholder="Enter text"
-              value={teamNames[`team${count}`]}
-              onChange={(e) => {
-                setTeamNames({ ...teamNames, [`team${count}`]: e.target.value });
-                setTeams(Object.values(teamNames))
-                setCurrTeam(teams[0])
-              }}
-            />
-          </FormGroup>
-        </form>
-      );
-    });
+  const listTeamForms = (n) => [...Array(n)].map((e, i) => {
+    const count = i + 1;
+    return (
+      <form key={i}>
+        <FormGroup
+          controlId="formBasicText"
+        >
+          <FormLabel>{`Team ${count.toString()} Name`}</FormLabel>
+          <FormControl
+            type="text"
+            name={`team${count.toString()}`}
+            placeholder="Enter text"
+            value={teamNames[`team${count}`]}
+            onChange={(e) => {
+              setTeamNames({ ...teamNames, [`team${count}`]: e.target.value });
+              setTeams(Object.values(teamNames));
+              setCurrTeam(teams[0]);
+            }}
+          />
+        </FormGroup>
+      </form>
+    );
+  });
   return (
     <div>
       <DropdownButton id="dropdown-basic-button" title="Select number of Teams">

@@ -1,11 +1,15 @@
+/* eslint-disable no-console */
+/* eslint-disable react/prop-types */
+/* eslint-disable no-shadow */
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 import React, { useState, createContext } from 'react';
 import axios from 'axios';
 
 const GameContext = createContext();
 
 function GameContextProvider({ children }) {
-
-  const [videoBool, setVideoBool] = useState(false);
+  // const [videoBool, setVideoBool] = useState(false);
   const [video, setVideo] = useState({ song: 'Frankie Valli - Can\'t Take My Eyes Off Of You Karaoke Lyrics', uri: 'UXYjQa_osMI' });
   const [videos, setVideos] = useState([]);
   const [visibility, setVisibility] = useState(true);
@@ -15,17 +19,29 @@ function GameContextProvider({ children }) {
   const [diff, setDiff] = useState('medium');
   const [category, setCategory] = useState(9);
   const [trivia, setTrivia] = useState(false);
-  
+
   // Team State
   const [teams, setTeams] = useState([]);
   const [currTeam, setCurrTeam] = useState(teams[0]);
+  // const [currTeam, setCurrTeam] = useState('team1');
+  // const [team1, setTeam1] = useState(0);
+  // const [team2, setTeam2] = useState(0);
+
+  const [triviaBool, setTriviaBool] = useState(false);
+  const [hidden] = useState(false);
 
   const triviaRequest = () => {
-    const url = `https://opentdb.com/api.php?amount=1&category=${sessionStorage.category}&difficulty=${sessionStorage.diff}&type=multiple`;
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => setQuestion(data.results[0]))
-      .catch((err) => { console.error(err); });
+    const uri = !triviaBool ? '/trivia/multi' : '/trivia/bool';
+    axios.get(uri, {
+      params: {
+        categoryID: sessionStorage.category,
+        diff: sessionStorage.diff,
+      },
+    }).then(({ data }) => {
+      setQuestion(data);
+    }).catch((err) => {
+      console.error(err);
+    });
   };
 
   const changeCat = () => {
@@ -42,40 +58,39 @@ function GameContextProvider({ children }) {
   };
 
   const nextTeam = () => {
-    //needs to be fixed
-    //right now it is curr team is team[0]
+    // needs to be fixed
+    // right now it is curr team is team[0]
     // return currTeam === 'team1' ? setCurrTeam('team2') : setCurrTeam('team1');
-    for(let i = 0; i < teams.length; i++){
-      if(currTeam === teams[i]){
-        if(i + 1 !== teams.length){
-          setCurrTeam(teams[i + 1])
+    for (let i = 0; i < teams.length; i++) {
+      if (currTeam === teams[i]) {
+        if (i + 1 !== teams.length) {
+          setCurrTeam(teams[i + 1]);
         } else {
-          setCurrTeam(teams[0])
+          setCurrTeam(teams[0]);
         }
       }
     }
   };
 
-  const triggerVideo = () => {
-    setVideoBool(prevVid => !prevVid)
-  };
+  // const triggerVideo = () => {
+  //   setVideoBool(prevVid => !prevVid)
+  // };
 
   const increaseScore = () => {
-    for(let i = 0; i < teams.length; i++){
-    if(currTeam === teams[i]){
-      sessionStorage.setItem(`score${i + 1}`, (Number(sessionStorage[`score${i + 1}`]) + 1));
-      setVisibility(true);
+    for (let i = 0; i < teams.length; i++) {
+      if (currTeam === teams[i]) {
+        sessionStorage.setItem(`score${i + 1}`, (Number(sessionStorage[`score${i + 1}`]) + 1));
+        setVisibility(true);
+      }
     }
-  }
   };
 
   // add songs from database to state. Should only run on start of a new game
   const addSongsToState = () => {
-    console.log('hits addsongs')
+    // console.log('hits addsongs')
     axios.get('/songs')
       .then(({ data }) => {
         if (data.length) {
-          console.log('PATH: there is existing data in the db');
           const rand = Math.floor(Math.random() * (data.length));
           setVideos(data);
           setVideo(data[rand]);
@@ -91,16 +106,15 @@ function GameContextProvider({ children }) {
                 });
             });
         }
-      })
-  }
+      });
+  };
 
-  const handleClick = () => {
-    setVisibility(prevVis => !prevVis);
-  }
-
+  const halveChoices = () => {
+    setVisibility((prevVis) => !prevVis);
+  };
 
   const state = {
-    videoBool,
+    // videoBool,
     video,
     setVideo,
     videos,
@@ -115,25 +129,30 @@ function GameContextProvider({ children }) {
     category,
     setCategory,
     trivia,
-    setTrivia
-  }
+    setTrivia,
+    // team1,
+    // team2,
+    triviaBool,
+    setTriviaBool,
+    hidden,
+  };
 
   const gameProps = {
     state,
     triviaRequest,
     changeCat,
     nextTeam,
-    triggerVideo,
+    // triggerVideo,
     increaseScore,
-    handleClick,
-    addSongsToState
+    halveChoices,
+    addSongsToState,
   };
 
   return (
     <GameContext.Provider value={gameProps}>
       {children}
     </GameContext.Provider>
-  )
+  );
 }
 
-export { GameContextProvider, GameContext }
+export { GameContextProvider, GameContext };

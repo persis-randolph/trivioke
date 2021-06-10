@@ -13,7 +13,6 @@ function UserContextProvider({ children }) {
   const loginUser = (userData) => {
     axios.get('/users', { params: userData })
       .then(({ data }) => {
-        console.log('===> userContext user response:', data);
         const { googleId, username } = data;
         setUserInfo({ googleId, username });
         setIsLoggedIn(true);

@@ -9,6 +9,7 @@ Trivia quiz game made with React.
 3. [Requirements](#requirements)
 4. [Development](#development)
     1. [Installing Dependencies](#installing-dependencies)
+5.[Deployment](#deployment)
 
 ## Team
 
@@ -35,3 +36,7 @@ From within the root directory:
 ```sh
 npm install
 ```
+
+## Deployment
+
+- Using an Amazon EC2 Instance with Ubuntu 20.04.

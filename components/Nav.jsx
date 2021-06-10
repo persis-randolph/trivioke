@@ -7,7 +7,6 @@ import { UserContext } from '../context/userContext';
 
 const Navbar = () => {
   const { isLoggedIn, userInfo } = useContext(UserContext);
-  console.log('logged in?', isLoggedIn);
 
   // this should dynamically render profile or login once isLoggedIn is being set correctly
   // <Link to={ isLoggedIn ? "/profile" : "/login" } className="nav-link">{ isLoggedIn ? "Player Card" : "Login" }</Link>

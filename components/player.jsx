@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 /* eslint-disable no-shadow */
 
@@ -9,7 +10,6 @@ import { GameContext } from '../context/gameContext';
 import { UserContext } from '../context/userContext';
 
 const VideoPlayer = () => {
-
   const { state } = useContext(GameContext);
   const { video, setVideo, videos } = state;
 
@@ -17,6 +17,10 @@ const VideoPlayer = () => {
     const rand = Math.floor(Math.random() * (videos.length - 1)) + 1;
     setVideo(videos[rand]);
   };
+
+  // useEffect(() => {
+  //   nextTeam()
+  // }, [])
 
   return (
     <center>
@@ -30,15 +34,16 @@ const VideoPlayer = () => {
         >
           Change Song
         </button>
-        <button
-          type="button"
-          style={{
-            justifyContent: 'center', alignItems: 'center', height: '3vh',
-          }}
-          // onClick={this.goBack}
-        >
-          <Link to="/game">Back</Link>
-        </button>
+        <Link to="/game">
+          <button
+            type="button"
+            style={{
+              justifyContent: 'center', alignItems: 'center', height: '3vh',
+            }}
+          >
+            Back to Game
+          </button>
+        </Link>
         <Iframe
           fluid="true"
           className="embed-responsive-item"

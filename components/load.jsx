@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable no-unused-vars */
 /* eslint-disable import/extensions */
 /* eslint-disable no-undef */
 /* eslint-disable no-restricted-globals */
@@ -92,14 +94,7 @@ const Load = () => {
 
 export default Load;
 
-{/* <div>
-<Game category={category} diff={diff} name1={team1} name2={team2} />
-</div> */}
-
-
-
-
-//original
+// original
 
 // import React, { Component, useState } from 'react';
 // import Filters from './filters.jsx';
