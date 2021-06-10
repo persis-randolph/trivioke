@@ -20,7 +20,6 @@ const createSession = (req, res, user) => {
 const getUser = async (id) => {
   const q = 'SELECT * FROM users WHERE googleId=?;';
   const user = await db.connection.query(q, id);
-  console.log('query result: ', user[0]);
   return user[0][0];
 };
 
