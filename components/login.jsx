@@ -25,6 +25,7 @@ const Login = () => {
     loginUser(res.profileObj);
     setShowLoginButton(false);
     setShowLogoutButton(true);
+    sessionStorage.clear();
   };
 
   const onLoginFailure = (res) => {

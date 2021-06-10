@@ -14,9 +14,19 @@ function GameContextProvider({ children }) {
   const [videos, setVideos] = useState([]);
   const [visibility, setVisibility] = useState(true);
   const [question, setQuestion] = useState(null);
-  const [currTeam, setCurrTeam] = useState('team1');
-  const [team1, setTeam1] = useState(0);
-  const [team2, setTeam2] = useState(0);
+
+  // Game Options (Load.jsx) State
+  const [diff, setDiff] = useState('medium');
+  const [category, setCategory] = useState(9);
+  const [trivia, setTrivia] = useState(false);
+
+  // Team State
+  const [teams, setTeams] = useState([]);
+  const [currTeam, setCurrTeam] = useState(teams[0]);
+  // const [currTeam, setCurrTeam] = useState('team1');
+  // const [team1, setTeam1] = useState(0);
+  // const [team2, setTeam2] = useState(0);
+
   const [triviaBool, setTriviaBool] = useState(false);
   const [hidden] = useState(false);
 
@@ -47,22 +57,31 @@ function GameContextProvider({ children }) {
       .catch((err) => { console.error(err); });
   };
 
-  const nextTeam = () => (currTeam === 'team1' ? setCurrTeam('team2') : setCurrTeam('team1'));
+  const nextTeam = () => {
+    // needs to be fixed
+    // right now it is curr team is team[0]
+    // return currTeam === 'team1' ? setCurrTeam('team2') : setCurrTeam('team1');
+    for (let i = 0; i < teams.length; i++) {
+      if (currTeam === teams[i]) {
+        if (i + 1 !== teams.length) {
+          setCurrTeam(teams[i + 1]);
+        } else {
+          setCurrTeam(teams[0]);
+        }
+      }
+    }
+  };
 
   // const triggerVideo = () => {
-
-  //   // setVideoBool(prevVid => !prevVid)
-  //   // this.setState((prevState) => ({ video: !prevState.video }));
+  //   setVideoBool(prevVid => !prevVid)
   // };
 
   const increaseScore = () => {
-    // const { currTeam } = this.state;
-    if (currTeam === 'team1') {
-      sessionStorage.setItem('score1', (Number(sessionStorage.score1) + 1));
-      setVisibility(true);
-    } else {
-      sessionStorage.setItem('score2', (Number(sessionStorage.score2) + 1));
-      setVisibility(true);
+    for (let i = 0; i < teams.length; i++) {
+      if (currTeam === teams[i]) {
+        sessionStorage.setItem(`score${i + 1}`, (Number(sessionStorage[`score${i + 1}`]) + 1));
+        setVisibility(true);
+      }
     }
   };
 
@@ -102,8 +121,17 @@ function GameContextProvider({ children }) {
     visibility,
     question,
     currTeam,
-    team1,
-    team2,
+    setCurrTeam,
+    teams,
+    setTeams,
+    diff,
+    setDiff,
+    category,
+    setCategory,
+    trivia,
+    setTrivia,
+    // team1,
+    // team2,
     triviaBool,
     setTriviaBool,
     hidden,

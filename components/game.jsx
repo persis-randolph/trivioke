@@ -29,8 +29,6 @@ function Game(props) {
     // videoBool,
     question,
     currTeam,
-    team1,
-    team2,
     visibility,
     hidden,
   } = state;
@@ -40,8 +38,6 @@ function Game(props) {
     triviaRequest();
   }, []);
 
-  const { name1, name2 } = props;
-  // if (!videoBool) {
   return (
     <center>
       <div>
@@ -59,20 +55,10 @@ function Game(props) {
           hidden={visibility}
           // trigger={triggerVideo}
         />
-        <Scoreboard
-          currTeam={currTeam}
-          team1={team1}
-          team2={team2}
-          name1={name1}
-          name2={name2}
-        />
+        <Scoreboard />
       </div>
     </center>
   );
-  // }
-  // return (
-  //   <VideoPlayer />
-  // );
 }
 
 // triviaRequest() {

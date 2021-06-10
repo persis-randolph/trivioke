@@ -3,22 +3,18 @@
 
 // Teams Refactor
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   FormGroup, FormLabel, FormControl, DropdownButton, Dropdown,
 } from 'react-bootstrap';
+import { GameContext } from '../context/gameContext';
 
 const Teams = () => {
+  const { state } = useContext(GameContext);
+  const { teams, setCurrTeam, setTeams } = state;
+
   const [teamNumber, setTeamNumber] = useState(2);
-  // const [teams, setTeams] = useState([]);
-  const [teamNames, setTeamNames] = useState({
-    team1: '',
-    team2: '',
-    team3: '',
-    team4: '',
-    team5: '',
-    team6: '',
-  });
+  const [teamNames, setTeamNames] = useState({});
 
   const setTeamDropdown = (number) => {
     const numberArr = [];
@@ -30,13 +26,11 @@ const Teams = () => {
         key={i}
         value={n}
         onClick={(e) => {
-          // console.log(e.target.text);
           setTeamNumber(parseInt(e.target.text));
-          // console.log(typeof teamNumber, teamNumber);
         }}
-        href={`#/action-${n}`}
+        href={`#/${n}-teams`}
       >
-        {n}
+        {`${n} `}
       </Dropdown.Item>
     ));
   };
@@ -56,6 +50,8 @@ const Teams = () => {
             value={teamNames[`team${count}`]}
             onChange={(e) => {
               setTeamNames({ ...teamNames, [`team${count}`]: e.target.value });
+              setTeams(Object.values(teamNames));
+              setCurrTeam(teams[0]);
             }}
           />
         </FormGroup>
