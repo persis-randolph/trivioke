@@ -35,16 +35,8 @@ const Teams = () => {
     ));
   };
 
-  // const handleTextChange = async (event) => {
-
-  //   await this.setState({text: event.target.value});
-  //   console.log(this.state.text);
-  // }
-
-  // const [teamState, setTeamState] = useState([]);
-
   useEffect(() => {
-    console.log('HERE ARE TEAM NAMES', teamNames);
+    // console.log('HERE ARE TEAM NAMES', teamNames);
     setTeams(Object.values(teamNames));
     setCurrTeam(teams[0]);
   }, [teamNames]);
