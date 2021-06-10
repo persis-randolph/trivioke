@@ -48,7 +48,7 @@ const getSongs = () => {
   };
   axios.get('https://www.googleapis.com/youtube/v3/search', options)
     .then((data) => {
-      console.log('getSongs data: ', data.data.items);
+      // console.log('getSongs data: ', data.data.items);
       data.data.items.forEach((song) => {
         db.save(song);
       });

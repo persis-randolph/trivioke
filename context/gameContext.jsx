@@ -17,13 +17,20 @@ function GameContextProvider({ children }) {
   const [currTeam, setCurrTeam] = useState('team1');
   const [team1, setTeam1] = useState(0);
   const [team2, setTeam2] = useState(0);
+  const [triviaBool, setTriviaBool] = useState(false);
 
   const triviaRequest = () => {
-    const url = `https://opentdb.com/api.php?amount=1&category=${sessionStorage.category}&difficulty=${sessionStorage.diff}&type=multiple`;
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => setQuestion(data.results[0]))
-      .catch((err) => { console.error(err); });
+    const uri = !triviaBool ? '/trivia/multi' : '/trivia/bool';
+    axios.get(uri, {
+      params: {
+        categoryID: sessionStorage.category,
+        diff: sessionStorage.diff,
+      },
+    }).then(({ data }) => {
+      setQuestion(data);
+    }).catch((err) => {
+      console.error(err);
+    });
   };
 
   const changeCat = () => {
@@ -97,6 +104,8 @@ function GameContextProvider({ children }) {
     currTeam,
     team1,
     team2,
+    triviaBool,
+    setTriviaBool,
   };
 
   const gameProps = {

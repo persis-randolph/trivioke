@@ -28,7 +28,7 @@ app.use(session({
   saveUninitialized: true,
 }));
 
-//? may not need, but this will return a song at a given id
+// ? may not need, but this will return a song at a given id
 // app.get('/songs:id', async (req, res) => {
 //   console.log('params from song request', req.query[0])
 //   try {
@@ -95,7 +95,7 @@ app.get('/users', async (req, res) => {
   } else if (!existingUser) {
     createUser(req.query);
     const newUser = await getUser(googleId);
-    console.log('new user ==>', newUser);
+    // console.log('new user ==>', newUser);
     res.status(200).send(newUser);
   } else {
     console.log('user not found');
