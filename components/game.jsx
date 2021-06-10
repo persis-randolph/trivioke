@@ -37,7 +37,7 @@ function Game(props) {
 
   useEffect(() => {
     addSongsToState();
-    // triviaRequest();
+    triviaRequest();
   }, []);
 
   const { name1, name2 } = props;
@@ -52,7 +52,7 @@ function Game(props) {
           // changeCat={changeCat} */}
         <Trivia
           triviaRequest={triviaRequest}
-            // handleChange={handleChange}
+          // handleChange={handleChange}
           question={question}
           nextTeam={nextTeam}
           increaseScore={increaseScore}

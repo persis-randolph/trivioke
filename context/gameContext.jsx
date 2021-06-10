@@ -21,15 +21,13 @@ function GameContextProvider({ children }) {
   const [hidden] = useState(false);
 
   const triviaRequest = () => {
-    // const uri = !triviaBool ? '/trivia/multi' : '/trivia/bool';
-    const uri = '/trivia/multi';
+    const uri = !triviaBool ? '/trivia/multi' : '/trivia/bool';
     axios.get(uri, {
       params: {
         categoryID: sessionStorage.category,
         diff: sessionStorage.diff,
       },
     }).then(({ data }) => {
-      console.log('question data: ', data);
       setQuestion(data);
     }).catch((err) => {
       console.error(err);
