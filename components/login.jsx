@@ -63,7 +63,7 @@ const Login = () => {
               onLogoutSuccess={onSignoutSuccess}
             />
             <br />
-            <Link to="/game">
+            <Link to="/trivia">
               <button
                 type="button"
                 style={{
