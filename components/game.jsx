@@ -5,6 +5,7 @@ import Lifelines from './lifelines';
 import Trivia from './trivia';
 import Scoreboard from './scoreBoard';
 import { GameContext } from '../context/gameContext';
+import Countdown from './Countdown.jsx';
 
 function Game(props) {
   const {
@@ -38,6 +39,7 @@ function Game(props) {
         <Redirect to="/endgame" />
       ) : (
         <div>
+          <Countdown />
           <Lifelines />
           <Trivia />
           <Scoreboard />
