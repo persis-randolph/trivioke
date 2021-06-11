@@ -1,25 +1,20 @@
-/* eslint-disable max-len */
-/* eslint-disable no-unused-vars */
-/* eslint-disable import/extensions */
-/* eslint-disable no-undef */
-/* eslint-disable no-restricted-globals */
+/* eslint-disable no-console */
+/* global sessionStorage */
 
-// Load Refactor
-
-import React, { useState, useContext } from 'react';
-import Filters from './filters.jsx';
-import Teams from './Teams.jsx';
-import Game from './game.jsx';
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import Filters from './filters';
+import Teams from './Teams';
+import Game from './game';
 import { GameContext } from '../context/gameContext';
 
 const Load = () => {
-  const { state } = useContext(GameContext);
+  const { state, triviaRequest } = useContext(GameContext);
   const {
     teams,
     diff,
     setDiff,
     category,
-    setCategory,
     trivia,
     setTrivia,
   } = state;
@@ -34,8 +29,8 @@ const Load = () => {
       sessionStorage.setItem(`score${index + 1}`, 0);
     });
     setTrivia(true);
-    console.log(teams);
-    console.log(sessionStorage);
+    // console.log(teams);
+    // console.log(sessionStorage);
   };
 
   const categories = {
@@ -78,7 +73,9 @@ const Load = () => {
             </thead>
           </table>
           <div key="begin">
-            <button type="button" onClick={() => begin()}><h5>Begin Game</h5></button>
+            <Link to="/game">
+              <button type="button" onClick={() => { begin(); triviaRequest(); }}><h5>Begin Game</h5></button>
+            </Link>
           </div>
         </div>
       </center>
@@ -182,9 +179,12 @@ export default Load;
 //             >
 //               <thead>
 //                 <tr style={{ cellpadding: 8, cellspacing: 8 }}>
-//                   <td><button type="button" name="diff" id="easy" onClick={this.handleClick}><h5>Easy</h5></button></td>
-//                   <td><button type="button" name="diff" id="medium" onClick={this.handleClick}><h5>Medium</h5></button></td>
-//                   <td><button type="button" name="diff" id="hard" onClick={this.handleClick}><h5>Hard</h5></button></td>
+// <td><button type="button" name="diff" id="easy"
+// onClick={this.handleClick}><h5>Easy</h5></button></td>
+// <td><button type="button" name="diff" id="medium"
+// onClick={this.handleClick}><h5>Medium</h5></button></td>
+// <td><button type="button" name="diff" id="hard"
+// onClick={this.handleClick}><h5>Hard</h5></button></td>
 //                 </tr>
 //               </thead>
 //             </table>

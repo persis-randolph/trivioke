@@ -1,26 +1,20 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
-/* eslint-disable no-shadow */
 
-import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import React, { useContext } from 'react';
 import Iframe from 'react-iframe';
 import { Link } from 'react-router-dom';
 import { GameContext } from '../context/gameContext';
-import { UserContext } from '../context/userContext';
+// import { UserContext } from '../context/userContext';
 
 const VideoPlayer = () => {
-  const { state } = useContext(GameContext);
+  const { state, increaseCount, nextTeam } = useContext(GameContext);
   const { video, setVideo, videos } = state;
 
   const changeVideo = () => {
     const rand = Math.floor(Math.random() * (videos.length - 1)) + 1;
     setVideo(videos[rand]);
   };
-
-  // useEffect(() => {
-  //   nextTeam()
-  // }, [])
 
   return (
     <center>
@@ -34,12 +28,13 @@ const VideoPlayer = () => {
         >
           Change Song
         </button>
-        <Link to="/game">
+        <Link to="/game" onClick={() => { nextTeam(); }}>
           <button
             type="button"
             style={{
               justifyContent: 'center', alignItems: 'center', height: '3vh',
             }}
+            onClick={() => { increaseCount(); }}
           >
             Back to Game
           </button>
