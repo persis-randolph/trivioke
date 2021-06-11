@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Lifelines from './lifelines';
 import Trivia from './trivia';
 import Scoreboard from './scoreBoard';
@@ -37,11 +37,7 @@ function Game(props) {
     <center>
       {/* this line decides the amount of rounds */}
       {count >= (teams.length * 1) ? (
-        <Link to="/endgame">
-          <button type="button">
-            End the Game
-          </button>
-        </Link>
+        <Redirect to="/endgame" />
       ) : (
         <div>
           <Lifelines />

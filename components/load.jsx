@@ -29,8 +29,8 @@ const Load = () => {
       sessionStorage.setItem(`score${index + 1}`, 0);
     });
     setTrivia(true);
-    console.log(teams);
-    console.log(sessionStorage);
+    // console.log(teams);
+    // console.log(sessionStorage);
   };
 
   const categories = {
