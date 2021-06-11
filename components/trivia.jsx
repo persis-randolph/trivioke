@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 /* eslint-disable react/no-array-index-key */
@@ -55,7 +56,7 @@ import { GameContext } from '../context/gameContext';
 // ** ATTEMPT AT REFACTOR, DID NOT WORK ******
 const Trivia = () => {
   const {
-    state, triviaRequest, nextTeam, increaseScore, increaseCount,
+    state, triviaRequest, nextTeam, increaseScore, increaseCount, boolRequest,
   } = useContext(GameContext);
 
   const { question, visibility } = state;
@@ -66,9 +67,9 @@ const Trivia = () => {
     }
     return answerArr;
   }
-  // console.log(question, 'in trivia');
   if (question) {
-    const shuffleArr = shuffle([
+    // true/false questions only have one incorrect answer
+    const shuffleArr = question.incorrect_answers.length > 1 ? shuffle([
       <button key="c" type="button" onClick={() => { triviaRequest(); nextTeam(); increaseScore(); increaseCount(); }}>{question.correct_answer}</button>,
       <Link to="/video">
         <button key="i1" style={{ display: visibility ? 'inline block' : 'none' }} type="button" onClick={() => { triviaRequest(); }}>{question.incorrect_answers[0]}</button>
@@ -79,8 +80,13 @@ const Trivia = () => {
       <Link to="/video">
         <button key="i3" type="button" onClick={() => { triviaRequest(); }}>{question.incorrect_answers[2]}</button>
       </Link>,
+    ]) : shuffle([
+      <button key="c" type="button" onClick={() => { boolRequest(); nextTeam(); increaseScore(); increaseCount(); }}>{question.correct_answer}</button>,
+      <Link to="/video">
+        <button key="i1" style={{ display: visibility ? 'inline block' : 'none' }} type="button" onClick={() => { boolRequest(); }}>{question.incorrect_answers[0]}</button>
+      </Link>,
     ]);
-    const multiChoice = [
+    const triviaView = [
       <div key="trivia">
         <div key="question"><h3>{(question.question)}</h3></div>
         <div key="answers">{shuffleArr.map((answer, i) => <div key={i}>{answer}</div>)}</div>
@@ -89,7 +95,7 @@ const Trivia = () => {
 
     return (
       <div>
-        <div>{multiChoice}</div>
+        <div>{triviaView}</div>
       </div>
     );
   }

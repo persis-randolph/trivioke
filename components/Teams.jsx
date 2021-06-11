@@ -6,6 +6,8 @@
 // Teams Refactor
 
 import React, { useState, useContext, useEffect } from 'react';
+import Swal from 'sweetalert2';
+
 import {
   FormGroup, FormLabel, FormControl, DropdownButton, Dropdown,
 } from 'react-bootstrap';
@@ -37,24 +39,22 @@ const Teams = () => {
     ));
   };
 
-  // const handleTextChange = async (event) => {
-
-  //   await this.setState({text: event.target.value});
-  //   console.log(this.state.text);
-  // }
-
-  // const [teamState, setTeamState] = useState([]);
+  const enterError = () => {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'You must click Begin to start Game!',
+    });
+  // alert('you must hit begin button')
+  };
 
   useEffect(() => {
-    // console.log('HERE ARE TEAM NAMES', teamNames);
     setTeams(Object.values(teamNames));
     setCurrTeam(teams[0]);
   }, [teamNames]);
 
   const listTeamForms = (n) => [...Array(n)].map((e, i) => {
     const count = i + 1;
-    // console.log('team names are: ', teamNames);
-    // console.log('teams are: ', teams);
     return (
       <form key={i}>
         <FormGroup
@@ -66,8 +66,12 @@ const Teams = () => {
             name={`team${count.toString()}`}
             placeholder="Enter text"
             value={teamNames[`team${count}`]}
-            onChange={async (e) => {
-              await setTeamNames({ ...teamNames, [`team${count}`]: e.target.value });
+            onKeyDown={(e) => e.key === 'Enter' && enterError()}
+            onChange={(e) => {
+              if (e.key !== 'Enter') {
+                setTeamNames({ ...teamNames, [`team${count}`]: e.target.value });
+                console.log(e.key);
+              }
             }}
           />
         </FormGroup>

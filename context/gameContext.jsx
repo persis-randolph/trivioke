@@ -35,11 +35,9 @@ const GameContextProvider = ({ children }) => {
   // boolean for if the game should end
   const [endGame, setEndGame] = useState(false);
 
-  const [triviaBool, setTriviaBool] = useState(false);
   const [trivia, setTrivia] = useState(false);
 
   const triviaRequest = async () => {
-    // const uri = !triviaBool ? '/trivia/multi' : '/trivia/bool';
     try {
       const { data } = await axios.get('/trivia/multi', {
         params: {
@@ -51,6 +49,21 @@ const GameContextProvider = ({ children }) => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const boolRequest = async () => {
+    try {
+      const { data } = await axios.get('/trivia/bool', {
+        params: {
+          categoryID: sessionStorage.category,
+          diff: sessionStorage.diff,
+        },
+      });
+      setQuestion(data);
+    } catch (error) {
+      console.error(error);
+    }
+    console.log(question);
   };
 
   const changeCat = () => {
@@ -146,7 +159,7 @@ const GameContextProvider = ({ children }) => {
     }
   };
 
-  const handleClick = () => {
+  const halveChoices = () => {
     setVisibility((prevVis) => !prevVis);
   };
 
@@ -187,9 +200,6 @@ const GameContextProvider = ({ children }) => {
     category,
     setCategory,
     setTrivia,
-    triviaBool,
-    setTriviaBool,
-    // hidden,
     count,
     setCount,
     setEndGame,
@@ -200,12 +210,13 @@ const GameContextProvider = ({ children }) => {
   const gameProps = {
     state,
     triviaRequest,
+    boolRequest,
     changeCat,
     nextTeam,
     getTeams,
     handleTeams,
     increaseScore,
-    handleClick,
+    halveChoices,
     addSongsToState,
     // begin,
     increaseCount,
