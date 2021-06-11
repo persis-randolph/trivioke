@@ -89,28 +89,24 @@ function GameContextProvider({ children }) {
   };
 
   // add songs from database to state. Should only run on start of a new game
-  const addSongsToState = () => {
-    // console.log('hits addsongs')
-    axios.get('/songs')
-      .then(({ data }) => {
-        if (data.length) {
-          console.log('PATH: there is existing data in the db');
-          const rand = Math.floor(Math.random() * (data.length));
-          setVideos(data);
-          setVideo(data[rand]);
-        } else {
-          // console.log('PATH: there is nothing in the db');
-          axios.post('/songs')
-            .then(() => {
-              axios.get('/songs')
-                .then(({ data }) => {
-                  const rand = Math.floor(Math.random() * (data.length - 1)) + 1;
-                  setVideo(data[rand]);
-                  setVideos(data);
-                });
-            });
-        }
-      });
+  const addSongsToState = async () => {
+    try {
+      const { data } = await axios.get('/songs');
+      if (data.length) {
+        console.log('data already in db');
+        const rand = Math.floor(Math.random() * (data.length));
+        setVideos(data);
+        setVideo(data[rand]);
+      } else {
+        console.log('data populating into db now');
+        await axios.post('/songs');
+        const { data } = await axios.get('/songs');
+        const rand = Math.floor(Math.random() * (data.length - 1)) + 1;
+        setVideos(data);
+      }
+    } catch (err) {
+      console.log('error with adding songs to state ', err);
+    }
   };
 
   const handleClick = () => {
@@ -143,7 +139,6 @@ function GameContextProvider({ children }) {
     setTrivia,
     triviaBool,
     setTriviaBool,
-    // hidden,
     count,
     setCount,
     setEndGame,
