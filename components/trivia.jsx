@@ -68,7 +68,7 @@ const Trivia = () => {
     return answerArr;
   }
   if (question) {
-    console.log(question);
+    // true/false questions only have one incorrect answer
     const shuffleArr = question.incorrect_answers.length > 1 ? shuffle([
       <button key="c" type="button" onClick={() => { triviaRequest(); nextTeam(); increaseScore(); increaseCount(); }}>{question.correct_answer}</button>,
       <Link to="/video">
