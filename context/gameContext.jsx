@@ -3,12 +3,16 @@
 /* eslint-disable no-shadow */
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
-import React, { useState, createContext } from 'react';
+import React, { useState, createContext, useContext } from 'react';
+import {UserContext} from './userContext';
 import axios from 'axios';
 
 const GameContext = createContext();
 
-function GameContextProvider({ children }) {
+const GameContextProvider = ({ children }) => {
+  // get what we need from UserContext
+  const { userInfo } = useContext(UserContext);
+
   // const [videoBool, setVideoBool] = useState(false);
   const [video, setVideo] = useState({ song: 'Frankie Valli - Can\'t Take My Eyes Off Of You Karaoke Lyrics', uri: 'UXYjQa_osMI' });
   const [videos, setVideos] = useState([]);
@@ -23,6 +27,9 @@ function GameContextProvider({ children }) {
   // Team State
   const [teams, setTeams] = useState([]);
   const [currTeam, setCurrTeam] = useState(teams[0]);
+  const [existingTeams, setExistingTeams] = useState([]);
+
+  
 
   const [triviaBool, setTriviaBool] = useState(false);
   const [hidden] = useState(false);
@@ -65,6 +72,28 @@ function GameContextProvider({ children }) {
       }
     }
   };
+
+  //* for getting and sending team info to/from db
+  const getTeams = (googleId) => {
+    axios.get('/teams', { params: {googleId} })
+    .then(({ data }) => {
+      console.log(data)
+      setExistingTeams(data);
+    })
+    .catch(err => console.log(err))
+  }
+
+  const postTeam = async (teamName) => {
+    const { googleId } = userInfo;
+    try {
+      const newTeam = axios.post('/teams', { googleId, teamName })
+      setExistingTeams(prevTeams => [...prevTeams, newTeam]);
+    }
+    catch (err) {
+      console.log(err)
+    }
+  }
+
 
   // const triggerVideo = () => {
   //   setVideoBool(prevVid => !prevVid)
@@ -116,6 +145,7 @@ function GameContextProvider({ children }) {
     currTeam,
     setCurrTeam,
     teams,
+    existingTeams,
     setTeams,
     diff,
     setDiff,
@@ -133,6 +163,8 @@ function GameContextProvider({ children }) {
     triviaRequest,
     changeCat,
     nextTeam,
+    getTeams,
+    postTeam,
     // triggerVideo,
     increaseScore,
     halveChoices,

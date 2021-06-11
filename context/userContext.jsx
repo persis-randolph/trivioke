@@ -30,16 +30,16 @@ function UserContextProvider({ children }) {
 
   //* Here's where we'll update a player's stats. Update locally and
   //* then call to the server to update the player's info in the db
-  const adjustRecord = () => {
+  // const adjustRecord = () => {
     
-  }
+  // }
 
-  const checkHighScore = (score) => {
-    if (score > highScore) {
-      setHighScore(score);
-      axios.patch('/users/stats:id' {params: score})
-    }
-  }
+  // const checkHighScore = (score) => {
+  //   if (score > highScore) {
+  //     setHighScore(score);
+  //     axios.patch('/users/stats:id' {params: score})
+  //   }
+  // }
 
 
 

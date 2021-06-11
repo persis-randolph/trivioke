@@ -10,21 +10,25 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { UserContext } from '../context/userContext';
+import {GameContext } from '../context/gameContext';
 
 const clientId = '385117283096-qa4t4ncd1714jpeq26hbkig65pbntd7h.apps.googleusercontent.com';
 
 const Login = () => {
   const [showLoginButton, setShowLoginButton] = useState(true);
   const [showLogoutButton, setShowLogoutButton] = useState(false);
-  const [userInfo, setUserInfo] = useState({});
+  // const [userInfo, setUserInfo] = useState({});  //! don't think we need this
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { loginUser, logoutUser } = useContext(UserContext);
+  const { getTeams } = useContext(GameContext);
 
   const onLoginSuccess = (res) => {
     // console.log('[Login Success] currentUser:', res.profileObj);
     loginUser(res.profileObj);
     setShowLoginButton(false);
     setShowLogoutButton(true);
+    // console.log('userInfo in login: ', userInfo);
+    getTeams(res.profileObj.googleId);
     sessionStorage.clear();
   };
 

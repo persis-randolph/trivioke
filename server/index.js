@@ -12,6 +12,8 @@ const {
   escapeHTML,
   getUser,
   createUser,
+  getTeams,
+  addTeam
 } = require('./helpers');
 
 const saltRounds = 10;
@@ -102,6 +104,34 @@ app.get('/users', async (req, res) => {
     res.sendStatus(404);
   }
 });
+
+//* Team Routes
+app.get('/teams', async (req, res) => {
+  const {googleId} = req.query;
+  try {
+    const teams = await getTeams(googleId)
+    res.status(200).send(teams)
+  }
+  catch (err) {
+    console.log(err)
+    res.sendStatus(500)
+  }
+})
+
+app.post('/teams', async (req, res) => {
+  console.log(req.body)
+  // const {teamName, googleId } = req.body;
+  try {
+    const newTeam = await addTeam(req.body);
+    res.status(201).send(newTeam);
+  }
+  catch (err) {
+    console.log(err);
+    res.sendStatus(500);
+  }
+  
+})
+
 
 //? need to flesh this out, this will handle updates to a user's stats and update the db
 app.patch('/users/stats:id', async (req, res) => {

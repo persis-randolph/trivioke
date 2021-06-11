@@ -57,6 +57,36 @@ const getSongs = () => {
     });
 };
 
+
+//* Team table helpers
+const getTeams = async (id) => {
+  const q = 'SELECT * FROM teams WHERE userId=?'
+  try {
+    const teams = await db.connection.query(q, id)
+    console.log(teams[0]);
+    return teams[0]
+  }
+  catch (err) {
+    console.log(err);
+  }
+}
+
+const addTeam = async ({teamName, googleId}) => {
+  console.log(team)
+  const q = 'INSERT INTO teams(teamName,userId) VALUES(?, ?)';
+  const args = [teamName, googleId];
+  try {
+    const newTeam = await db.connection.query(q, args);
+    console.log(newTeam);
+    return newTeam;
+  } 
+  catch (err) {
+    console.log('error in helpers: ', err);
+  }
+}
+
+
+
 const escapeQuotes = (string) => string.split('/').join(',');
 const escapeHTML = (trivia) => {
   const decodedQuestion = {
@@ -78,4 +108,6 @@ module.exports = {
   escapeHTML,
   getUser,
   createUser,
+  getTeams,
+  addTeam
 };
