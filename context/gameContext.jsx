@@ -84,7 +84,6 @@ function GameContextProvider({ children }) {
     }
   };
 
-
   const increaseScore = () => {
     for (let i = 0; i < teams.length; i++) {
       if (currTeam === teams[i]) {
