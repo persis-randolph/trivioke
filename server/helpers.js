@@ -68,10 +68,13 @@ const setTeams = async ({ googleId, teams }) => {
     teams.map(async (team) => {
       let args = [team, googleId];
       let checkTeam = await db.connection.query(check, args);
+      console.log('check team', checkTeam[0]);
       if (!checkTeam[0].length) {
         await db.connection.query(add, args);
         checkTeam = await db.connection.query(check, args);
       }
+      
+      console.log('added to db: ', checkTeam[0])
       return checkTeam[0];
     })
   );
@@ -82,6 +85,7 @@ const getTeams = async (id) => {
   const q = "SELECT * FROM teams WHERE userId=?";
   try {
     const teams = await db.connection.query(q, id);
+    console.log('All the teams: ', teams[0])
     return teams[0];
   } catch (err) {
     console.log(err);

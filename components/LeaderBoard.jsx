@@ -20,13 +20,13 @@ const LeaderBoard = () => {
 
 
   return (
-    <div>
+    <center>
       <h1>Leader Board</h1>
       <h2>Current Teams</h2>
       {currentTeams}
       <h2>All Time Leaders</h2>
       {allTimeLeaders}
-    </div>
+    </center>
     
 
   )
