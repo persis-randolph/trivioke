@@ -2,17 +2,23 @@
 
 import React, { useState, useEffect, useContext } from 'react';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
+import { Redirect } from 'react-router-dom';
 import { GameContext } from '../context/gameContext';
 
 const Countdown = () => {
-  // const rerender = () => useState()[1];
-  const { state } = useContext(GameContext);
+  const { state, nextTeam } = useContext(GameContext);
   const { currTeam } = state;
   const [key, setKey] = useState(0);
 
   const renderTime = ({ remainingTime }) => {
+    //deal with this later
+    // if (remainingTime <= 10000 && remainingTime > 6000) {
+    //   return <div className="timer">Hurry Up</div>;
+    // }
+
     if (remainingTime === 0) {
-      return <div className="timer">Too late...</div>;
+      nextTeam();
+      return <Redirect to="/video" />;
     }
 
     return (
@@ -46,7 +52,5 @@ const Countdown = () => {
     </div>
   );
 };
-
-// link to player page if answer is wrong//
 
 export default Countdown;
