@@ -72,10 +72,19 @@ const escapeHTML = (trivia) => {
   };
   return decodedQuestion;
 };
+
+// takes in an array of category objects containing keys id and name.
+const parseCategories = (catArr) => {
+  catArr.reduce((acc, cat) => {
+    acc[cat.id] = cat.name;
+    return acc;
+  }, {});
+};
 module.exports = {
   getSongs,
   createSession,
   escapeHTML,
   getUser,
   createUser,
+  parseCategories,
 };
