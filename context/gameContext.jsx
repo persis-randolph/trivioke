@@ -32,7 +32,6 @@ function GameContextProvider({ children }) {
   const [trivia, setTrivia] = useState(false);
 
   const triviaRequest = async () => {
-    // const uri = !triviaBool ? '/trivia/multi' : '/trivia/bool';
     try {
       const { data } = await axios.get('/trivia/multi', {
         params: {
@@ -44,6 +43,21 @@ function GameContextProvider({ children }) {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const boolRequest = async () => {
+    try {
+      const { data } = await axios.get('/trivia/bool', {
+        params: {
+          categoryID: sessionStorage.category,
+          diff: sessionStorage.diff,
+        },
+      });
+      setQuestion(data);
+    } catch (error) {
+      console.error(error);
+    }
+    console.log(question);
   };
 
   const changeCat = () => {
@@ -149,6 +163,7 @@ function GameContextProvider({ children }) {
   const gameProps = {
     state,
     triviaRequest,
+    boolRequest,
     changeCat,
     nextTeam,
     // triggerVideo,
