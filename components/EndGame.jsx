@@ -6,7 +6,7 @@ import { GameContext } from '../context/gameContext';
 
 const EndGame = () => {
   const { state } = useContext(GameContext);
-  const { count, teams } = state;
+  const { count, teams, teamCards } = state;
 
   const loadTeamScores = () => {
     console.log(sessionStorage);

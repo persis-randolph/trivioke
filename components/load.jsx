@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 /* global sessionStorage */
 
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Filters from './filters';
 import Teams from './Teams';
@@ -9,7 +9,8 @@ import Game from './game';
 import { GameContext } from '../context/gameContext';
 
 const Load = () => {
-  const { state, triviaRequest } = useContext(GameContext);
+
+  const { state, triviaRequest, handleTeams, getTeams } = useContext(GameContext);
   const {
     teams,
     diff,
@@ -75,7 +76,7 @@ const Load = () => {
           </table>
           <div key="begin">
             <Link to="/game">
-              <button type="button" onClick={() => { begin(); triviaRequest(); }}><h5>Begin Game</h5></button>
+              <button type="button" onClick={() => { handleTeams(); begin(); triviaRequest(); }}><h5>Begin Game</h5></button>
             </Link>
           </div>
         </div>

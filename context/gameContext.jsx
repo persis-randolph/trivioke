@@ -1,10 +1,12 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 
-import React, { useState, createContext } from 'react';
+import React, { useState, createContext, useContext } from 'react';
 import axios from 'axios';
+import { UserContext } from './userContext';
 
 const GameContext = createContext();
 
@@ -25,9 +27,8 @@ const GameContextProvider = ({ children }) => {
   // Team State
   const [teams, setTeams] = useState([]);
   const [currTeam, setCurrTeam] = useState(teams[0]);
-  const [existingTeams, setExistingTeams] = useState([]);
-
-  
+  const [teamCards, setTeamCards] = useState([]);
+  const [allTeams, setAllTeams] = useState([]);
 
   // Answered Questions Count - starts at 0, goes up each time a question is completed
   const [count, setCount] = useState(0);
@@ -79,29 +80,43 @@ const GameContextProvider = ({ children }) => {
 
   //* for getting and sending team info to/from db
   const getTeams = (googleId) => {
-    axios.get('/teams', { params: {googleId} })
-    .then(({ data }) => {
-      console.log(data)
-      setExistingTeams(data);
-    })
-    .catch(err => console.log(err))
-  }
+    console.log('getTeams called')
+    axios.get('/teams', { params: { googleId } })
+      .then(({ data }) => {
+        console.log('all the teams:', data);
+        setAllTeams(data);
+      })
+      .catch((err) => console.log(err));
+  };
 
-  const postTeam = async (teamName) => {
+  const handleTeams = () => {
     const { googleId } = userInfo;
-    try {
-      const newTeam = axios.post('/teams', { googleId, teamName })
-      setExistingTeams(prevTeams => [...prevTeams, newTeam]);
-    }
-    catch (err) {
-      console.log(err)
-    }
+    
+    axios.get('/teams/set', { params: { teams, googleId } })
+    .then(({ data }) => {
+      setTeamCards(data); 
+    })
+    .catch(err=> console.log(err));
+      
+    console.log('teamCards in gameContext: ', teamCards);
+
+  };
+
+  const modifyTeamCard = (teamName) => {
+
+    axios.patch('/teams', {})
   }
 
-
-  // const triggerVideo = () => {
-  //   setVideoBool(prevVid => !prevVid)
-  // };
+  // const postTeam = async (teamName) => {
+  //   const { googleId } = userInfo;
+  //   try {
+  //     const newTeam = axios.post('/teams', { googleId, teamName })
+  //     setExistingTeams(prevTeams => [...prevTeams, newTeam]);
+  //   }
+  //   catch (err) {
+  //     console.log(err)
+  //   }
+  // }
 
   const increaseScore = () => {
     for (let i = 0; i < teams.length; i++) {
@@ -117,28 +132,23 @@ const GameContextProvider = ({ children }) => {
   };
 
   // add songs from database to state. Should only run on start of a new game
-  const addSongsToState = () => {
-    // console.log('hits addsongs')
-    axios.get('/songs')
-      .then(({ data }) => {
-        if (data.length) {
-          console.log('PATH: there is existing data in the db');
-          const rand = Math.floor(Math.random() * (data.length));
-          setVideos(data);
-          setVideo(data[rand]);
-        } else {
-          console.log('PATH: there is nothing in the db');
-          axios.post('/songs')
-            .then(() => {
-              axios.get('/songs')
-                .then(({ data }) => {
-                  const rand = Math.floor(Math.random() * (data.length - 1)) + 1;
-                  setVideo(data[rand]);
-                  setVideos(data);
-                });
-            });
-        }
-      });
+  const addSongsToState = async () => {
+    try {
+      const { data } = await axios.get('/songs');
+      if (data.length) {
+        const rand = Math.floor(Math.random() * (data.length));
+        setVideos(data);
+        setVideo(data[rand]);
+      } else {
+        console.log('data populating into db now');
+        await axios.post('/songs');
+        const { data } = await axios.get('/songs');
+        const rand = Math.floor(Math.random() * (data.length - 1)) + 1;
+        setVideos(data);
+      }
+    } catch (err) {
+      console.log('error with adding songs to state ', err);
+    }
   };
 
   const handleClick = () => {
@@ -163,8 +173,9 @@ const GameContextProvider = ({ children }) => {
     currTeam,
     setCurrTeam,
     teams,
-    existingTeams,
+    allTeams,
     setTeams,
+    teamCards,
     diff,
     setDiff,
     category,
@@ -186,8 +197,7 @@ const GameContextProvider = ({ children }) => {
     changeCat,
     nextTeam,
     getTeams,
-    postTeam,
-    // triggerVideo,
+    handleTeams,
     increaseScore,
     handleClick,
     addSongsToState,
@@ -200,6 +210,6 @@ const GameContextProvider = ({ children }) => {
       {children}
     </GameContext.Provider>
   );
-}
+};
 
 export { GameContextProvider, GameContext };

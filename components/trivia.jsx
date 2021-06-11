@@ -55,7 +55,7 @@ import { GameContext } from '../context/gameContext';
 // ** ATTEMPT AT REFACTOR, DID NOT WORK ******
 const Trivia = () => {
   const {
-    state, triviaRequest, nextTeam, increaseScore,
+    state, triviaRequest, nextTeam, increaseScore, gameCards
   } = useContext(GameContext);
 
   const { question, visibility } = state;

@@ -4,6 +4,7 @@ import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { UserContext } from '../context/userContext';
+import { GameContext } from '../context/gameContext';
 import clientId from '../src/googleConfig';
 
 const Login = () => {
@@ -15,11 +16,11 @@ const Login = () => {
 
   const onLoginSuccess = (res) => {
     // console.log('[Login Success] currentUser:', res.profileObj);
+    getTeams(res.profileObj.googleId);
     loginUser(res.profileObj);
     setShowLoginButton(false);
     setShowLogoutButton(true);
     // console.log('userInfo in login: ', userInfo);
-    getTeams(res.profileObj.googleId);
     sessionStorage.clear();
   };
 
