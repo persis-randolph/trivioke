@@ -106,12 +106,10 @@ function GameContextProvider({ children }) {
     try {
       const { data } = await axios.get('/songs');
       if (data.length) {
-        console.log('data already in db');
         const rand = Math.floor(Math.random() * (data.length));
         setVideos(data);
         setVideo(data[rand]);
       } else {
-        console.log('data populating into db now');
         await axios.post('/songs');
         const { data } = await axios.get('/songs');
         const rand = Math.floor(Math.random() * (data.length - 1)) + 1;
@@ -125,14 +123,25 @@ function GameContextProvider({ children }) {
   const handleClick = () => {
     setVisibility((prevVis) => !prevVis);
   };
-  const begin = () => {
-    sessionStorage.setItem('diff', diff);
-    sessionStorage.setItem('category', category);
-    sessionStorage.setItem('team1', team1);
-    sessionStorage.setItem('team2', team2);
-    sessionStorage.setItem('score1', 0);
-    sessionStorage.setItem('score2', 0);
-    setTrivia(true);
+
+  // const begin = () => {
+  //   sessionStorage.setItem('diff', diff);
+  //   sessionStorage.setItem('category', category);
+
+  //   // as a mapping function
+  //   teams.forEach((teamName, index) => {
+  //     sessionStorage.setItem(`team${index + 1}`, teamName);
+  //     sessionStorage.setItem(`score${index + 1}`, 0);
+  //   });
+  //   setTrivia(true);
+  // };
+
+  const end = () => {
+    sessionStorage.clear();
+    setTrivia(false);
+    setCount(0);
+    setTeams([]);
+    setCurrTeam(teams[0]);
   };
 
   const state = {
@@ -167,8 +176,9 @@ function GameContextProvider({ children }) {
     increaseScore,
     handleClick,
     addSongsToState,
-    begin,
+    // begin,
     increaseCount,
+    end,
   };
 
   return (
