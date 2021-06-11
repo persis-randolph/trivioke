@@ -9,7 +9,7 @@ import Game from './game';
 import { GameContext } from '../context/gameContext';
 
 const Load = () => {
-  const { state, triviaRequest } = useContext(GameContext);
+  const { state, triviaRequest, boolRequest } = useContext(GameContext);
   const {
     teams,
     diff,
@@ -73,8 +73,14 @@ const Load = () => {
             </thead>
           </table>
           <div key="begin">
+            <h5>Choose Your Question Type</h5>
             <Link to="/game">
-              <button type="button" onClick={() => { begin(); triviaRequest(); }}><h5>Begin Game</h5></button>
+              <button type="button" onClick={() => { begin(); triviaRequest(); }}><h5>Multiple Choice</h5></button>
+            </Link>
+          </div>
+          <div key="bool">
+            <Link to="/game">
+              <button type="button" onClick={() => { begin(); boolRequest(); }}><h5>True/False</h5></button>
             </Link>
           </div>
         </div>

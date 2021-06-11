@@ -23,7 +23,7 @@ function Game(props) {
     question,
     currTeam,
     visibility,
-    hidden,
+    // hidden,
     count,
     endGame,
     teams,
