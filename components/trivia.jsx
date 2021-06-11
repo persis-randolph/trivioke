@@ -86,7 +86,7 @@ const Trivia = () => {
         <button key="i1" style={{ display: visibility ? 'inline block' : 'none' }} type="button" onClick={() => { triviaRequest(); }}>{question.incorrect_answers[0]}</button>
       </Link>,
     ]);
-    const multiChoice = [
+    const triviaView = [
       <div key="trivia">
         <div key="question"><h3>{(question.question)}</h3></div>
         <div key="answers">{shuffleArr.map((answer, i) => <div key={i}>{answer}</div>)}</div>
@@ -95,7 +95,7 @@ const Trivia = () => {
 
     return (
       <div>
-        <div>{multiChoice}</div>
+        <div>{triviaView}</div>
       </div>
     );
   }
