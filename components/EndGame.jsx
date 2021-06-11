@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
@@ -17,9 +18,25 @@ const EndGame = () => {
     // score2: "1"
     // team1: "biscuits"
     // team2: "rutabagas"
+    // return (
+    //   teams.reduce(score, (teamName, i) => (
+    //     <div key={teamName + i}>
+    //       <h1>
+    //         Team
+    //         {' '}
+    //         {teamName}
+    //       </h1>
+    //       <h3>
+    //         Final Score:
+    //         {' '}
+    //         {sessionStorage[`score${i + 1}`]}
+    //       </h3>
+    //     </div>
+    //   ))
+    // );
     return (
       teams.map((teamName, i) => (
-        <div key={teamName}>
+        <div key={teamName + i}>
           <h1>
             Team
             {' '}
