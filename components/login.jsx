@@ -14,9 +14,9 @@ const Login = () => {
   const { loginUser, logoutUser } = useContext(UserContext);
   const { getTeams } = useContext(GameContext);
 
-  const onLoginSuccess = (res) => {
+  const onLoginSuccess = async (res) => {
     // console.log('[Login Success] currentUser:', res.profileObj);
-    getTeams(res.profileObj.googleId);
+    await getTeams(res.profileObj.googleId);
     loginUser(res.profileObj);
     setShowLoginButton(false);
     setShowLogoutButton(true);
