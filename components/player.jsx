@@ -10,17 +10,13 @@ import { GameContext } from '../context/gameContext';
 import { UserContext } from '../context/userContext';
 
 const VideoPlayer = () => {
-  const { state, increaseCount } = useContext(GameContext);
+  const { state, increaseCount, nextTeam } = useContext(GameContext);
   const { video, setVideo, videos } = state;
 
   const changeVideo = () => {
     const rand = Math.floor(Math.random() * (videos.length - 1)) + 1;
     setVideo(videos[rand]);
   };
-
-  // useEffect(() => {
-  //   nextTeam()
-  // }, [])
 
   return (
     <center>
@@ -34,7 +30,7 @@ const VideoPlayer = () => {
         >
           Change Song
         </button>
-        <Link to="/game">
+        <Link to="/game" onClick={() => { nextTeam(); }}>
           <button
             type="button"
             style={{

@@ -31,7 +31,7 @@ const EndGame = () => {
     console.log('sorted teams', highToLowScore);
     return (
       highToLowScore.map((team, i) => (
-        <div key={team[i][0] + i}>
+        <div key={team + i}>
           {i === 0 ? (
             <div>
               <h2>And the Winner is... 🥁</h2>
