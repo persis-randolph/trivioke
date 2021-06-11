@@ -55,7 +55,7 @@ import { GameContext } from '../context/gameContext';
 // ** ATTEMPT AT REFACTOR, DID NOT WORK ******
 const Trivia = () => {
   const {
-    state, triviaRequest, nextTeam, increaseScore,
+    state, triviaRequest, nextTeam, increaseScore, increaseCount,
   } = useContext(GameContext);
 
   const { question, visibility } = state;
@@ -69,12 +69,12 @@ const Trivia = () => {
   // console.log(question, 'in trivia');
   if (question) {
     const shuffleArr = shuffle([
-      <button key="c" type="button" onClick={() => { triviaRequest(); nextTeam(); increaseScore(); }}>{question.correct_answer}</button>,
+      <button key="c" type="button" onClick={() => { triviaRequest(); nextTeam(); increaseScore(); increaseCount(); }}>{question.correct_answer}</button>,
       <Link to="/video">
-        <button key="i1" style={{ display: visibility ? 'block' : 'none' }} type="button">{question.incorrect_answers[0]}</button>
+        <button key="i1" style={{ display: visibility ? 'inline block' : 'none' }} type="button">{question.incorrect_answers[0]}</button>
       </Link>,
       <Link to="/video">
-        <button key="i2" style={{ display: visibility ? 'block' : 'none' }} type="button">{question.incorrect_answers[1]}</button>
+        <button key="i2" style={{ display: visibility ? 'inline block' : 'none' }} type="button">{question.incorrect_answers[1]}</button>
       </Link>,
       <Link to="/video">
         <button key="i3" type="button">{question.incorrect_answers[2]}</button>
