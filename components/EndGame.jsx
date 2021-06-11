@@ -21,10 +21,10 @@ const EndGame = () => {
     // team2: "rutabagas"
     const highToLowScore = teams.reduce((highToLow, teamName, i) => {
       let index = 0;
-      while (index < highToLow.length && sessionStorage[`score${i + 1}`] < highToLow[index]) {
+      while (index > highToLow.length && sessionStorage[`score${i + 1}`] > highToLow[index]) {
         index++;
       }
-      highToLow.splice(i, 0, [teamName, sessionStorage[`score${i + 1}`]]);
+      highToLow.splice(index, 0, [teamName, sessionStorage[`score${i + 1}`]]);
       return highToLow;
     }, []);
 
