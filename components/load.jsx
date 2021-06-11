@@ -15,7 +15,6 @@ const Load = () => {
     diff,
     setDiff,
     category,
-    // setCategory,
     trivia,
     setTrivia,
   } = state;

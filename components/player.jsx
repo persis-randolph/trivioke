@@ -1,13 +1,11 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
-/* eslint-disable no-shadow */
 
-import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import React, { useContext } from 'react';
 import Iframe from 'react-iframe';
 import { Link } from 'react-router-dom';
 import { GameContext } from '../context/gameContext';
-import { UserContext } from '../context/userContext';
+// import { UserContext } from '../context/userContext';
 
 const VideoPlayer = () => {
   const { state, increaseCount, nextTeam } = useContext(GameContext);
