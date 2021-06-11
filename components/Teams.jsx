@@ -39,12 +39,6 @@ const Teams = () => {
     ));
   };
 
-  // const setter = (e) => {
-  //   if(e.key!== 'Enter'){
-  //     setTeamNames({ ...teamNames, [`team${count}`]: e.target.value }
-  //   }
-  // }
-
   const enterError = () => {
     Swal.fire({
       icon: 'error',
@@ -61,8 +55,6 @@ const Teams = () => {
 
   const listTeamForms = (n) => [...Array(n)].map((e, i) => {
     const count = i + 1;
-    // console.log('team names are: ', teamNames);
-    // console.log('teams are: ', teams);
     return (
       <form key={i}>
         <FormGroup

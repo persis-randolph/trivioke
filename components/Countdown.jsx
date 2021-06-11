@@ -13,22 +13,13 @@ const Countdown = () => {
   const [key, setKey] = useState(0);
 
   const timeoutAlert = () => {
-    Swal.fire(`You Have Run Out Of Time\n Time To Sing!`);
-    // .then(() => {
-    //    nextTeam();
-    // return <Redirect to="/video" />;
-    // });
+    Swal.fire('You Have Run Out Of Time\n Time To Sing!');
   };
 
   const renderTime = ({ remainingTime }) => {
-    // deal with this later
-    // if (remainingTime <= 10000 && remainingTime > 6000) {
-    //   return <div className="timer">Hurry Up</div>;
-    // }
-
     if (remainingTime === 0) {
+      nextTeam;
       timeoutAlert();
-      nextTeam();
       return <Redirect to="/video" />;
     }
 
