@@ -99,7 +99,7 @@ function GameContextProvider({ children }) {
           setVideos(data);
           setVideo(data[rand]);
         } else {
-          console.log('PATH: there is nothing in the db');
+          // console.log('PATH: there is nothing in the db');
           axios.post('/songs')
             .then(() => {
               axios.get('/songs')
