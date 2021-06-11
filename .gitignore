@@ -3,3 +3,4 @@ dist
 package-lock.json
 .env
 .vscode/extensions.json
+src/googleConfig.js

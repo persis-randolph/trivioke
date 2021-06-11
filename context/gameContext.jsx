@@ -1,10 +1,9 @@
-/* eslint-disable no-console */
-/* eslint-disable react/prop-types */
-/* eslint-disable no-shadow */
-/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
-import React, { useState, createContext, useContext } from 'react';
-import {UserContext} from './userContext';
+/* eslint-disable no-console */
+/* eslint-disable no-undef */
+/* eslint-disable react/prop-types */
+
+import React, { useState, createContext } from 'react';
 import axios from 'axios';
 
 const GameContext = createContext();
@@ -30,6 +29,11 @@ const GameContextProvider = ({ children }) => {
   const [existingTeams, setExistingTeams] = useState([]);
 
   
+
+  // Answered Questions Count - starts at 0, goes up each time a question is completed
+  const [count, setCount] = useState(0);
+  // boolean for if the game should end
+  const [endGame, setEndGame] = useState(false);
 
   const [triviaBool, setTriviaBool] = useState(false);
   const [hidden] = useState(false);
@@ -108,6 +112,10 @@ const GameContextProvider = ({ children }) => {
     }
   };
 
+  const increaseCount = () => {
+    setCount(count + 1);
+  };
+
   // add songs from database to state. Should only run on start of a new game
   const addSongsToState = () => {
     // console.log('hits addsongs')
@@ -156,6 +164,9 @@ const GameContextProvider = ({ children }) => {
     triviaBool,
     setTriviaBool,
     hidden,
+    count,
+    setCount,
+    setEndGame,
   };
 
   const gameProps = {
@@ -169,6 +180,7 @@ const GameContextProvider = ({ children }) => {
     increaseScore,
     halveChoices,
     addSongsToState,
+    increaseCount,
   };
 
   return (
