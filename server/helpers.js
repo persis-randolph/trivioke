@@ -73,7 +73,7 @@ const setTeams = async ({ googleId, teams }) => {
         await db.connection.query(add, args);
         checkTeam = await db.connection.query(check, args);
       }
-      
+
       console.log('added to db: ', checkTeam[0])
       return checkTeam[0];
     })
@@ -89,7 +89,7 @@ const getTeams = async (id) => {
     return teams[0];
   } catch (err) {
     console.log(err);
-  }
+  } 
 };
 
 const addTeam = async ({ teamName, googleId }) => {
