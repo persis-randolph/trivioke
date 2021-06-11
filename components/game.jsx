@@ -5,7 +5,7 @@ import Lifelines from './lifelines';
 import Trivia from './trivia';
 import Scoreboard from './scoreBoard';
 import { GameContext } from '../context/gameContext';
-import Countdown from './Countdown.jsx';
+import Countdown from './Countdown';
 
 function Game(props) {
   const {
