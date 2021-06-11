@@ -32,14 +32,11 @@ function Game(props) {
     team1,
     team2,
     visibility,
-    hidden,
   } = state;
 
   useEffect(() => {
     addSongsToState();
-    // triviaRequest();
   }, []);
-
   const { name1, name2 } = props;
   // if (!videoBool) {
   return (
@@ -51,14 +48,15 @@ function Game(props) {
           // halveChoices={halveChoices}
           // changeCat={changeCat} */}
         <Trivia
-          triviaRequest={triviaRequest}
-          // handleChange={handleChange}
-          question={question}
-          nextTeam={nextTeam}
-          increaseScore={increaseScore}
           hidden={visibility}
-          // trigger={triggerVideo}
+          question={question}
         />
+        {/* // triviaRequest={triviaRequest}
+          // handleChange={handleChange}
+          // nextTeam={nextTeam}
+          // increaseScore={increaseScore}
+          // trigger={triggerVideo} */}
+
         <Scoreboard
           currTeam={currTeam}
           team1={team1}

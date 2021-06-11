@@ -18,10 +18,13 @@ function GameContextProvider({ children }) {
   const [team1, setTeam1] = useState(0);
   const [team2, setTeam2] = useState(0);
   const [triviaBool, setTriviaBool] = useState(false);
+  const [diff, setDiff] = useState('easy');
+  const [category, setCategory] = useState(9);
+  const [trivia, setTrivia] = useState(false);
 
-  const triviaRequest = () => {
-    const uri = !triviaBool ? '/trivia/multi' : '/trivia/bool';
-    axios.get(uri, {
+  const triviaRequest = async () => {
+    // const uri = !triviaBool ? '/trivia/multi' : '/trivia/bool';
+    await axios.get('/trivia/multi', {
       params: {
         categoryID: sessionStorage.category,
         diff: sessionStorage.diff,
@@ -29,6 +32,7 @@ function GameContextProvider({ children }) {
     }).then(({ data }) => {
       console.log(data);
       setQuestion(data);
+      console.log('in context', question);
     }).catch((err) => {
       console.error(err);
     });
@@ -94,19 +98,35 @@ function GameContextProvider({ children }) {
   const handleClick = () => {
     setVisibility((prevVis) => !prevVis);
   };
+  const begin = () => {
+    sessionStorage.setItem('diff', diff);
+    sessionStorage.setItem('category', category);
+    sessionStorage.setItem('team1', team1);
+    sessionStorage.setItem('team2', team2);
+    sessionStorage.setItem('score1', 0);
+    sessionStorage.setItem('score2', 0);
+    setTrivia(true);
+  };
 
   const state = {
     // videoBool,
     video,
-    setVideo,
     videos,
     visibility,
     question,
+    trivia,
     currTeam,
     team1,
     team2,
     triviaBool,
+    category,
+    diff,
     setTriviaBool,
+    setCategory,
+    setDiff,
+    setVideo,
+    setTrivia,
+    setQuestion,
   };
 
   const gameProps = {
@@ -118,6 +138,7 @@ function GameContextProvider({ children }) {
     increaseScore,
     handleClick,
     addSongsToState,
+    begin,
   };
 
   return (
