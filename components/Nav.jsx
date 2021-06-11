@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-/* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 import React, { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -9,9 +8,11 @@ const Navbar = () => {
   const { isLoggedIn, userInfo } = useContext(UserContext);
 
   // this should dynamically render profile or login once isLoggedIn is being set correctly
-  // <Link to={ isLoggedIn ? "/profile" : "/login" } className="nav-link">{ isLoggedIn ? "Player Card" : "Login" }</Link>
+  // <Link to={ isLoggedIn ? "/profile" : "/login" }
+  // className="nav-link">{ isLoggedIn ? "Player Card" : "Login" }</Link>
 
-  // we can add other stuff if needed, or do away with the navbar and just have a link or button somewhere
+  // we can add other stuff if needed,
+  // or do away with the navbar and just have a link or button somewhere
 
   return (
     <nav className="navbar">

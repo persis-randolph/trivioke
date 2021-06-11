@@ -66,7 +66,7 @@ const Trivia = () => {
     }
     return answerArr;
   }
-  console.log(question, 'in trivia');
+  // console.log(question, 'in trivia');
   if (question) {
     const shuffleArr = shuffle([
       <button key="c" type="button" onClick={() => { triviaRequest(); nextTeam(); increaseScore(); }}>{question.correct_answer}</button>,

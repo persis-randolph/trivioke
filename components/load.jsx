@@ -1,16 +1,11 @@
-/* eslint-disable max-len */
-/* eslint-disable no-unused-vars */
-/* eslint-disable import/extensions */
-/* eslint-disable no-undef */
-/* eslint-disable no-restricted-globals */
+/* eslint-disable no-console */
+/* global sessionStorage */
 
-// Load Refactor
-
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import Filters from './filters.jsx';
-import Teams from './Teams.jsx';
-import Game from './game.jsx';
+import Filters from './filters';
+import Teams from './Teams';
+import Game from './game';
 import { GameContext } from '../context/gameContext';
 
 const Load = () => {
@@ -20,7 +15,7 @@ const Load = () => {
     diff,
     setDiff,
     category,
-    setCategory,
+    // setCategory,
     trivia,
     setTrivia,
   } = state;
@@ -185,9 +180,12 @@ export default Load;
 //             >
 //               <thead>
 //                 <tr style={{ cellpadding: 8, cellspacing: 8 }}>
-//                   <td><button type="button" name="diff" id="easy" onClick={this.handleClick}><h5>Easy</h5></button></td>
-//                   <td><button type="button" name="diff" id="medium" onClick={this.handleClick}><h5>Medium</h5></button></td>
-//                   <td><button type="button" name="diff" id="hard" onClick={this.handleClick}><h5>Hard</h5></button></td>
+// <td><button type="button" name="diff" id="easy"
+// onClick={this.handleClick}><h5>Easy</h5></button></td>
+// <td><button type="button" name="diff" id="medium"
+// onClick={this.handleClick}><h5>Medium</h5></button></td>
+// <td><button type="button" name="diff" id="hard"
+// onClick={this.handleClick}><h5>Hard</h5></button></td>
 //                 </tr>
 //               </thead>
 //             </table>

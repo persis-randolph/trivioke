@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 
@@ -26,7 +28,7 @@ const Teams = () => {
         key={i}
         value={n}
         onClick={(e) => {
-          setTeamNumber(parseInt(e.target.text));
+          setTeamNumber(parseInt(e.target.text, 10));
         }}
         href={`#/${n}-teams`}
       >
@@ -44,13 +46,15 @@ const Teams = () => {
   // const [teamState, setTeamState] = useState([]);
 
   useEffect(() => {
-    console.log('HERE ARE TEAM NAMES', teamNames);
+    // console.log('HERE ARE TEAM NAMES', teamNames);
     setTeams(Object.values(teamNames));
     setCurrTeam(teams[0]);
   }, [teamNames]);
 
   const listTeamForms = (n) => [...Array(n)].map((e, i) => {
     const count = i + 1;
+    console.log('team names are: ', teamNames);
+    console.log('teams are: ', teams);
     return (
       <form key={i}>
         <FormGroup
