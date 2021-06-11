@@ -17,7 +17,7 @@ const Scoreboard = () => {
     // console.log('teams are: ', teams, 'currentTeam is: ', currTeam);
     (
       teams.map((teamName, i) => (
-        <tr id={`team${i + 1}`} style={{ background: currTeam === teamName ? 'lightgreen' : 'transparent' }}>
+        <tr id={teamName + i} style={{ background: currTeam === teamName ? 'lightgreen' : 'transparent' }}>
           <td>{sessionStorage[`team${i + 1}`]}</td>
           <td>{sessionStorage[`score${i + 1}`]}</td>
         </tr>
