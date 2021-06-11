@@ -84,10 +84,6 @@ function GameContextProvider({ children }) {
     }
   };
 
-  // const triggerVideo = () => {
-  //   setVideoBool(prevVid => !prevVid)
-  // };
-
   const increaseScore = () => {
     for (let i = 0; i < teams.length; i++) {
       if (currTeam === teams[i]) {
@@ -174,10 +170,10 @@ function GameContextProvider({ children }) {
     nextTeam,
     // triggerVideo,
     increaseScore,
+    halveChoices,
     addSongsToState,
     // begin,
     increaseCount,
-    halveChoices,
     end,
   };
 
