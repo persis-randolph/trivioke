@@ -14,7 +14,7 @@ import Game from './game.jsx';
 import { GameContext } from '../context/gameContext';
 
 const Load = () => {
-  const { state } = useContext(GameContext);
+  const { state, triviaRequest } = useContext(GameContext);
   const {
     teams,
     diff,
