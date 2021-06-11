@@ -70,7 +70,6 @@ const Teams = () => {
             onChange={(e) => {
               if (e.key !== 'Enter') {
                 setTeamNames({ ...teamNames, [`team${count}`]: e.target.value });
-                console.log(e.key);
               }
             }}
           />

@@ -13,7 +13,7 @@ const Countdown = () => {
   const [key, setKey] = useState(0);
 
   const timeoutAlert = () => {
-    Swal.fire('You Have Run Out Of Time\n Time To Sing!');
+    Swal.fire('You Have Run Out Of Time\n Get Ready To Sing!');
   };
 
   const renderTime = ({ remainingTime }) => {
@@ -37,7 +37,7 @@ const Countdown = () => {
       size={140}
       key={key}
       isPlaying
-      duration={15}
+      duration={30}
       colors={[['#210004', 0.33], ['#A30000', 0.33], ['#c90018']]}
       onComplete={() => [false, 2000]}
     >
