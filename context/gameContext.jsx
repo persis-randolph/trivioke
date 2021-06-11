@@ -28,7 +28,6 @@ function GameContextProvider({ children }) {
   // boolean for if the game should end
   const [endGame, setEndGame] = useState(false);
 
-  const [triviaBool, setTriviaBool] = useState(false);
   const [trivia, setTrivia] = useState(false);
 
   const triviaRequest = async () => {
@@ -151,8 +150,6 @@ function GameContextProvider({ children }) {
     category,
     setCategory,
     setTrivia,
-    triviaBool,
-    setTriviaBool,
     count,
     setCount,
     setEndGame,
