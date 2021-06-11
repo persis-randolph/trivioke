@@ -18,7 +18,6 @@ function GameContextProvider({ children }) {
   // Game Options (Load.jsx) State
   const [diff, setDiff] = useState('medium');
   const [category, setCategory] = useState(9);
-  const [trivia, setTrivia] = useState(false);
 
   // Team State
   const [teams, setTeams] = useState([]);
@@ -30,20 +29,21 @@ function GameContextProvider({ children }) {
   const [endGame, setEndGame] = useState(false);
 
   const [triviaBool, setTriviaBool] = useState(false);
-  const [hidden] = useState(false);
+  const [trivia, setTrivia] = useState(false);
 
-  const triviaRequest = () => {
-    const uri = !triviaBool ? '/trivia/multi' : '/trivia/bool';
-    axios.get(uri, {
-      params: {
-        categoryID: sessionStorage.category,
-        diff: sessionStorage.diff,
-      },
-    }).then(({ data }) => {
+  const triviaRequest = async () => {
+    // const uri = !triviaBool ? '/trivia/multi' : '/trivia/bool';
+    try {
+      const { data } = await axios.get('/trivia/multi', {
+        params: {
+          categoryID: sessionStorage.category,
+          diff: sessionStorage.diff,
+        },
+      });
       setQuestion(data);
-    }).catch((err) => {
-      console.error(err);
-    });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const changeCat = () => {
@@ -94,6 +94,7 @@ function GameContextProvider({ children }) {
     axios.get('/songs')
       .then(({ data }) => {
         if (data.length) {
+          console.log('PATH: there is existing data in the db');
           const rand = Math.floor(Math.random() * (data.length));
           setVideos(data);
           setVideo(data[rand]);
@@ -112,16 +113,25 @@ function GameContextProvider({ children }) {
       });
   };
 
-  const halveChoices = () => {
+  const handleClick = () => {
     setVisibility((prevVis) => !prevVis);
+  };
+  const begin = () => {
+    sessionStorage.setItem('diff', diff);
+    sessionStorage.setItem('category', category);
+    sessionStorage.setItem('team1', team1);
+    sessionStorage.setItem('team2', team2);
+    sessionStorage.setItem('score1', 0);
+    sessionStorage.setItem('score2', 0);
+    setTrivia(true);
   };
 
   const state = {
     video,
-    setVideo,
     videos,
     visibility,
     question,
+    trivia,
     currTeam,
     setCurrTeam,
     teams,
@@ -130,14 +140,15 @@ function GameContextProvider({ children }) {
     setDiff,
     category,
     setCategory,
-    trivia,
     setTrivia,
     triviaBool,
     setTriviaBool,
-    hidden,
+    // hidden,
     count,
     setCount,
     setEndGame,
+    setVideo,
+    setQuestion,
   };
 
   const gameProps = {
@@ -147,8 +158,9 @@ function GameContextProvider({ children }) {
     nextTeam,
     // triggerVideo,
     increaseScore,
-    halveChoices,
+    handleClick,
     addSongsToState,
+    begin,
     increaseCount,
   };
 

@@ -30,9 +30,7 @@ function Game(props) {
 
   useEffect(() => {
     addSongsToState();
-    triviaRequest();
   }, []);
-
   return (
     <center>
       {/* this line decides the amount of rounds */}
@@ -41,15 +39,7 @@ function Game(props) {
       ) : (
         <div>
           <Lifelines />
-          <Trivia
-            triviaRequest={triviaRequest}
-            question={question}
-            nextTeam={nextTeam}
-            increaseScore={increaseScore}
-            hidden={visibility}
-            count={count}
-            increaseCount={increaseCount}
-          />
+          <Trivia />
           <Scoreboard />
         </div>
       )}
