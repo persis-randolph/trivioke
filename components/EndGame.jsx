@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
@@ -10,7 +11,7 @@ const EndGame = () => {
   const { count, teams } = state;
 
   const loadTeamScores = () => {
-    console.log(sessionStorage);
+    // console.log(sessionStorage); // => looks like this:
     // category: "9"
     // diff: "easy"
     // length: 6
@@ -18,35 +19,50 @@ const EndGame = () => {
     // score2: "1"
     // team1: "biscuits"
     // team2: "rutabagas"
-    // return (
-    //   teams.reduce(score, (teamName, i) => (
-    //     <div key={teamName + i}>
-    //       <h1>
-    //         Team
-    //         {' '}
-    //         {teamName}
-    //       </h1>
-    //       <h3>
-    //         Final Score:
-    //         {' '}
-    //         {sessionStorage[`score${i + 1}`]}
-    //       </h3>
-    //     </div>
-    //   ))
-    // );
+    const highToLowScore = teams.reduce((highToLow, teamName, i) => {
+      let index = 0;
+      while (index < highToLow.length && sessionStorage[`score${i + 1}`] < highToLow[index]) {
+        index++;
+      }
+      highToLow.splice(i, 0, [teamName, sessionStorage[`score${i + 1}`]]);
+      return highToLow;
+    }, []);
+
+    console.log('sorted teams', highToLowScore);
     return (
-      teams.map((teamName, i) => (
-        <div key={teamName + i}>
-          <h1>
-            Team
-            {' '}
-            {teamName}
-          </h1>
-          <h3>
-            Final Score:
-            {' '}
-            {sessionStorage[`score${i + 1}`]}
-          </h3>
+      highToLowScore.map((team, i) => (
+        <div key={team + i}>
+          {i === 0 ? (
+            <div>
+              <h2>And the Winner is... 🥁</h2>
+              <br />
+              <h1>
+                Team
+                {' '}
+                {team[0]}
+              </h1>
+              <h2>
+                Final Score:
+                {' '}
+                {team[1]}
+              </h2>
+              <br />
+              <h3>Maybe next time for:</h3>
+            </div>
+          ) : (
+            <div>
+              <h4>
+                Team
+                {' '}
+                {team[0]}
+              </h4>
+              <h5>
+                Final Score:
+                {' '}
+                {team[1]}
+              </h5>
+            </div>
+          )}
         </div>
       ))
     );

@@ -89,41 +89,46 @@ function GameContextProvider({ children }) {
   };
 
   // add songs from database to state. Should only run on start of a new game
-  const addSongsToState = () => {
-    // console.log('hits addsongs')
-    axios.get('/songs')
-      .then(({ data }) => {
-        if (data.length) {
-          console.log('PATH: there is existing data in the db');
-          const rand = Math.floor(Math.random() * (data.length));
-          setVideos(data);
-          setVideo(data[rand]);
-        } else {
-          // console.log('PATH: there is nothing in the db');
-          axios.post('/songs')
-            .then(() => {
-              axios.get('/songs')
-                .then(({ data }) => {
-                  const rand = Math.floor(Math.random() * (data.length - 1)) + 1;
-                  setVideo(data[rand]);
-                  setVideos(data);
-                });
-            });
-        }
-      });
+  const addSongsToState = async () => {
+    try {
+      const { data } = await axios.get('/songs');
+      if (data.length) {
+        const rand = Math.floor(Math.random() * (data.length));
+        setVideos(data);
+        setVideo(data[rand]);
+      } else {
+        await axios.post('/songs');
+        const { data } = await axios.get('/songs');
+        const rand = Math.floor(Math.random() * (data.length - 1)) + 1;
+        setVideos(data);
+      }
+    } catch (err) {
+      console.log('error with adding songs to state ', err);
+    }
   };
 
   const handleClick = () => {
     setVisibility((prevVis) => !prevVis);
   };
-  const begin = () => {
-    sessionStorage.setItem('diff', diff);
-    sessionStorage.setItem('category', category);
-    sessionStorage.setItem('team1', team1);
-    sessionStorage.setItem('team2', team2);
-    sessionStorage.setItem('score1', 0);
-    sessionStorage.setItem('score2', 0);
-    setTrivia(true);
+
+  // const begin = () => {
+  //   sessionStorage.setItem('diff', diff);
+  //   sessionStorage.setItem('category', category);
+
+  //   // as a mapping function
+  //   teams.forEach((teamName, index) => {
+  //     sessionStorage.setItem(`team${index + 1}`, teamName);
+  //     sessionStorage.setItem(`score${index + 1}`, 0);
+  //   });
+  //   setTrivia(true);
+  // };
+
+  const end = () => {
+    sessionStorage.clear();
+    setTrivia(false);
+    setCount(0);
+    setTeams([]);
+    setCurrTeam(teams[0]);
   };
 
   const state = {
@@ -160,8 +165,9 @@ function GameContextProvider({ children }) {
     increaseScore,
     handleClick,
     addSongsToState,
-    begin,
+    // begin,
     increaseCount,
+    end,
   };
 
   return (

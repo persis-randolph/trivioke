@@ -71,13 +71,13 @@ const Trivia = () => {
     const shuffleArr = shuffle([
       <button key="c" type="button" onClick={() => { triviaRequest(); nextTeam(); increaseScore(); increaseCount(); }}>{question.correct_answer}</button>,
       <Link to="/video">
-        <button key="i1" style={{ display: visibility ? 'inline block' : 'none' }} type="button">{question.incorrect_answers[0]}</button>
+        <button key="i1" style={{ display: visibility ? 'inline block' : 'none' }} type="button" onClick={() => { triviaRequest(); }}>{question.incorrect_answers[0]}</button>
       </Link>,
       <Link to="/video">
-        <button key="i2" style={{ display: visibility ? 'inline block' : 'none' }} type="button">{question.incorrect_answers[1]}</button>
+        <button key="i2" style={{ display: visibility ? 'inline block' : 'none' }} type="button" onClick={() => { triviaRequest(); }}>{question.incorrect_answers[1]}</button>
       </Link>,
       <Link to="/video">
-        <button key="i3" type="button">{question.incorrect_answers[2]}</button>
+        <button key="i3" type="button" onClick={() => { triviaRequest(); }}>{question.incorrect_answers[2]}</button>
       </Link>,
     ]);
     const multiChoice = [
