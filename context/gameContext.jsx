@@ -106,6 +106,7 @@ const GameContextProvider = ({ children }) => {
     axios.get('/teams/set', { params: { teams, googleId } })
     .then(({ data }) => {
       setTeamCards(data); 
+      getTeams(googleId);
     })
     .catch(err=> console.log(err));
   };
