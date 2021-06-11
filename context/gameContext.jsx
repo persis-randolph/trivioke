@@ -174,7 +174,6 @@ function GameContextProvider({ children }) {
     nextTeam,
     // triggerVideo,
     increaseScore,
-    handleClick,
     addSongsToState,
     // begin,
     increaseCount,
