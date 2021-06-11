@@ -175,7 +175,6 @@ function GameContextProvider({ children }) {
     addSongsToState,
     // begin,
     increaseCount,
-    halveChoices,
     end,
   };
 
