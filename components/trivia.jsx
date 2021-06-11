@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 /* eslint-disable react/no-array-index-key */
@@ -66,9 +67,9 @@ const Trivia = () => {
     }
     return answerArr;
   }
-  // console.log(question, 'in trivia');
   if (question) {
-    const shuffleArr = shuffle([
+    console.log(question);
+    const shuffleArr = question.incorrect_answers.length > 1 ? shuffle([
       <button key="c" type="button" onClick={() => { triviaRequest(); nextTeam(); increaseScore(); increaseCount(); }}>{question.correct_answer}</button>,
       <Link to="/video">
         <button key="i1" style={{ display: visibility ? 'inline block' : 'none' }} type="button" onClick={() => { triviaRequest(); }}>{question.incorrect_answers[0]}</button>
@@ -78,6 +79,11 @@ const Trivia = () => {
       </Link>,
       <Link to="/video">
         <button key="i3" type="button" onClick={() => { triviaRequest(); }}>{question.incorrect_answers[2]}</button>
+      </Link>,
+    ]) : shuffle([
+      <button key="c" type="button" onClick={() => { triviaRequest(); nextTeam(); increaseScore(); increaseCount(); }}>{question.correct_answer}</button>,
+      <Link to="/video">
+        <button key="i1" style={{ display: visibility ? 'inline block' : 'none' }} type="button" onClick={() => { triviaRequest(); }}>{question.incorrect_answers[0]}</button>
       </Link>,
     ]);
     const multiChoice = [
