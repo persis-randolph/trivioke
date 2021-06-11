@@ -2,13 +2,14 @@
 /* global sessionStorage */
 
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import Filters from './filters';
 import Teams from './Teams';
 import Game from './game';
 import { GameContext } from '../context/gameContext';
 
 const Load = () => {
-  const { state } = useContext(GameContext);
+  const { state, triviaRequest } = useContext(GameContext);
   const {
     teams,
     diff,
@@ -29,8 +30,8 @@ const Load = () => {
       sessionStorage.setItem(`score${index + 1}`, 0);
     });
     setTrivia(true);
-    console.log(teams);
-    console.log(sessionStorage);
+    // console.log(teams);
+    // console.log(sessionStorage);
   };
 
   const categories = {
@@ -73,7 +74,9 @@ const Load = () => {
             </thead>
           </table>
           <div key="begin">
-            <button type="button" onClick={() => begin()}><h5>Begin Game</h5></button>
+            <Link to="/game">
+              <button type="button" onClick={() => { begin(); triviaRequest(); }}><h5>Begin Game</h5></button>
+            </Link>
           </div>
         </div>
       </center>

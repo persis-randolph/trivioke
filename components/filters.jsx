@@ -4,15 +4,17 @@
 // Filters refactor
 
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { DropdownButton, Dropdown, ButtonToolbar } from 'react-bootstrap';
-
+import { GameContext } from '../context/gameContext';
 // // MenuItem was depreciated to Dropdown.Item
 // class Filters extends Component {
 //   render() {
 //     const { click } = this.props;
 const Filters = () => {
-  const [category, setCategory] = useState(9);
+  const { state } = useContext(GameContext);
+  const { setCategory } = state;
+
   const BUTTONS = ['Select Category'];
   const renderDropdownButton = (title, i) => (
     <DropdownButton
