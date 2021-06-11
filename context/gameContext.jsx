@@ -28,18 +28,17 @@ function GameContextProvider({ children }) {
 
   const triviaRequest = async () => {
     // const uri = !triviaBool ? '/trivia/multi' : '/trivia/bool';
-    await axios.get('/trivia/multi', {
-      params: {
-        categoryID: sessionStorage.category,
-        diff: sessionStorage.diff,
-      },
-    }).then(({ data }) => {
-      console.log(data);
+    try {
+      const { data } = await axios.get('/trivia/multi', {
+        params: {
+          categoryID: sessionStorage.category,
+          diff: sessionStorage.diff,
+        },
+      });
       setQuestion(data);
-      console.log('in context', question);
-    }).catch((err) => {
-      console.error(err);
-    });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const changeCat = () => {
