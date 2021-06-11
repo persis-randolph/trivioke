@@ -6,6 +6,8 @@
 // Teams Refactor
 
 import React, { useState, useContext, useEffect } from 'react';
+import Swal from 'sweetalert2';
+
 import {
   FormGroup, FormLabel, FormControl, DropdownButton, Dropdown,
 } from 'react-bootstrap';
@@ -37,6 +39,21 @@ const Teams = () => {
     ));
   };
 
+  // const setter = (e) => {
+  //   if(e.key!== 'Enter'){
+  //     setTeamNames({ ...teamNames, [`team${count}`]: e.target.value }
+  //   }
+  // }
+
+  const enterError = () => {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'You must click Begin to start Game!',
+    });
+  // alert('you must hit begin button')
+  };
+
   useEffect(() => {
     setTeams(Object.values(teamNames));
     setCurrTeam(teams[0]);
@@ -57,8 +74,12 @@ const Teams = () => {
             name={`team${count.toString()}`}
             placeholder="Enter text"
             value={teamNames[`team${count}`]}
-            onChange={async (e) => {
-              await setTeamNames({ ...teamNames, [`team${count}`]: e.target.value });
+            onKeyDown={(e) => e.key === 'Enter' && enterError()}
+            onChange={(e) => {
+              if (e.key !== 'Enter') {
+                setTeamNames({ ...teamNames, [`team${count}`]: e.target.value });
+                console.log(e.key);
+              }
             }}
           />
         </FormGroup>
