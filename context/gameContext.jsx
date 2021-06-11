@@ -1,8 +1,8 @@
-/* eslint-disable no-console */
-/* eslint-disable react/prop-types */
-/* eslint-disable no-shadow */
-/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
+/* eslint-disable no-console */
+/* eslint-disable no-undef */
+/* eslint-disable react/prop-types */
+
 import React, { useState, createContext } from 'react';
 import axios from 'axios';
 
@@ -14,23 +14,49 @@ function GameContextProvider({ children }) {
   const [videos, setVideos] = useState([]);
   const [visibility, setVisibility] = useState(true);
   const [question, setQuestion] = useState(null);
-  const [currTeam, setCurrTeam] = useState('team1');
-  const [team1, setTeam1] = useState(0);
-  const [team2, setTeam2] = useState(0);
-  const [triviaBool, setTriviaBool] = useState(false);
 
-  const triviaRequest = () => {
-    const uri = !triviaBool ? '/trivia/multi' : '/trivia/bool';
-    axios.get(uri, {
-      params: {
-        categoryID: sessionStorage.category,
-        diff: sessionStorage.diff,
-      },
-    }).then(({ data }) => {
+  // Game Options (Load.jsx) State
+  const [diff, setDiff] = useState('medium');
+  const [category, setCategory] = useState(9);
+
+  // Team State
+  const [teams, setTeams] = useState([]);
+  const [currTeam, setCurrTeam] = useState(teams[0]);
+
+  // Answered Questions Count - starts at 0, goes up each time a question is completed
+  const [count, setCount] = useState(0);
+  // boolean for if the game should end
+  const [endGame, setEndGame] = useState(false);
+
+  const [trivia, setTrivia] = useState(false);
+
+  const triviaRequest = async () => {
+    try {
+      const { data } = await axios.get('/trivia/multi', {
+        params: {
+          categoryID: sessionStorage.category,
+          diff: sessionStorage.diff,
+        },
+      });
       setQuestion(data);
-    }).catch((err) => {
-      console.error(err);
-    });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const boolRequest = async () => {
+    try {
+      const { data } = await axios.get('/trivia/bool', {
+        params: {
+          categoryID: sessionStorage.category,
+          diff: sessionStorage.diff,
+        },
+      });
+      setQuestion(data);
+    } catch (error) {
+      console.error(error);
+    }
+    console.log(question);
   };
 
   const changeCat = () => {
@@ -46,77 +72,114 @@ function GameContextProvider({ children }) {
       .catch((err) => { console.error(err); });
   };
 
-  const nextTeam = () => (currTeam === 'team1' ? setCurrTeam('team2') : setCurrTeam('team1'));
-
-  // const triggerVideo = () => {
-
-  //   // setVideoBool(prevVid => !prevVid)
-  //   // this.setState((prevState) => ({ video: !prevState.video }));
-  // };
-
-  const increaseScore = () => {
-    // const { currTeam } = this.state;
-    if (currTeam === 'team1') {
-      sessionStorage.setItem('score1', (Number(sessionStorage.score1) + 1));
-      setVisibility(true);
-    } else {
-      sessionStorage.setItem('score2', (Number(sessionStorage.score2) + 1));
-      setVisibility(true);
+  const nextTeam = () => {
+    for (let i = 0; i < teams.length; i++) {
+      if (currTeam === teams[i]) {
+        if (i + 1 !== teams.length) {
+          setCurrTeam(teams[i + 1]);
+        } else {
+          setCurrTeam(teams[0]);
+        }
+      }
     }
   };
 
-  // add songs from database to state. Should only run on start of a new game
-  const addSongsToState = () => {
-    // console.log('hits addsongs')
-    axios.get('/songs')
-      .then(({ data }) => {
-        if (data.length) {
-          console.log('PATH: there is existing data in the db');
-          const rand = Math.floor(Math.random() * (data.length));
-          setVideos(data);
-          setVideo(data[rand]);
-        } else {
-          console.log('PATH: there is nothing in the db');
-          axios.post('/songs')
-            .then(() => {
-              axios.get('/songs')
-                .then(({ data }) => {
-                  const rand = Math.floor(Math.random() * (data.length - 1)) + 1;
-                  setVideo(data[rand]);
-                  setVideos(data);
-                });
-            });
-        }
-      });
+  // const triggerVideo = () => {
+  //   setVideoBool(prevVid => !prevVid)
+  // };
+
+  const increaseScore = () => {
+    for (let i = 0; i < teams.length; i++) {
+      if (currTeam === teams[i]) {
+        sessionStorage.setItem(`score${i + 1}`, (Number(sessionStorage[`score${i + 1}`]) + 1));
+        setVisibility(true);
+      }
+    }
   };
 
-  const handleClick = () => {
+  const increaseCount = () => {
+    setCount(count + 1);
+  };
+
+  // add songs from database to state. Should only run on start of a new game
+  const addSongsToState = async () => {
+    try {
+      const { data } = await axios.get('/songs');
+      if (data.length) {
+        const rand = Math.floor(Math.random() * (data.length));
+        setVideos(data);
+        setVideo(data[rand]);
+      } else {
+        await axios.post('/songs');
+        const { data } = await axios.get('/songs');
+        const rand = Math.floor(Math.random() * (data.length - 1)) + 1;
+        setVideos(data);
+      }
+    } catch (err) {
+      console.log('error with adding songs to state ', err);
+    }
+  };
+
+  const halveChoices = () => {
     setVisibility((prevVis) => !prevVis);
   };
 
+  // const begin = () => {
+  //   sessionStorage.setItem('diff', diff);
+  //   sessionStorage.setItem('category', category);
+
+  //   // as a mapping function
+  //   teams.forEach((teamName, index) => {
+  //     sessionStorage.setItem(`team${index + 1}`, teamName);
+  //     sessionStorage.setItem(`score${index + 1}`, 0);
+  //   });
+  //   setTrivia(true);
+  // };
+
+  const end = () => {
+    sessionStorage.clear();
+    setTrivia(false);
+    setCount(0);
+    setTeams([]);
+    setCurrTeam(teams[0]);
+  };
+
   const state = {
-    // videoBool,
     video,
-    setVideo,
     videos,
     visibility,
     question,
+    trivia,
     currTeam,
-    team1,
-    team2,
-    triviaBool,
-    setTriviaBool,
+    setCurrTeam,
+    teams,
+    setTeams,
+    diff,
+    setDiff,
+    category,
+    setCategory,
+    setTrivia,
+    count,
+    setCount,
+    setEndGame,
+    setVideo,
+    setQuestion,
   };
 
   const gameProps = {
     state,
     triviaRequest,
+    boolRequest,
     changeCat,
     nextTeam,
     // triggerVideo,
     increaseScore,
     handleClick,
     addSongsToState,
+    // begin,
+    increaseCount,
+    halveChoices,
+    end,
   };
 
   return (

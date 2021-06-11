@@ -1,16 +1,9 @@
-/* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
-/* eslint-disable no-undef */
-/* eslint-disable react/prop-types */
-/* eslint-disable import/extensions */
-/* eslint-disable react/sort-comp */
-
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
-import Lifelines from './lifelines.jsx';
-import Trivia from './trivia.jsx';
-import Scoreboard from './scoreBoard.jsx';
-import VideoPlayer from './player.jsx';
+import { Link, Redirect } from 'react-router-dom';
+import Lifelines from './lifelines';
+import Trivia from './trivia';
+import Scoreboard from './scoreBoard';
 import { GameContext } from '../context/gameContext';
 
 function Game(props) {
@@ -19,58 +12,39 @@ function Game(props) {
     triviaRequest,
     changeCat,
     nextTeam,
-    // triggerVideo,
     increaseScore,
-    handleClick,
     addSongsToState,
+    increaseCount,
   } = useContext(GameContext);
 
   const {
     // videoBool,
     question,
     currTeam,
-    team1,
-    team2,
+    visibility,
+    // hidden,
+    count,
+    endGame,
+    teams,
   } = state;
 
   useEffect(() => {
     addSongsToState();
-    triviaRequest();
   }, []);
-
-  const { name1, name2 } = props;
-  // if (!videoBool) {
   return (
     <center>
-      <div>
-        <Lifelines
-            // handleChange={this.handleChange}
-          triviaRequest={triviaRequest}
-          handleClick={handleClick}
-          changeCat={changeCat}
-        />
-        <Trivia
-          triviaRequest={triviaRequest}
-            // handleChange={handleChange}
-          question={question}
-          nextTeam={nextTeam}
-          increaseScore={increaseScore}
-          // trigger={triggerVideo}
-        />
-        <Scoreboard
-          currTeam={currTeam}
-          team1={team1}
-          team2={team2}
-          name1={name1}
-          name2={name2}
-        />
-      </div>
+      {/* this line decides the amount of rounds */}
+      {count >= (teams.length * 3) ? (
+        <Redirect to="/endgame" />
+      ) : (
+        <div>
+          <Lifelines />
+          <Trivia />
+          <Scoreboard />
+        </div>
+      )}
     </center>
   );
-  // }
-  // return (
-  //   <VideoPlayer />
-  // );
 }
 
 // triviaRequest() {
@@ -114,7 +88,8 @@ function Game(props) {
 
 // nextTeam() {
 //   const { currTeam } = this.state;
-//   return currTeam === 'team1' ? this.setState({ currTeam: 'team2' }) : this.setState({ currTeam: 'team1' });
+//   return currTeam === 'team1' ? this.setState({ currTeam: 'team2' })
+// : this.setState({ currTeam: 'team1' });
 // }
 
 // triggerVideo() {
@@ -140,7 +115,7 @@ function Game(props) {
 //   this.triviaRequest();
 // }
 
-// handleClick() {
+// halveChoices() {
 //   const { visibility } = this.state;
 //   this.setState({ visibility: !visibility });
 // }
@@ -157,7 +132,7 @@ function Game(props) {
 //             <Lifelines
 //               handleChange={this.handleChange}
 //               triviaRequest={this.triviaRequest}
-//               handleClick={this.handleClick}
+//               halveChoices={this.halveChoices}
 //               changeCat={this.changeCat}
 //               bool={bool}
 //             />

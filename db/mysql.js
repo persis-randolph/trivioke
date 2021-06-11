@@ -9,7 +9,7 @@ const connection = mysql.createPool({
   user: 'root',
   password: process.env.DB_PASS || '',
   database: 'trivioke',
-  // port: '3307',
+  port: process.env.DB_PORT,
 });
 
 // this should only happen once;
