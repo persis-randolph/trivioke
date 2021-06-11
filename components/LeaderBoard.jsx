@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import TeamCard from './TeamCard';
 import { GameContext } from '../context/gameContext';
 
 const LeaderBoard = () => {
@@ -9,8 +10,25 @@ const LeaderBoard = () => {
     console.log('allTeams: ', allTeams, 'teamCards: ', teamCards)
   }, [])
 
+  const currentTeams = teamCards.map((team, i) => {
+    return <TeamCard team={team} key={i} />
+  }); 
+
+  const allTimeLeaders = allTeams.map((team, i) => {
+    return <TeamCard team={team} key={i} />
+  })
+
+
   return (
-    <h1>Leader Board</h1>
+    <div>
+      <h1>Leader Board</h1>
+      <h2>Current Teams</h2>
+      {currentTeams}
+      <h2>All Time Leaders</h2>
+      {allTimeLeaders}
+    </div>
+    
+
   )
 }
 

@@ -116,7 +116,6 @@ app.get("/teams/set", async (req, res) => {
 
 app.get("/teams", async (req, res) => {
   const { googleId } = req.query;
-  console.log('hit server: ', googleId);
   try {
     const teams = await getTeams(googleId);
     res.status(200).send(teams);

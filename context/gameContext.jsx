@@ -80,10 +80,8 @@ const GameContextProvider = ({ children }) => {
 
   //* for getting and sending team info to/from db
   const getTeams = (googleId) => {
-    console.log('getTeams called')
     axios.get('/teams', { params: { googleId } })
       .then(({ data }) => {
-        console.log('all the teams:', data);
         setAllTeams(data);
       })
       .catch((err) => console.log(err));
@@ -97,11 +95,9 @@ const GameContextProvider = ({ children }) => {
       setTeamCards(data); 
     })
     .catch(err=> console.log(err));
-      
-    console.log('teamCards in gameContext: ', teamCards);
-
   };
 
+  //* Gotta finish this
   const modifyTeamCard = (teamName) => {
 
     axios.patch('/teams', {})

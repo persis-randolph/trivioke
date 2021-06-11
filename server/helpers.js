@@ -82,7 +82,6 @@ const getTeams = async (id) => {
   const q = "SELECT * FROM teams WHERE userId=?";
   try {
     const teams = await db.connection.query(q, id);
-    console.log(teams[0]);
     return teams[0];
   } catch (err) {
     console.log(err);
@@ -95,7 +94,6 @@ const addTeam = async ({ teamName, googleId }) => {
   const args = [teamName, googleId];
   try {
     const newTeam = await db.connection.query(q, args);
-    console.log(newTeam);
     return newTeam;
   } catch (err) {
     console.log("error in helpers: ", err);
