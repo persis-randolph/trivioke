@@ -58,16 +58,7 @@ const Trivia = () => {
     state, triviaRequest, nextTeam, increaseScore,
   } = useContext(GameContext);
 
-  const {
-    question,
-    currTeam,
-    team1,
-    team2,
-    visibility,
-    hidden,
-    triviaBool,
-  } = state;
-  useEffect(() => triviaRequest(), []);
+  const { question, visibility } = state;
   function shuffle(answerArr) {
     for (let i = answerArr.length - 1; i > 0; i -= 1) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -75,22 +66,20 @@ const Trivia = () => {
     }
     return answerArr;
   }
-
+  // console.log(question);
   if (question) {
-    console.log(question);
-    const answers = [
+    const shuffleArr = shuffle([
       <button key="c" type="button" onClick={() => { triviaRequest(); nextTeam(); increaseScore(); }}>{question.correct_answer}</button>,
       <Link to="/video">
-        <button key="i1" style={{ display: hidden ? 'block' : 'none' }} type="button">{question.incorrect_answers[0]}</button>
+        <button key="i1" style={{ display: visibility ? 'block' : 'none' }} type="button">{question.incorrect_answers[0]}</button>
       </Link>,
       <Link to="/video">
-        <button key="i2" style={{ display: hidden ? 'block' : 'none' }} type="button">{question.incorrect_answers[1]}</button>
+        <button key="i2" style={{ display: visibility ? 'block' : 'none' }} type="button">{question.incorrect_answers[1]}</button>
       </Link>,
       <Link to="/video">
         <button key="i3" type="button">{question.incorrect_answers[2]}</button>
       </Link>,
-    ];
-    const shuffleArr = shuffle(answers);
+    ]);
     const multiChoice = [
       <div key="trivia">
         <div key="question"><h3>{(question.question)}</h3></div>

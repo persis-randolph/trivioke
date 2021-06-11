@@ -47,11 +47,10 @@ function Game(props) {
           // triviaRequest={triviaRequest}
           // halveChoices={halveChoices}
           // changeCat={changeCat} */}
-        <Trivia
-          hidden={visibility}
-          question={question}
-        />
+        <Trivia />
         {/* // triviaRequest={triviaRequest}
+        hidden={visibility}
+        question={question}
           // handleChange={handleChange}
           // nextTeam={nextTeam}
           // increaseScore={increaseScore}
