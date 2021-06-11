@@ -143,7 +143,7 @@ function GameContextProvider({ children }) {
     setTrivia,
     triviaBool,
     setTriviaBool,
-    hidden,
+    // hidden,
     count,
     setCount,
     setEndGame,
