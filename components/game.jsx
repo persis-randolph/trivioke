@@ -11,7 +11,7 @@ import Lifelines from './lifelines.jsx';
 import Trivia from './trivia.jsx';
 import Scoreboard from './scoreBoard.jsx';
 import VideoPlayer from './player.jsx';
-import { GameContext } from '../context/gameContext';
+import { GameContext } from '../context/gameContext.jsx';
 
 function Game(props) {
   const {
@@ -29,16 +29,12 @@ function Game(props) {
     // videoBool,
     question,
     currTeam,
-    team1,
-    team2,
     visibility,
   } = state;
 
   useEffect(() => {
     addSongsToState();
   }, []);
-  const { name1, name2 } = props;
-  // if (!videoBool) {
   return (
     <center>
       <div>
@@ -56,20 +52,10 @@ function Game(props) {
           // increaseScore={increaseScore}
           // trigger={triggerVideo} */}
 
-        <Scoreboard
-          currTeam={currTeam}
-          team1={team1}
-          team2={team2}
-          name1={name1}
-          name2={name2}
-        />
+        <Scoreboard />
       </div>
     </center>
   );
-  // }
-  // return (
-  //   <VideoPlayer />
-  // );
 }
 
 // triviaRequest() {

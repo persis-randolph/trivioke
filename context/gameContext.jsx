@@ -13,13 +13,17 @@ function GameContextProvider({ children }) {
   const [video, setVideo] = useState({ song: 'Frankie Valli - Can\'t Take My Eyes Off Of You Karaoke Lyrics', uri: 'UXYjQa_osMI' });
   const [videos, setVideos] = useState([]);
   const [visibility, setVisibility] = useState(true);
-  const [question, setQuestion] = useState({});
-  const [currTeam, setCurrTeam] = useState('team1');
-  const [team1, setTeam1] = useState(0);
-  const [team2, setTeam2] = useState(0);
-  const [triviaBool, setTriviaBool] = useState(false);
-  const [diff, setDiff] = useState('easy');
+  const [question, setQuestion] = useState(null);
+
+  // Game Options (Load.jsx) State
+  const [diff, setDiff] = useState('medium');
   const [category, setCategory] = useState(9);
+
+  // Team State
+  const [teams, setTeams] = useState([]);
+  const [currTeam, setCurrTeam] = useState(teams[0]);
+
+  const [triviaBool, setTriviaBool] = useState(false);
   const [trivia, setTrivia] = useState(false);
 
   const triviaRequest = async () => {
@@ -51,22 +55,28 @@ function GameContextProvider({ children }) {
       .catch((err) => { console.error(err); });
   };
 
-  const nextTeam = () => (currTeam === 'team1' ? setCurrTeam('team2') : setCurrTeam('team1'));
+  const nextTeam = () => {
+    for (let i = 0; i < teams.length; i++) {
+      if (currTeam === teams[i]) {
+        if (i + 1 !== teams.length) {
+          setCurrTeam(teams[i + 1]);
+        } else {
+          setCurrTeam(teams[0]);
+        }
+      }
+    }
+  };
 
   // const triggerVideo = () => {
-
-  //   // setVideoBool(prevVid => !prevVid)
-  //   // this.setState((prevState) => ({ video: !prevState.video }));
+  //   setVideoBool(prevVid => !prevVid)
   // };
 
   const increaseScore = () => {
-    // const { currTeam } = this.state;
-    if (currTeam === 'team1') {
-      sessionStorage.setItem('score1', (Number(sessionStorage.score1) + 1));
-      setVisibility(true);
-    } else {
-      sessionStorage.setItem('score2', (Number(sessionStorage.score2) + 1));
-      setVisibility(true);
+    for (let i = 0; i < teams.length; i++) {
+      if (currTeam === teams[i]) {
+        sessionStorage.setItem(`score${i + 1}`, (Number(sessionStorage[`score${i + 1}`]) + 1));
+        setVisibility(true);
+      }
     }
   };
 
@@ -109,23 +119,23 @@ function GameContextProvider({ children }) {
   };
 
   const state = {
-    // videoBool,
     video,
     videos,
     visibility,
     question,
     trivia,
     currTeam,
-    team1,
-    team2,
-    triviaBool,
-    category,
+    setCurrTeam,
+    teams,
+    setTeams,
     diff,
-    setTriviaBool,
-    setCategory,
     setDiff,
-    setVideo,
+    category,
+    setCategory,
     setTrivia,
+    triviaBool,
+    setTriviaBool,
+    setVideo,
     setQuestion,
   };
 

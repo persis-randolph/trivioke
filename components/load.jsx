@@ -14,13 +14,30 @@ import Game from './game.jsx';
 import { GameContext } from '../context/gameContext';
 
 const Load = () => {
-  // this is the hub setTeam should come Teams Component
-  const { state, begin, triviaRequest } = useContext(GameContext);
+  const { state } = useContext(GameContext);
   const {
-    setDiff, category, trivia, question,
+    teams,
+    diff,
+    setDiff,
+    category,
+    setCategory,
+    trivia,
+    setTrivia,
   } = state;
-  const [team1, setTeam1] = useState('bloke');
-  const [team2, setTeam2] = useState('anotherBloke');
+
+  const begin = () => {
+    sessionStorage.setItem('diff', diff);
+    sessionStorage.setItem('category', category);
+
+    // as a mapping function
+    teams.forEach((teamName, index) => {
+      sessionStorage.setItem(`team${index + 1}`, teamName);
+      sessionStorage.setItem(`score${index + 1}`, 0);
+    });
+    setTrivia(true);
+    console.log(teams);
+    console.log(sessionStorage);
+  };
 
   const categories = {
     9: 'General',
@@ -68,12 +85,11 @@ const Load = () => {
           </div>
         </div>
       </center>
-
     );
   }
   return (
     <div>
-      <Game question={question} category={category} diff={diff} name1={team1} name2={team2} />
+      <Game category={category} diff={diff} />
     </div>
   );
 };
