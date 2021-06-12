@@ -2,23 +2,22 @@
 /* eslint-disable no-undef */
 /* eslint-disable import/extensions */
 /* eslint-disable react/jsx-filename-extension */
-const React = require('react');
-const ReactDOM = require('react-dom');
-const {
-  Switch, Route, BrowserRouter: Router,
-} = require('react-router-dom');
-const Login = require('../components/login.jsx');
-const VideoPlayer = require('../components/player.jsx');
-const Load = require('../components/load.jsx');
-const Game = require('../components/game.jsx');
-const Navbar = require('../components/Nav.jsx');
-const EndGame = require('../components/EndGame.jsx');
-const LeaderBoard = require('../components/LeaderBoard');
-const { UserContextProvider } = require('../context/userContext');
-const { GameContextProvider } = require('../context/gameContext');
-require('./index.css');
+import React from 'react';
+import {
+  Switch, Route, Link, BrowserRouter as Router,
+} from 'react-router-dom';
+import Login from './login.jsx';
+import VideoPlayer from './player.jsx';
+import Load from './load.jsx';
+import Game from './game.jsx';
+import Navbar from './Nav.jsx';
+import EndGame from './EndGame.jsx';
+import LeaderBoard from './LeaderBoard';
+import '../src/index.css';
+import { UserContextProvider } from '../context/userContext';
+import { GameContextProvider } from '../context/gameContext';
 
-const routing = (
+const App = () => (
   <UserContextProvider>
     <GameContextProvider>
       <Router>
@@ -45,4 +44,4 @@ const routing = (
   </UserContextProvider>
 );
 
-ReactDOM.render(routing, document.getElementById('index'));
+export default App;
