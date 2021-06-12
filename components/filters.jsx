@@ -22,7 +22,12 @@ const Filters = () => {
       key={i}
       id={`dropdown-basic-${i}`}
     >
-      {catArr.map((cat) => <Dropdown.Item name="category" id={cat[0]} onClick={() => setCategory(parseInt(cat[0], 10))}>{cat[1]}</Dropdown.Item>)}
+      {catArr.map((cat) => (
+        <Dropdown.Item name="category" id={cat[0]} onClick={() => setCategory(parseInt(cat[0], 10))}>
+          {cat[1]}
+          {' '}
+        </Dropdown.Item>
+      ))}
     </DropdownButton>
   );
   const buttonsInstance = (
