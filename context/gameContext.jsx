@@ -96,7 +96,7 @@ const GameContextProvider = ({ children }) => {
       .then(({ data }) => {
         setAllTeams(data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.warn(err));
   };
 
   const handleTeams = () => {
@@ -106,7 +106,7 @@ const GameContextProvider = ({ children }) => {
         setTeamCards(data);
         getTeams(googleId);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.warn(err));
   };
 
   //* Gotta finish this
@@ -191,7 +191,7 @@ const GameContextProvider = ({ children }) => {
     setEndGame,
     setVideo,
     setQuestion,
-    timer, 
+    timer,
     setTimer,
   };
 
