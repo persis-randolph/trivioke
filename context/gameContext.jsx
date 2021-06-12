@@ -13,11 +13,14 @@ function GameContextProvider({ children }) {
   const [video, setVideo] = useState({ song: 'Frankie Valli - Can\'t Take My Eyes Off Of You Karaoke Lyrics', uri: 'UXYjQa_osMI' });
   const [videos, setVideos] = useState([]);
   const [visibility, setVisibility] = useState(true);
+
+  // Trivia Question State
   const [question, setQuestion] = useState(null);
 
   // Game Options (Load.jsx) State
   const [diff, setDiff] = useState('medium');
   const [category, setCategory] = useState(9);
+  const [categories, setCategories] = useState({});
 
   // Team State
   const [teams, setTeams] = useState([]);
@@ -120,17 +123,14 @@ function GameContextProvider({ children }) {
     setVisibility((prevVis) => !prevVis);
   };
 
-  // const begin = () => {
-  //   sessionStorage.setItem('diff', diff);
-  //   sessionStorage.setItem('category', category);
-
-  //   // as a mapping function
-  //   teams.forEach((teamName, index) => {
-  //     sessionStorage.setItem(`team${index + 1}`, teamName);
-  //     sessionStorage.setItem(`score${index + 1}`, 0);
-  //   });
-  //   setTrivia(true);
-  // };
+  const getCategories = async () => {
+    try {
+      const { data } = await axios.get('/categories');
+      setCategories(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const end = () => {
     sessionStorage.clear();
@@ -160,10 +160,13 @@ function GameContextProvider({ children }) {
     setEndGame,
     setVideo,
     setQuestion,
+    categories,
+    setCategories,
   };
 
   const gameProps = {
     state,
+    getCategories,
     triviaRequest,
     boolRequest,
     changeCat,
