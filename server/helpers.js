@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable consistent-return */
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
@@ -74,12 +75,15 @@ const escapeHTML = (trivia) => {
 };
 
 // takes in an array of category objects containing keys id and name.
-const parseCategories = (catArr) => {
-  catArr.reduce((acc, cat) => {
-    acc[cat.id] = cat.name;
-    return acc;
-  }, {});
-};
+const parseCategories = (catArr) => catArr.reduce((acc, cat) => {
+  // Cleans up category name by getting rid of redundant names ex: Science: Science & Mathematics
+  if (cat.name.includes(':')) {
+    const i = cat.name.indexOf(':');
+    cat.name = cat.name.slice(i + 2);
+  }
+  acc[cat.id] = cat.name;
+  return acc;
+}, {});
 module.exports = {
   getSongs,
   createSession,
