@@ -8,8 +8,12 @@ USE trivioke;
 
 CREATE TABLE users (
   googleId varchar(21) NOT NULL,
-  username varchar(15) NOT NULL UNIQUE,
+  username varchar(25) NOT NULL UNIQUE,
   score int(3) NULL,
+  wins INT DEFAULT 0,
+  losses INT DEFAULT 0,
+  highScore INT DEFAULT 0,
+  featuredSong varchar(30),
   PRIMARY KEY (googleId)
 );
 
@@ -19,6 +23,19 @@ CREATE TABLE songs (
   uri varchar(100) NOT NULL,
   PRIMARY KEY (id)
 );
+
+CREATE TABLE teams (
+  id int NOT NULL AUTO_INCREMENT,
+  teamName varchar(30) NOT NULL UNIQUE,
+  wins INT DEFAULT 0,
+  losses INT DEFAULT 0,
+  highScore INT DEFAULT 0,
+  currentScore INT DEFAULT 0,
+  userId varchar(21),
+  FOREIGN KEY (userId)
+    REFERENCES users(googleId),
+  PRIMARY KEY (id)
+)
 
 
 /*  Execute this file from the command line by typing:

@@ -14,6 +14,7 @@ import Game from '../components/game.jsx';
 import Profile from '../components/Profile.jsx';
 import Navbar from '../components/Nav.jsx';
 import EndGame from '../components/EndGame.jsx';
+import LeaderBoard from '../components/LeaderBoard';
 import './index.css';
 import { UserContextProvider } from '../context/userContext';
 import { GameContextProvider } from '../context/gameContext';
@@ -38,6 +39,7 @@ const routing = (
             <Route exact path="/game" component={Game} />
             <Route exact path="/profile" component={Profile} />
             <Route exact path="/endgame" component={EndGame} />
+            <Route exact path="/LeaderBoard" component={LeaderBoard} />
           </Switch>
         </div>
       </Router>

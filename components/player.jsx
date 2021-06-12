@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-/* eslint-disable no-console */
 
 import React, { useContext } from 'react';
 import Iframe from 'react-iframe';

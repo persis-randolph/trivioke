@@ -46,7 +46,8 @@ const getSongs = () => {
       maxResults: 50,
     },
   };
-  axios.get('https://www.googleapis.com/youtube/v3/search', options)
+  axios
+    .get('https://www.googleapis.com/youtube/v3/search', options)
     .then((data) => {
       // console.log('getSongs data: ', data.data.items);
       data.data.items.forEach((song) => {
@@ -58,6 +59,62 @@ const getSongs = () => {
     });
 };
 
+//* Team table helpers
+
+const setTeams = async ({ googleId, teams }) => {
+  const check = 'SELECT * FROM teams WHERE teamName=? AND userId=?';
+  const add = 'INSERT INTO teams(teamName,userId) VALUES(?, ?)';
+
+  const returnTeams = await Promise.all(
+    teams.map(async (team) => {
+      const args = [team, googleId];
+      let checkTeam = await db.connection.query(check, args);
+      console.log('check team', checkTeam[0]);
+      if (!checkTeam[0].length) {
+        await db.connection.query(add, args);
+        checkTeam = await db.connection.query(check, args);
+      }
+
+      console.log('added to db: ', checkTeam[0]);
+      return checkTeam[0];
+    }),
+  );
+  return returnTeams;
+};
+
+const getTeams = async (id) => {
+  const q = 'SELECT * FROM teams WHERE userId=?';
+  try {
+    const teams = await db.connection.query(q, id);
+    return teams[0];
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const addTeam = async ({ teamName, googleId }) => {
+  console.log(team);
+  const q = 'INSERT INTO teams(teamName,userId) VALUES(?, ?)';
+  const args = [teamName, googleId];
+  try {
+    const newTeam = await db.connection.query(q, args);
+    return newTeam;
+  } catch (err) {
+    console.log('error in helpers: ', err);
+  }
+};
+
+const teamAddWin = async (team) => {
+  const q = 'UPDATE teams SET ? = ? + 1 WHERE teamName = ?';
+  const args = [outcome, outcome, team];
+  const updatedTeam = await db.connection.query(q, args);
+  // console.log(updatedTeam);
+};
+
+const teamAddLoss = async (team) => {
+  const q = 'UPDATE teams SET losses = losses + 1 WHERE teamName = ?';
+};
+
 const escapeQuotes = (string) => string.split('/').join(',');
 const escapeHTML = (trivia) => {
   const decodedQuestion = {
@@ -65,11 +122,14 @@ const escapeHTML = (trivia) => {
     type: trivia.type,
     question: escapeQuotes(decode(trivia.question)),
     correct_answer: decode(trivia.correct_answer),
-    incorrect_answers: trivia.incorrect_answers.length === 1
-      ? [decode(trivia.incorrect_answers[0])]
-      : [decode(trivia.incorrect_answers[0]),
-        decode(trivia.incorrect_answers[1]),
-        decode(trivia.incorrect_answers[2])],
+    incorrect_answers:
+      trivia.incorrect_answers.length === 1
+        ? [decode(trivia.incorrect_answers[0])]
+        : [
+          decode(trivia.incorrect_answers[0]),
+          decode(trivia.incorrect_answers[1]),
+          decode(trivia.incorrect_answers[2]),
+        ],
   };
   return decodedQuestion;
 };
@@ -91,4 +151,7 @@ module.exports = {
   getUser,
   createUser,
   parseCategories,
+  getTeams,
+  addTeam,
+  setTeams,
 };

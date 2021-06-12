@@ -1,14 +1,19 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
+/* eslint-disable linebreak-style */
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 
-import React, { useState, createContext } from 'react';
+import React, { useState, createContext, useContext } from 'react';
 import axios from 'axios';
+import { UserContext } from './userContext';
 
 const GameContext = createContext();
 
-function GameContextProvider({ children }) {
+const GameContextProvider = ({ children }) => {
+  // get what we need from UserContext
+  const { userInfo } = useContext(UserContext);
+
   // const [videoBool, setVideoBool] = useState(false);
   const [video, setVideo] = useState({ song: 'Frankie Valli - Can\'t Take My Eyes Off Of You Karaoke Lyrics', uri: 'UXYjQa_osMI' });
   const [videos, setVideos] = useState([]);
@@ -21,10 +26,13 @@ function GameContextProvider({ children }) {
   const [diff, setDiff] = useState('medium');
   const [category, setCategory] = useState(9);
   const [categories, setCategories] = useState({});
+  const [timer, setTimer] = useState(30);
 
   // Team State
   const [teams, setTeams] = useState([]);
   const [currTeam, setCurrTeam] = useState(teams[0]);
+  const [teamCards, setTeamCards] = useState([]);
+  const [allTeams, setAllTeams] = useState([]);
 
   // Answered Questions Count - starts at 0, goes up each time a question is completed
   const [count, setCount] = useState(0);
@@ -43,7 +51,7 @@ function GameContextProvider({ children }) {
       });
       setQuestion(data);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
 
@@ -57,9 +65,8 @@ function GameContextProvider({ children }) {
       });
       setQuestion(data);
     } catch (error) {
-      console.error(error);
+      console.warn(error);
     }
-    console.log(question);
   };
 
   const changeCat = () => {
@@ -72,7 +79,7 @@ function GameContextProvider({ children }) {
         setQuestion(data.results[0]);
         sessionStorage.setItem('category', rand);
       })
-      .catch((err) => { console.error(err); });
+      .catch((err) => {});
   };
 
   const nextTeam = () => {
@@ -86,6 +93,41 @@ function GameContextProvider({ children }) {
       }
     }
   };
+
+  //* for getting and sending team info to/from db
+  const getTeams = (googleId) => {
+    axios.get('/teams', { params: { googleId } })
+      .then(({ data }) => {
+        setAllTeams(data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleTeams = () => {
+    const { googleId } = userInfo;
+    axios.get('/teams/set', { params: { teams, googleId } })
+      .then(({ data }) => {
+        setTeamCards(data);
+        getTeams(googleId);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  //* Gotta finish this
+  const modifyTeamCard = (teamName) => {
+    axios.patch('/teams', {});
+  };
+
+  // const postTeam = async (teamName) => {
+  //   const { googleId } = userInfo;
+  //   try {
+  //     const newTeam = axios.post('/teams', { googleId, teamName })
+  //     setExistingTeams(prevTeams => [...prevTeams, newTeam]);
+  //   }
+  //   catch (err) {
+  //     console.log(err)
+  //   }
+  // }
 
   const increaseScore = () => {
     for (let i = 0; i < teams.length; i++) {
@@ -115,7 +157,7 @@ function GameContextProvider({ children }) {
         setVideos(data);
       }
     } catch (err) {
-      console.log('error with adding songs to state ', err);
+      // console.log('error with adding songs to state ', err);
     }
   };
 
@@ -149,7 +191,9 @@ function GameContextProvider({ children }) {
     currTeam,
     setCurrTeam,
     teams,
+    allTeams,
     setTeams,
+    teamCards,
     diff,
     setDiff,
     category,
@@ -162,6 +206,8 @@ function GameContextProvider({ children }) {
     setQuestion,
     categories,
     setCategories,
+    timer,
+    setTimer,
   };
 
   const gameProps = {
@@ -171,11 +217,11 @@ function GameContextProvider({ children }) {
     boolRequest,
     changeCat,
     nextTeam,
-    // triggerVideo,
+    getTeams,
+    handleTeams,
     increaseScore,
     halveChoices,
     addSongsToState,
-    // begin,
     increaseCount,
     end,
   };
@@ -185,6 +231,6 @@ function GameContextProvider({ children }) {
       {children}
     </GameContext.Provider>
   );
-}
+};
 
 export { GameContextProvider, GameContext };

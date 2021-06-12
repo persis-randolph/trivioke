@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
@@ -40,12 +39,14 @@ const Teams = () => {
   };
 
   const enterError = () => {
+    event.preventDefault();
     Swal.fire({
       icon: 'error',
-      title: 'Oops...',
-      text: 'You must click Begin to start Game!',
+      title: 'Fill Out The Full Form To Begin The Game!',
+      width: 500,
+      backdrop:
+      'rgba(160, 160, 160, 0.39)'
     });
-  // alert('you must hit begin button')
   };
 
   useEffect(() => {
@@ -66,11 +67,10 @@ const Teams = () => {
             name={`team${count.toString()}`}
             placeholder="Enter text"
             value={teamNames[`team${count}`]}
-            onKeyDown={(e) => e.key === 'Enter' && enterError()}
+            onKeyDown={(e) => { if (e.key === 'Enter') { return enterError(); } return false; }}
             onChange={(e) => {
               if (e.key !== 'Enter') {
                 setTeamNames({ ...teamNames, [`team${count}`]: e.target.value });
-                console.log(e.key);
               }
             }}
           />

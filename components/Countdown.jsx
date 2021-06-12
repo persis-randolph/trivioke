@@ -1,4 +1,5 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable no-unused-expressions */
 
 import React, { useState, useEffect, useContext } from 'react';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
@@ -9,12 +10,17 @@ import { GameContext } from '../context/gameContext';
 
 const Countdown = () => {
   const { state, nextTeam } = useContext(GameContext);
-  const { currTeam } = state;
+  const { currTeam, timer } = state;
   const [key, setKey] = useState(0);
 
   const timeoutAlert = () => {
-    Swal.fire('You Have Run Out Of Time\n Time To Sing!');
-  };
+    Swal.fire({
+      imageUrl: '/goat-sing-resize.jpg',
+      title: '🎵🎶 Times Run Out, Get Ready To Sing! 🎶🎵',
+      padding: '3em',
+      width: 400
+    });
+ };
 
   const renderTime = ({ remainingTime }) => {
     if (remainingTime === 0) {
@@ -37,7 +43,7 @@ const Countdown = () => {
       size={140}
       key={key}
       isPlaying
-      duration={15}
+      duration={timer}
       colors={[['#210004', 0.33], ['#A30000', 0.33], ['#c90018']]}
       onComplete={() => [false, 2000]}
     >

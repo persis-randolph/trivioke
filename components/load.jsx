@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* global sessionStorage */
 
 import React, { useContext } from 'react';
@@ -10,8 +9,9 @@ import { GameContext } from '../context/gameContext';
 
 const Load = () => {
   const {
-    state, triviaRequest, boolRequest,
+    state, triviaRequest, boolRequest, handleTeams,
   } = useContext(GameContext);
+
   const {
     teams,
     diff,
@@ -20,6 +20,7 @@ const Load = () => {
     trivia,
     setTrivia,
     categories,
+    setTimer,
   } = state;
 
   const begin = () => {
@@ -60,15 +61,31 @@ const Load = () => {
               </tr>
             </thead>
           </table>
+          <h5>
+            Select Timer:
+            {' '}
+          </h5>
+          <table style={{
+            alignItems: 'center', width: '400px', display: 'flex', justifyContent: 'center',
+          }}
+          >
+            <thead>
+              <tr style={{ cellpadding: 8, cellspacing: 8 }}>
+                <td><button type="button" name="timer" id="15" onClick={() => { setTimer(15); }}><h5>15 seconds</h5></button></td>
+                <td><button type="button" name="timer" id="30" onClick={() => { setTimer(30); }}><h5>30 seconds</h5></button></td>
+                <td><button type="button" name="timer" id="45" onClick={() => { setTimer(45); }}><h5>45 seconds</h5></button></td>
+              </tr>
+            </thead>
+          </table>
           <div key="begin">
             <h5>Choose Your Question Type</h5>
             <Link to="/game">
-              <button type="button" onClick={() => { begin(); triviaRequest(); }}><h5>Multiple Choice</h5></button>
+              <button type="button" onClick={() => { handleTeams(); begin(); triviaRequest(); }}><h5>Multiple Choice</h5></button>
             </Link>
           </div>
           <div key="bool">
             <Link to="/game">
-              <button type="button" onClick={() => { begin(); boolRequest(); }}><h5>True/False</h5></button>
+              <button type="button" onClick={() => { handleTeams(); begin(); boolRequest(); }}><h5>True/False</h5></button>
             </Link>
           </div>
         </div>

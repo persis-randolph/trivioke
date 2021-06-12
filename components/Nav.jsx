@@ -1,5 +1,4 @@
 /* eslint-disable no-undef */
-/* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 import React, { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -20,6 +19,7 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <Link to="/profile" className="nav-link"> GamerCard </Link>
+      <Link to="/LeaderBoard" className="nav-link"> LeadeBoard </Link>
       <Link to="/login" className="nav-link"> Login/Logout </Link>
       <Link to="/load" className="nav-link" onClick={() => { end(); }}> New Game </Link>
     </nav>
