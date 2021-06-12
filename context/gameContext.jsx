@@ -22,6 +22,7 @@ const GameContextProvider = ({ children }) => {
   // Game Options (Load.jsx) State
   const [diff, setDiff] = useState('medium');
   const [category, setCategory] = useState(9);
+  const [timer, setTimer] = useState(30);
 
   // Team State
   const [teams, setTeams] = useState([]);
@@ -100,20 +101,18 @@ const GameContextProvider = ({ children }) => {
 
   const handleTeams = () => {
     const { googleId } = userInfo;
-    
     axios.get('/teams/set', { params: { teams, googleId } })
-    .then(({ data }) => {
-      setTeamCards(data); 
-      getTeams(googleId);
-    })
-    .catch(err=> console.log(err));
+      .then(({ data }) => {
+        setTeamCards(data);
+        getTeams(googleId);
+      })
+      .catch((err) => console.log(err));
   };
 
   //* Gotta finish this
   const modifyTeamCard = (teamName) => {
-
-    axios.patch('/teams', {})
-  }
+    axios.patch('/teams', {});
+  };
 
   // const postTeam = async (teamName) => {
   //   const { googleId } = userInfo;
@@ -192,6 +191,8 @@ const GameContextProvider = ({ children }) => {
     setEndGame,
     setVideo,
     setQuestion,
+    timer, 
+    setTimer,
   };
 
   const gameProps = {

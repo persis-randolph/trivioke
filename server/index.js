@@ -104,6 +104,7 @@ app.get('/users', async (req, res) => {
 //* TEAM ROUTES
 app.get('/teams/set', async (req, res) => {
   const { googleId, teams } = req.query;
+  console.log('this is req.query', req.query);
   try {
     let teamCards = await setTeams({ googleId, teams });
     teamCards = teamCards.map((team) => team[0]);
