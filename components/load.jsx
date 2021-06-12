@@ -19,6 +19,7 @@ const Load = () => {
     category,
     trivia,
     setTrivia,
+    setTimer,
   } = state;
 
   const begin = () => {
@@ -54,7 +55,7 @@ const Load = () => {
           <div key="team">
             <Teams />
           </div>
-          <Filters />
+            <Filters />
           <h5>
             Selected Category:
             {' '}
@@ -69,6 +70,22 @@ const Load = () => {
                 <td><button type="button" name="diff" id="easy" onClick={() => { setDiff('easy'); }}><h5>Easy</h5></button></td>
                 <td><button type="button" name="diff" id="medium" onClick={() => { setDiff('medium'); }}><h5>Medium</h5></button></td>
                 <td><button type="button" name="diff" id="hard" onClick={() => { setDiff('hard'); }}><h5>Hard</h5></button></td>
+              </tr>
+            </thead>
+          </table>
+          <h5>
+            Select Timer:
+            {' '}
+          </h5>
+          <table style={{
+            alignItems: 'center', width: '400px', display: 'flex', justifyContent: 'center',
+          }}
+          >
+            <thead>
+              <tr style={{ cellpadding: 8, cellspacing: 8 }}>
+                <td><button type="button" name="timer" id="15" onClick={() => { setTimer(15); }}><h5>15 seconds</h5></button></td>
+                <td><button type="button" name="timer" id="30" onClick={() => { setTimer(30); }}><h5>30 seconds</h5></button></td>
+                <td><button type="button" name="timer" id="45" onClick={() => { setTimer(45); }}><h5>45 seconds</h5></button></td>
               </tr>
             </thead>
           </table>
@@ -95,3 +112,5 @@ const Load = () => {
 };
 
 export default Load;
+
+
