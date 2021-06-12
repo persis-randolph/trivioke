@@ -21,7 +21,7 @@ module.exports = {
     production: {
       user: 'ubuntu',
       host: 'ec2-18-223-184-101.us-east-2.compute.amazonaws.com',
-      key: '~/.ssh/trioke-key.pem',
+      key: '~/.ssh/trivioke-key.pem',
       ref: 'origin/master',
       repo: 'git@github.com:BiscuitBae/trivioke.git',
       path: '/home/ubuntu/trivioke',
