@@ -66,6 +66,7 @@ app.get('/trivia/bool', (req, res) => {
     });
 });
 
+//* CATEGORY ROUTES
 app.get('/categories', (req, res) => {
   axios.get('https://opentdb.com/api_category.php')
     .then(({ data }) => {
