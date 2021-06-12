@@ -1,8 +1,7 @@
 /* eslint-disable react/prop-types */
+/* eslint-disable react/prop-types */
 
-// Filters refactor
-
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { DropdownButton, Dropdown, ButtonToolbar } from 'react-bootstrap';
 import { GameContext } from '../context/gameContext';
 
