@@ -1,11 +1,10 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useContext } from 'react';
 
 import { GameContext } from '../context/gameContext';
 
 const Lifelines = () => {
-  const { halveChoices, triviaRequest, changeCat } = useContext(GameContext);
+  const { halveChoices, triviaRequest } = useContext(GameContext);
   return (
     <div>
       <h4>Lifelines</h4>
