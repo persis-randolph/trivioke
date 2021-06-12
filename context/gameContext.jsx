@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-/* eslint-disable no-console */
 /* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 
@@ -9,7 +8,6 @@ import axios from 'axios';
 const GameContext = createContext();
 
 function GameContextProvider({ children }) {
-  // const [videoBool, setVideoBool] = useState(false);
   const [video, setVideo] = useState({ song: 'Frankie Valli - Can\'t Take My Eyes Off Of You Karaoke Lyrics', uri: 'UXYjQa_osMI' });
   const [videos, setVideos] = useState([]);
   const [visibility, setVisibility] = useState(true);
@@ -40,7 +38,7 @@ function GameContextProvider({ children }) {
       });
       setQuestion(data);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
 
@@ -54,9 +52,8 @@ function GameContextProvider({ children }) {
       });
       setQuestion(data);
     } catch (error) {
-      console.error(error);
+      console.warn(error);
     }
-    console.log(question);
   };
 
   const changeCat = () => {
@@ -69,7 +66,7 @@ function GameContextProvider({ children }) {
         setQuestion(data.results[0]);
         sessionStorage.setItem('category', rand);
       })
-      .catch((err) => { console.error(err); });
+      .catch((err) => {});
   };
 
   const nextTeam = () => {
@@ -112,25 +109,13 @@ function GameContextProvider({ children }) {
         setVideos(data);
       }
     } catch (err) {
-      console.log('error with adding songs to state ', err);
+      // console.log('error with adding songs to state ', err);
     }
   };
 
   const halveChoices = () => {
     setVisibility((prevVis) => !prevVis);
   };
-
-  // const begin = () => {
-  //   sessionStorage.setItem('diff', diff);
-  //   sessionStorage.setItem('category', category);
-
-  //   // as a mapping function
-  //   teams.forEach((teamName, index) => {
-  //     sessionStorage.setItem(`team${index + 1}`, teamName);
-  //     sessionStorage.setItem(`score${index + 1}`, 0);
-  //   });
-  //   setTrivia(true);
-  // };
 
   const end = () => {
     sessionStorage.clear();
@@ -168,11 +153,9 @@ function GameContextProvider({ children }) {
     boolRequest,
     changeCat,
     nextTeam,
-    // triggerVideo,
     increaseScore,
     halveChoices,
     addSongsToState,
-    // begin,
     increaseCount,
     end,
   };

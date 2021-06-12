@@ -1,5 +1,4 @@
 /* eslint-disable implicit-arrow-linebreak */
-/* eslint-disable no-console */
 /* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
@@ -11,10 +10,8 @@ const Scoreboard = () => {
   // load score board
   const { state } = useContext(GameContext);
   const { teams, currTeam, setCurrTeam } = state;
-  //  setCurrTeam( teams[0] )
 
   const loadScoreBoard = () =>
-    // console.log('teams are: ', teams, 'currentTeam is: ', currTeam);
     (
       teams.map((teamName, i) => (
         <tr id={teamName + i} style={{ background: currTeam === teamName ? 'lightgreen' : 'transparent' }}>

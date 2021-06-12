@@ -1,7 +1,6 @@
 /* eslint-disable max-len */
 /* eslint-disable no-plusplus */
 /* eslint-disable react/no-array-index-key */
-/* eslint-disable no-console */
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 import React, { useContext } from 'react';
@@ -26,8 +25,6 @@ const EndGame = () => {
       return acc;
     }, []);
 
-    console.log(teamScoreMap);
-
     // [[biscuits, 1], [rutabagas, 2]];
 
     teamScoreMap.sort((a, b) => {
@@ -35,16 +32,6 @@ const EndGame = () => {
       if (a[1] > b[1]) return -1;
       return 0;
     });
-
-    // const highToLowScore = teams.reduce((highToLow, teamName, i) => {
-    //   let index = 0;
-    //   while (index < highToLow.length && sessionStorage[`score${i + 1}`] > highToLow[index]) {
-    //     console.log('index: ', index, 'highToLow: ', highToLow, 'sessionStorage[`score${i + 1}`]:', sessionStorage[`score${i + 1}`], 'highToLow[index]: ', highToLow[index]);
-    //     index++;
-    //   }
-    //   highToLow.splice(index, 0, [teamName, sessionStorage[`score${i + 1}`]]);
-    //   return highToLow;
-    // }, []);
 
     return (
       teamScoreMap.map((team, i) => (

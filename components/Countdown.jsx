@@ -1,4 +1,5 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable no-unused-expressions */
 
 import React, { useState, useEffect, useContext } from 'react';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';

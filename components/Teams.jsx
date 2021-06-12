@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
@@ -70,7 +69,6 @@ const Teams = () => {
             onChange={(e) => {
               if (e.key !== 'Enter') {
                 setTeamNames({ ...teamNames, [`team${count}`]: e.target.value });
-                console.log(e.key);
               }
             }}
           />

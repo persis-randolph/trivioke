@@ -9,10 +9,12 @@ module.exports = {
     env: {
       NODE_ENV: 'development',
       YOUTUBE_API_KEY: process.env.YOUTUBE_API_KEY,
+      DB_PASS: process.env.DB_PASS,
     },
     env_production: {
       NODE_ENV: 'development',
       YOUTUBE_API_KEY: process.env.YOUTUBE_API_KEY,
+      DB_PASS: process.env.DB_PASS,
     },
   }],
   deploy: {
@@ -27,10 +29,12 @@ module.exports = {
       env: {
         NODE_ENV: 'development',
         YOUTUBE_API_KEY: process.env.YOUTUBE_API_KEY,
+        DB_PASS: process.env.DB_PASS,
       },
       env_production: {
         NODE_ENV: 'development',
         YOUTUBE_API_KEY: process.env.YOUTUBE_API_KEY,
+        DB_PASS: process.env.DB_PASS,
       },
     },
   },
