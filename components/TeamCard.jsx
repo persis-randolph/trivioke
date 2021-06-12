@@ -1,13 +1,13 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useContext } from 'react';
+import React from 'react';
 // import { GameContext } from '../context/gameContext';
 
 const TeamCard = ({ team }) => {
   // const { state } = useContext(GameContext);
   // const { allTeams, teamCards } = state;
   const {
-    teamName, wins, losses, highScore, currentScore,
+    teamName, wins, losses, highScore,
   } = team;
 
   return (

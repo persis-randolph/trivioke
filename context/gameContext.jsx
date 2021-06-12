@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable linebreak-style */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
@@ -96,7 +97,7 @@ const GameContextProvider = ({ children }) => {
       .then(({ data }) => {
         setAllTeams(data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.warn(err));
   };
 
   const handleTeams = () => {
@@ -106,24 +107,17 @@ const GameContextProvider = ({ children }) => {
         setTeamCards(data);
         getTeams(googleId);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.warn(err));
   };
 
-  //* Gotta finish this
-  const modifyTeamCard = (teamName) => {
-    axios.patch('/teams', {});
+  //* Called from EndGame to update stats of all participating teams
+  const modifyTeamCards = async (gameResults) => {
+    const { data: updatedTeams } = await axios.patch('/teams', { gameResults });
+    // checks allTeams in state and replaces the team objects that have just been updated as well as replace
+    // current teams
+    setTeamCards(updatedTeams);
+    setAllTeams((prevTeams) => prevTeams.map((team) => updatedTeams.find((o) => o.id === team.id) || team));
   };
-
-  // const postTeam = async (teamName) => {
-  //   const { googleId } = userInfo;
-  //   try {
-  //     const newTeam = axios.post('/teams', { googleId, teamName })
-  //     setExistingTeams(prevTeams => [...prevTeams, newTeam]);
-  //   }
-  //   catch (err) {
-  //     console.log(err)
-  //   }
-  // }
 
   const increaseScore = () => {
     for (let i = 0; i < teams.length; i++) {
@@ -191,7 +185,7 @@ const GameContextProvider = ({ children }) => {
     setEndGame,
     setVideo,
     setQuestion,
-    timer, 
+    timer,
     setTimer,
   };
 
@@ -208,6 +202,7 @@ const GameContextProvider = ({ children }) => {
     addSongsToState,
     increaseCount,
     end,
+    modifyTeamCards,
   };
 
   return (
