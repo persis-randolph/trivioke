@@ -12,15 +12,13 @@ const Login = () => {
   // const [userInfo, setUserInfo] = useState({});
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { loginUser, logoutUser } = useContext(UserContext);
-  const { getTeams } = useContext(GameContext);
+  const { getTeams, isLoggedIn } = useContext(GameContext);
 
-  const onLoginSuccess = async (res) => {
-    // console.log('[Login Success] currentUser:', res.profileObj);
-    await getTeams(res.profileObj.googleId);
-    loginUser(res.profileObj);
+  const onLoginSuccess = (res) => {
+    if (!isLoggedIn) {
+      loginUser(res.profileObj);
+    }
     setShowLoginButton(false);
-    setShowLogoutButton(true);
-    // console.log('userInfo in login: ', userInfo);
     sessionStorage.clear();
   };
 
