@@ -8,16 +8,13 @@ import React, { useContext } from 'react';
 import { GameContext } from '../context/gameContext';
 
 const Scoreboard = () => {
-  // load score board
   const { state } = useContext(GameContext);
   const { teams, currTeam, setCurrTeam } = state;
-  //  setCurrTeam( teams[0] )
 
   const loadScoreBoard = () =>
-    // console.log('teams are: ', teams, 'currentTeam is: ', currTeam);
     (
       teams.map((teamName, i) => (
-        <tr id={teamName + i} style={{ background: currTeam === teamName ? 'lightgreen' : 'transparent' }}>
+        <tr key={i} id={teamName + i} style={{ background: currTeam === teamName ? 'lightgreen' : 'transparent' }}>
           <td>{sessionStorage[`team${i + 1}`]}</td>
           <td>{sessionStorage[`score${i + 1}`]}</td>
         </tr>

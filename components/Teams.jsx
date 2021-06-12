@@ -45,6 +45,7 @@ const Teams = () => {
       title: 'Oops...',
       text: 'You must click Begin to start Game!',
     });
+    return false;
   // alert('you must hit begin button')
   };
 
@@ -66,7 +67,7 @@ const Teams = () => {
             name={`team${count.toString()}`}
             placeholder="Enter text"
             value={teamNames[`team${count}`]}
-            onKeyDown={(e) => e.key === 'Enter' && enterError()}
+            onKeyDown={(e) => { if (e.key === 'Enter') { return enterError(); } console.log('click!') }}
             onChange={(e) => {
               if (e.key !== 'Enter') {
                 setTeamNames({ ...teamNames, [`team${count}`]: e.target.value });
