@@ -29,6 +29,7 @@ CREATE TABLE teams (
   teamName varchar(30) NOT NULL UNIQUE,
   wins INT DEFAULT 0,
   losses INT DEFAULT 0,
+  draws INT DEFAULT 0,
   highScore INT DEFAULT 0,
   currentScore INT DEFAULT 0,
   userId varchar(21),
