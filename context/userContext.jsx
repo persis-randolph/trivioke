@@ -9,8 +9,6 @@ const UserContext = createContext();
 function UserContextProvider({ children }) {
   const [userInfo, setUserInfo] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [highScore, setHighScore] = useState(0);
-  const [record, setRecord] = useState({})
 
   const loginUser = (userData) => {
     axios.get('/users', { params: userData })
@@ -45,11 +43,10 @@ function UserContextProvider({ children }) {
     });
   };
 
-
   //* Here's where we'll update a player's stats. Update locally and
   //* then call to the server to update the player's info in the db
   // const adjustRecord = () => {
-    
+
   // }
 
   // const checkHighScore = (score) => {
@@ -58,8 +55,6 @@ function UserContextProvider({ children }) {
   //     axios.patch('/users/stats:id' {params: score})
   //   }
   // }
-
-
 
   const userProps = {
     userInfo,
