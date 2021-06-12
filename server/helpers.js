@@ -104,6 +104,18 @@ const addTeam = async ({ teamName, googleId }) => {
   }
 };
 
+const teamAddWin = async (team) => {
+  let q = "UPDATE teams SET ? = ? + 1 WHERE teamName = ?";
+  let args = [outcome, outcome, team];
+  let updatedTeam = await db.connection.query(q, args);
+  console.log(updatedTeam);
+}
+
+const teamAddLoss = async (team) => {
+  let q = "UPDATE teams SET losses = losses + 1 WHERE teamName = ?"
+}
+
+
 const escapeQuotes = (string) => string.split("/").join(",");
 const escapeHTML = (trivia) => {
   const decodedQuestion = {

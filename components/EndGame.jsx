@@ -3,7 +3,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { GameContext } from '../context/gameContext';
 
 const EndGame = () => {
@@ -11,7 +11,7 @@ const EndGame = () => {
   const { count, teams, teamCards } = state;
 
   const loadTeamScores = () => {
-    // console.log(sessionStorage); // => looks like this:
+    console.log('sessionStorage', sessionStorage); // => looks like this:
     // category: "9"
     // diff: "easy"
     // length: 6
@@ -19,6 +19,12 @@ const EndGame = () => {
     // score2: "1"
     // team1: "biscuits"
     // team2: "rutabagas"
+
+    // useEffect(() => {
+    //   console.log('these the teams', teams)
+
+    // }, [])
+
     const highToLowScore = teams.reduce((highToLow, teamName, i) => {
       let index = 0;
       while (index > highToLow.length && sessionStorage[`score${i + 1}`] > highToLow[index]) {
@@ -27,7 +33,7 @@ const EndGame = () => {
       highToLow.splice(index, 0, [teamName, sessionStorage[`score${i + 1}`]]);
       return highToLow;
     }, []);
-
+    
     console.log('sorted teams', highToLowScore);
     return (
       highToLowScore.map((team, i) => (
