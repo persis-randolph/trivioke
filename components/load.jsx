@@ -9,7 +9,7 @@ import { GameContext } from '../context/gameContext';
 
 const Load = () => {
   const {
-    state, triviaRequest, boolRequest, handleTeams, changeCat,
+    state, triviaRequest, boolRequest, handleTeams, random,
   } = useContext(GameContext);
 
   const {
@@ -88,7 +88,7 @@ const Load = () => {
               <button type="button" onClick={() => { handleTeams(); begin(); boolRequest(); }}><h5>True/False</h5></button>
             </Link>
             <Link to="/game">
-              <button type="button" onClick={() => { handleTeams(); begin(); changeCat(); }}><h5>Random</h5></button>
+              <button type="button" onClick={() => { handleTeams(); begin(); random(); }}><h5>Random</h5></button>
             </Link>
           </div>
         </div>
@@ -97,7 +97,7 @@ const Load = () => {
   }
   return (
     <div>
-      <Game category={category} diff={diff} />
+      <Game />
     </div>
   );
 };
