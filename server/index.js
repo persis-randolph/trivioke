@@ -12,6 +12,7 @@ const {
   escapeHTML,
   getUser,
   createUser,
+  parseCategories,
 } = require('./helpers');
 
 const saltRounds = 10;
@@ -69,7 +70,7 @@ app.get('/trivia/bool', (req, res) => {
 app.get('/categories', (req, res) => {
   axios.get('https://opentdb.com/api_category.php')
     .then(({ data }) => {
-      const categories = data.trivia_categories;
+      const categories = parseCategories(data.trivia_categories);
       res.status(200).send(categories);
     })
     .catch((err) => {
