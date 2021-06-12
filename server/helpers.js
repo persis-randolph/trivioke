@@ -85,7 +85,6 @@ const getTeams = async (id) => {
   const q = "SELECT * FROM teams WHERE userId=?";
   try {
     const teams = await db.connection.query(q, id);
-    console.log('All the teams: ', teams[0])
     return teams[0];
   } catch (err) {
     console.log(err);
@@ -108,7 +107,7 @@ const teamAddWin = async (team) => {
   let q = "UPDATE teams SET ? = ? + 1 WHERE teamName = ?";
   let args = [outcome, outcome, team];
   let updatedTeam = await db.connection.query(q, args);
-  console.log(updatedTeam);
+  // console.log(updatedTeam);
 }
 
 const teamAddLoss = async (team) => {
