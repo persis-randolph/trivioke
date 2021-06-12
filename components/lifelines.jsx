@@ -17,7 +17,6 @@ const Lifelines = () => {
           <tr style={{ border: 'none' }}>
             <td><button type="button" onClick={halveChoices}>50/50</button></td>
             <td><button type="button" onClick={triviaRequest}>Change Question</button></td>
-            <td><button type="button" onClick={changeCat}>Change Category</button></td>
           </tr>
         </thead>
       </table>
