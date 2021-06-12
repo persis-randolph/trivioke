@@ -7,10 +7,12 @@ import clientId from '../src/googleConfig';
 
 const Login = () => {
   const [showLoginButton, setShowLoginButton] = useState(true);
-  const { loginUser, logoutUser } = useContext(UserContext);
+  const { loginUser, logoutUser, isLoggedIn } = useContext(UserContext);
 
   const onLoginSuccess = (res) => {
-    loginUser(res.profileObj);
+    if (!isLoggedIn) {
+      loginUser(res.profileObj);
+    }
     setShowLoginButton(false);
     sessionStorage.clear();
   };
