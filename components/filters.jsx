@@ -1,10 +1,8 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 
 // Filters refactor
 
-/* eslint-disable react/prop-types */
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { DropdownButton, Dropdown, ButtonToolbar } from 'react-bootstrap';
 import { GameContext } from '../context/gameContext';
 
