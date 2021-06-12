@@ -70,17 +70,11 @@ const GameContextProvider = ({ children }) => {
     }
   };
 
-  const changeCat = () => {
-    const cats = [9, 11, 14, 15, 17, 22, 23, 26, 27];
+  const random = () => {
+    const cats = Object.keys(categories);
     const rand = cats[Math.floor(Math.random() * cats.length)];
-    const url = `https://opentdb.com/api.php?amount=1&category=${rand}&difficulty=${sessionStorage.diff}&type=multiple`;
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        setQuestion(data.results[0]);
-        sessionStorage.setItem('category', rand);
-      })
-      .catch((err) => {});
+    sessionStorage.setItem('category', parseInt(rand, 10));
+    return triviaRequest() || boolRequest();
   };
 
   const nextTeam = () => {
@@ -209,7 +203,7 @@ const GameContextProvider = ({ children }) => {
     getCategories,
     triviaRequest,
     boolRequest,
-    changeCat,
+    random,
     nextTeam,
     getTeams,
     handleTeams,
