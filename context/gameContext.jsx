@@ -95,25 +95,24 @@ const GameContextProvider = ({ children }) => {
       .then(({ data }) => {
         setAllTeams(data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.warn(err));
   };
 
   const handleTeams = () => {
     const { googleId } = userInfo;
-    
+
     axios.get('/teams/set', { params: { teams, googleId } })
-    .then(({ data }) => {
-      setTeamCards(data); 
-      getTeams(googleId);
-    })
-    .catch(err=> console.log(err));
+      .then(({ data }) => {
+        setTeamCards(data);
+        getTeams(googleId);
+      })
+      .catch((err) => console.warn(err));
   };
 
   //* Gotta finish this
   const modifyTeamCard = (teamName) => {
-
-    axios.patch('/teams', {})
-  }
+    axios.patch('/teams', {});
+  };
 
   // const postTeam = async (teamName) => {
   //   const { googleId } = userInfo;

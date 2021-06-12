@@ -2,13 +2,13 @@
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 
-const dotenv = require("dotenv").config();
-const axios = require("axios");
+const dotenv = require('dotenv').config();
+const axios = require('axios');
 // const bcrypt = require('bcrypt');
-const { decode } = require("he");
-const db = require("../db/mysql");
+const { decode } = require('he');
+const db = require('../db/mysql');
 
-require("dotenv").config();
+require('dotenv').config();
 
 const createSession = (req, res, user) => {
   req.session.regenerate(() => {
@@ -18,14 +18,14 @@ const createSession = (req, res, user) => {
 
 // get user req is just the googleId
 const getUser = async (id) => {
-  const q = "SELECT * FROM users WHERE googleId=?;";
+  const q = 'SELECT * FROM users WHERE googleId=?;';
   const user = await db.connection.query(q, id);
   return user[0][0];
 };
 
 const createUser = async (userObj) => {
   const { googleId, givenName: username } = userObj;
-  const q = "INSERT IGNORE INTO users (googleId, username) VALUES (?, ?);";
+  const q = 'INSERT IGNORE INTO users (googleId, username) VALUES (?, ?);';
   const args = [googleId, username];
   try {
     await db.connection.query(q, args);
@@ -37,16 +37,16 @@ const createUser = async (userObj) => {
 const getSongs = () => {
   const options = {
     params: {
-      part: "snippet",
-      chart: "mostPopular",
-      type: "video",
+      part: 'snippet',
+      chart: 'mostPopular',
+      type: 'video',
       key: process.env.YOUTUBE_API_KEY,
-      channelId: "UCXosPWESPuLZoG66YuHKX9Q",
+      channelId: 'UCXosPWESPuLZoG66YuHKX9Q',
       maxResults: 50,
     },
   };
   axios
-    .get("https://www.googleapis.com/youtube/v3/search", options)
+    .get('https://www.googleapis.com/youtube/v3/search', options)
     .then((data) => {
       // console.log('getSongs data: ', data.data.items);
       data.data.items.forEach((song) => {
@@ -61,12 +61,12 @@ const getSongs = () => {
 //* Team table helpers
 
 const setTeams = async ({ googleId, teams }) => {
-  const check = "SELECT * FROM teams WHERE teamName=? AND userId=?";
-  const add = "INSERT INTO teams(teamName,userId) VALUES(?, ?)";
+  const check = 'SELECT * FROM teams WHERE teamName=? AND userId=?';
+  const add = 'INSERT INTO teams(teamName,userId) VALUES(?, ?)';
 
   const returnTeams = await Promise.all(
     teams.map(async (team) => {
-      let args = [team, googleId];
+      const args = [team, googleId];
       let checkTeam = await db.connection.query(check, args);
       console.log('check team', checkTeam[0]);
       if (!checkTeam[0].length) {
@@ -74,48 +74,47 @@ const setTeams = async ({ googleId, teams }) => {
         checkTeam = await db.connection.query(check, args);
       }
 
-      console.log('added to db: ', checkTeam[0])
+      console.log('added to db: ', checkTeam[0]);
       return checkTeam[0];
-    })
+    }),
   );
   return returnTeams;
 };
 
 const getTeams = async (id) => {
-  const q = "SELECT * FROM teams WHERE userId=?";
+  const q = 'SELECT * FROM teams WHERE userId=?';
   try {
     const teams = await db.connection.query(q, id);
     return teams[0];
   } catch (err) {
     console.log(err);
-  } 
+  }
 };
 
 const addTeam = async ({ teamName, googleId }) => {
-  console.log(team);
-  const q = "INSERT INTO teams(teamName,userId) VALUES(?, ?)";
+  // sconsole.log(team);
+  const q = 'INSERT INTO teams(teamName,userId) VALUES(?, ?)';
   const args = [teamName, googleId];
   try {
     const newTeam = await db.connection.query(q, args);
     return newTeam;
   } catch (err) {
-    console.log("error in helpers: ", err);
+    console.log('error in helpers: ', err);
   }
 };
 
-const teamAddWin = async (team) => {
-  let q = "UPDATE teams SET ? = ? + 1 WHERE teamName = ?";
-  let args = [outcome, outcome, team];
-  let updatedTeam = await db.connection.query(q, args);
-  // console.log(updatedTeam);
-}
+// const teamAddWin = async (team) => {
+//   const q = 'UPDATE teams SET ? = ? + 1 WHERE teamName = ?';
+//   // const args = [outcome, outcome, team];
+//   const updatedTeam = await db.connection.query(q, args);
+//   // console.log(updatedTeam);
+// };
 
 const teamAddLoss = async (team) => {
-  let q = "UPDATE teams SET losses = losses + 1 WHERE teamName = ?"
-}
+  const q = 'UPDATE teams SET losses = losses + 1 WHERE teamName = ?';
+};
 
-
-const escapeQuotes = (string) => string.split("/").join(",");
+const escapeQuotes = (string) => string.split('/').join(',');
 const escapeHTML = (trivia) => {
   const decodedQuestion = {
     category: trivia.category,
@@ -126,10 +125,10 @@ const escapeHTML = (trivia) => {
       trivia.incorrect_answers.length === 1
         ? [decode(trivia.incorrect_answers[0])]
         : [
-            decode(trivia.incorrect_answers[0]),
-            decode(trivia.incorrect_answers[1]),
-            decode(trivia.incorrect_answers[2]),
-          ],
+          decode(trivia.incorrect_answers[0]),
+          decode(trivia.incorrect_answers[1]),
+          decode(trivia.incorrect_answers[2]),
+        ],
   };
   return decodedQuestion;
 };
