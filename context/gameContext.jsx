@@ -114,7 +114,12 @@ const GameContextProvider = ({ children }) => {
     // checks allTeams in state and replaces the team objects that have just been updated as well as replace
     // current teams
     setTeamCards(updatedTeams);
-    setAllTeams((prevTeams) => prevTeams.map((team) => updatedTeams.find((o) => o.id === team.id) || team));
+    setAllTeams((prevTeams) => {
+      if (prevTeams.length) {
+        return prevTeams.map((team) => updatedTeams.find((o) => o.id === team.id) || team);
+      }
+      return updatedTeams;
+    });
   };
 
   const increaseScore = () => {
