@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-plusplus */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-console */
@@ -19,18 +20,34 @@ const EndGame = () => {
     // score2: "1"
     // team1: "biscuits"
     // team2: "rutabagas"
-    const highToLowScore = teams.reduce((highToLow, teamName, i) => {
-      let index = 0;
-      while (index > highToLow.length && sessionStorage[`score${i + 1}`] > highToLow[index]) {
-        index++;
-      }
-      highToLow.splice(index, 0, [teamName, sessionStorage[`score${i + 1}`]]);
-      return highToLow;
+
+    const teamScoreMap = teams.reduce((acc, team, i) => {
+      acc.push([team, sessionStorage[`score${i + 1}`]]);
+      return acc;
     }, []);
 
-    console.log('sorted teams', highToLowScore);
+    console.log(teamScoreMap);
+
+    // [[biscuits, 1], [rutabagas, 2]];
+
+    teamScoreMap.sort((a, b) => {
+      if (a[1] < b[1]) return 1;
+      if (a[1] > b[1]) return -1;
+      return 0;
+    });
+
+    // const highToLowScore = teams.reduce((highToLow, teamName, i) => {
+    //   let index = 0;
+    //   while (index < highToLow.length && sessionStorage[`score${i + 1}`] > highToLow[index]) {
+    //     console.log('index: ', index, 'highToLow: ', highToLow, 'sessionStorage[`score${i + 1}`]:', sessionStorage[`score${i + 1}`], 'highToLow[index]: ', highToLow[index]);
+    //     index++;
+    //   }
+    //   highToLow.splice(index, 0, [teamName, sessionStorage[`score${i + 1}`]]);
+    //   return highToLow;
+    // }, []);
+
     return (
-      highToLowScore.map((team, i) => (
+      teamScoreMap.map((team, i) => (
         <div key={team + i}>
           {i === 0 ? (
             <div>
