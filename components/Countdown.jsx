@@ -16,11 +16,11 @@ const Countdown = () => {
   const timeoutAlert = () => {
     Swal.fire({
       imageUrl: '/goat-sing-resize.jpg',
-      title: '🎵🎶 Times Run Out, Get Ready To Sing! 🎶🎵',
+      title: '🎵🎶 Time\'s run out. Get ready to sing! 🎶🎵',
       padding: '3em',
-      width: 400
+      width: 400,
     });
- };
+  };
 
   const renderTime = ({ remainingTime }) => {
     if (remainingTime === 0) {

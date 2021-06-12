@@ -4,13 +4,21 @@
 const mysql = require('mysql2/promise');
 require('dotenv').config();
 
+// const { DB_PASS, DB_USERNAME } = require('../prod-config');
+
 const connection = mysql.createPool({
   host: 'localhost',
-  user: 'root',
-  password: process.env.DB_PASS || '',
+  user: process.env.DB_USERNAME,
+  password: process.env.DB_PASS,
   database: 'trivioke',
-  port: process.env.DB_PORT,
 });
+
+// const connection = mysql.createPool({
+//   host: 'localhost',
+//   user: process.env.DB_USERNAME || DB_USERNAME,
+//   password: process.env.DB_PASS || DB_PASS,
+//   database: 'trivioke',
+// });
 
 // this should only happen once;
 const save = async (data) => {

@@ -5,11 +5,12 @@
 
 const dotenv = require('dotenv').config();
 const axios = require('axios');
-// const bcrypt = require('bcrypt');
 const { decode } = require('he');
 const db = require('../db/mysql');
 
 require('dotenv').config();
+
+// const { YOUTUBE_API_KEY } = require('../prod-config');
 
 const createSession = (req, res, user) => {
   req.session.regenerate(() => {

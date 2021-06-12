@@ -47,6 +47,7 @@ const Load = () => {
           <Filters />
           <h5>
             Selected Category:
+            {' '}
             {categoryName}
           </h5>
           <table style={{
