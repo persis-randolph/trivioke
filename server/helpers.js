@@ -85,7 +85,6 @@ const getTeams = async (id) => {
   const q = "SELECT * FROM teams WHERE userId=?";
   try {
     const teams = await db.connection.query(q, id);
-    console.log('All the teams: ', teams[0])
     return teams[0];
   } catch (err) {
     console.log(err);
@@ -103,6 +102,18 @@ const addTeam = async ({ teamName, googleId }) => {
     console.log("error in helpers: ", err);
   }
 };
+
+const teamAddWin = async (team) => {
+  let q = "UPDATE teams SET ? = ? + 1 WHERE teamName = ?";
+  let args = [outcome, outcome, team];
+  let updatedTeam = await db.connection.query(q, args);
+  // console.log(updatedTeam);
+}
+
+const teamAddLoss = async (team) => {
+  let q = "UPDATE teams SET losses = losses + 1 WHERE teamName = ?"
+}
+
 
 const escapeQuotes = (string) => string.split("/").join(",");
 const escapeHTML = (trivia) => {

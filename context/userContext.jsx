@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable no-console */
 
 import React, { useState, createContext } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const UserContext = createContext();
 
@@ -19,12 +19,30 @@ function UserContextProvider({ children }) {
         setUserInfo({ googleId, username });
         setIsLoggedIn(true);
       })
-      .catch((err) => console.log(err));
+      .then(Swal.fire({
+        toast: true,
+        position: 'bottom-end',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        icon: 'success',
+        title: 'Signed in successfully',
+      }));
+    // .catch((err) => console.log(err));
   };
 
   const logoutUser = () => {
     setUserInfo({});
     setIsLoggedIn(false);
+    Swal.fire({
+      toast: true,
+      position: 'bottom-end',
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+      icon: 'success',
+      title: 'Signed out successfully',
+    });
   };
 
 

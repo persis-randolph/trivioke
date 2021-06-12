@@ -1,6 +1,5 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable no-unused-vars */
-/* eslint-disable no-console */
 /* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 
@@ -47,7 +46,7 @@ const GameContextProvider = ({ children }) => {
       });
       setQuestion(data);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
 
@@ -61,9 +60,8 @@ const GameContextProvider = ({ children }) => {
       });
       setQuestion(data);
     } catch (error) {
-      console.error(error);
+      console.warn(error);
     }
-    console.log(question);
   };
 
   const changeCat = () => {
@@ -76,7 +74,7 @@ const GameContextProvider = ({ children }) => {
         setQuestion(data.results[0]);
         sessionStorage.setItem('category', rand);
       })
-      .catch((err) => { console.error(err); });
+      .catch((err) => {});
   };
 
   const nextTeam = () => {
@@ -105,6 +103,7 @@ const GameContextProvider = ({ children }) => {
     axios.get('/teams/set', { params: { teams, googleId } })
       .then(({ data }) => {
         setTeamCards(data);
+        getTeams(googleId);
       })
       .catch((err) => console.log(err));
   };
@@ -153,25 +152,13 @@ const GameContextProvider = ({ children }) => {
         setVideos(data);
       }
     } catch (err) {
-      console.log('error with adding songs to state ', err);
+      // console.log('error with adding songs to state ', err);
     }
   };
 
   const halveChoices = () => {
     setVisibility((prevVis) => !prevVis);
   };
-
-  // const begin = () => {
-  //   sessionStorage.setItem('diff', diff);
-  //   sessionStorage.setItem('category', category);
-
-  //   // as a mapping function
-  //   teams.forEach((teamName, index) => {
-  //     sessionStorage.setItem(`team${index + 1}`, teamName);
-  //     sessionStorage.setItem(`score${index + 1}`, 0);
-  //   });
-  //   setTrivia(true);
-  // };
 
   const end = () => {
     sessionStorage.clear();
@@ -216,7 +203,6 @@ const GameContextProvider = ({ children }) => {
     increaseScore,
     halveChoices,
     addSongsToState,
-    // begin,
     increaseCount,
     end,
   };
