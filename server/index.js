@@ -16,6 +16,7 @@ const {
   getTeams,
   addTeam,
   setTeams,
+  updateTeams,
 } = require('./helpers');
 
 const saltRounds = 10;
@@ -133,6 +134,17 @@ app.get('/teams', async (req, res) => {
   try {
     const teams = await getTeams(googleId);
     res.status(200).send(teams);
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(500);
+  }
+});
+
+app.patch('/teams', async (req, res) => {
+  const { gameResults } = req.body;
+  try {
+    const updatedTeams = await updateTeams(gameResults);
+    res.status(201).send(updatedTeams);
   } catch (err) {
     console.log(err);
     res.sendStatus(500);

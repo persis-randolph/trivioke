@@ -69,13 +69,10 @@ const setTeams = async ({ googleId, teams }) => {
     teams.map(async (team) => {
       const args = [team, googleId];
       let checkTeam = await db.connection.query(check, args);
-      console.log('check team', checkTeam[0]);
       if (!checkTeam[0].length) {
         await db.connection.query(add, args);
         checkTeam = await db.connection.query(check, args);
       }
-
-      console.log('added to db: ', checkTeam[0]);
       return checkTeam[0];
     }),
   );
@@ -93,7 +90,7 @@ const getTeams = async (id) => {
 };
 
 const addTeam = async ({ teamName, googleId }) => {
-  console.log(team);
+  // sconsole.log(team);
   const q = 'INSERT INTO teams(teamName,userId) VALUES(?, ?)';
   const args = [teamName, googleId];
   try {
@@ -104,16 +101,21 @@ const addTeam = async ({ teamName, googleId }) => {
   }
 };
 
-const teamAddWin = async (team) => {
-  const q = 'UPDATE teams SET ? = ? + 1 WHERE teamName = ?';
-  const args = [outcome, outcome, team];
-  const updatedTeam = await db.connection.query(q, args);
-  // console.log(updatedTeam);
+const updateTeams = async (teamUpdateData) => {
+  console.log('===> OUTCOME COMING INTO HELPERS ===> ', teamUpdateData);
+  const updatedTeams = await Promise.all(teamUpdateData.map(async (team) => {
+    const updateQ = `UPDATE teams SET ${team[2]} = ${team[2]} + 1 WHERE teamName = '${team[0]}'`;
+    const getQ = `SELECT * FROM teams WHERE teamName = '${team[0]}'`;
+    await db.connection.query(updateQ);
+    const updatedTeam = await db.connection.query(getQ);
+    return updatedTeam[0][0];
+  }));
+  return updatedTeams;
 };
 
-const teamAddLoss = async (team) => {
-  const q = 'UPDATE teams SET losses = losses + 1 WHERE teamName = ?';
-};
+// const teamAddLoss = async (team) => {
+//   const q = 'UPDATE teams SET losses = losses + 1 WHERE teamName = ?';
+// };
 
 const escapeQuotes = (string) => string.split('/').join(',');
 const escapeHTML = (trivia) => {
@@ -154,4 +156,5 @@ module.exports = {
   getTeams,
   addTeam,
   setTeams,
+  updateTeams,
 };
