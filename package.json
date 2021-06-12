@@ -5,8 +5,8 @@
   "main": "index.jsx",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server/index.js",
-    "dev": "nodemon server/index.js",
+    "start": "node server/index.jsx",
+    "dev": "nodemon server/index.jsx",
     "webpack": "webpack --config webpack.config.js --mode development --watch",
     "build": "webpack --config webpack.config.js --mode production",
     "lint": "eslint . --ext .js --ext .jsx",

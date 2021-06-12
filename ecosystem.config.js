@@ -5,7 +5,7 @@ dotenv.config();
 module.exports = {
   apps: [{
     name: 'trivioke',
-    script: './src/index.js',
+    script: './src/index.jsx',
     env: {
       NODE_ENV: 'development',
       YOUTUBE_API_KEY: process.env.YOUTUBE_API_KEY,
