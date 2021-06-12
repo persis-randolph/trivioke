@@ -9,7 +9,7 @@ import { GameContext } from '../context/gameContext';
 
 const Load = () => {
   const {
-    state, triviaRequest, boolRequest, handleTeams,
+    state, triviaRequest, boolRequest, handleTeams, changeCat,
   } = useContext(GameContext);
 
   const {
@@ -86,6 +86,9 @@ const Load = () => {
           <div key="bool">
             <Link to="/game">
               <button type="button" onClick={() => { handleTeams(); begin(); boolRequest(); }}><h5>True/False</h5></button>
+            </Link>
+            <Link to="/game">
+              <button type="button" onClick={() => { handleTeams(); begin(); changeCat(); }}><h5>I Am Feeling Lucky</h5></button>
             </Link>
           </div>
         </div>
