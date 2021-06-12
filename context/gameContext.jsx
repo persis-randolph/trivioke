@@ -22,6 +22,7 @@ const GameContextProvider = ({ children }) => {
   // Game Options (Load.jsx) State
   const [diff, setDiff] = useState('medium');
   const [category, setCategory] = useState(9);
+  const [timer, setTimer] = useState(30);
 
   // Team State
   const [teams, setTeams] = useState([]);
@@ -190,6 +191,8 @@ const GameContextProvider = ({ children }) => {
     setEndGame,
     setVideo,
     setQuestion,
+    timer, 
+    setTimer,
   };
 
   const gameProps = {
