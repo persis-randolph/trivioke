@@ -5,7 +5,7 @@ dotenv.config();
 module.exports = {
   apps: [{
     name: 'trivioke',
-    script: './src/index.js',
+    script: './src/index.jsx',
     env: {
       NODE_ENV: 'development',
       YOUTUBE_API_KEY: process.env.YOUTUBE_API_KEY,
@@ -20,8 +20,8 @@ module.exports = {
   deploy: {
     production: {
       user: 'ubuntu',
-      host: 'ec2-18-223-184-101.us-east-2.compute.amazonaws.com',
-      key: '~/.ssh/trioke-key.pem',
+      host: 'ec2-3-138-183-17.us-east-2.compute.amazonaws.com',
+      key: '~/.ssh/trivioke-key.pem',
       ref: 'origin/master',
       repo: 'git@github.com:BiscuitBae/trivioke.git',
       path: '/home/ubuntu/trivioke',

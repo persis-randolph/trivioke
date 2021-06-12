@@ -2,13 +2,13 @@
   "name": "greenfield",
   "version": "2.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server/index.js",
-    "dev": "nodemon server/index.js",
+    "start": "node server/index.jsx",
+    "dev": "nodemon server/index.jsx",
     "webpack": "webpack --config webpack.config.js --mode development --watch",
-    "build": "webpack --mode production",
+    "build": "webpack --config webpack.config.js --mode production",
     "lint": "eslint . --ext .js --ext .jsx",
     "restart": "pm2 startOrRestart ecosystem.config.js --env production",
     "deploy": "pm2 deploy ecosystem.config.js production"

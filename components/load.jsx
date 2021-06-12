@@ -1,6 +1,6 @@
 /* global sessionStorage */
 
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Filters from './filters';
 import Teams from './Teams';
@@ -8,8 +8,9 @@ import Game from './game';
 import { GameContext } from '../context/gameContext';
 
 const Load = () => {
-
-  const { state, triviaRequest, boolRequest, handleTeams, getTeams } = useContext(GameContext);
+  const {
+    state, triviaRequest, boolRequest, handleTeams,
+  } = useContext(GameContext);
 
   const {
     teams,
