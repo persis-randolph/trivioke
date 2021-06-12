@@ -39,4 +39,4 @@ npm install
 
 ## Deployment
 
-- Using an Amazon EC2 Instance with Ubuntu 20.04.
+- Attempt to use an Amazon EC2 Instance with Ubuntu 20.04.
