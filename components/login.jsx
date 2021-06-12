@@ -1,4 +1,3 @@
-/* eslint-disable no-alert */
 /* eslint-disable no-undef */
 import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
@@ -9,10 +8,7 @@ import clientId from '../src/googleConfig';
 
 const Login = () => {
   const [showLoginButton, setShowLoginButton] = useState(true);
-  // const [userInfo, setUserInfo] = useState({});
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const { loginUser, logoutUser } = useContext(UserContext);
-  const { getTeams, isLoggedIn } = useContext(GameContext);
+  const { loginUser, logoutUser, isLoggedIn } = useContext(UserContext);
 
   const onLoginSuccess = (res) => {
     if (!isLoggedIn) {
@@ -22,13 +18,7 @@ const Login = () => {
     sessionStorage.clear();
   };
 
-  // const onLoginFailure = () => {
-  //   // console.log('[Login failed] res:', res);
-  // };
-
   const onSignoutSuccess = () => {
-    alert('You have been logged out successfully');
-    // console.clear();
     setShowLoginButton(true);
     logoutUser();
   };
@@ -44,7 +34,6 @@ const Login = () => {
             clientId={clientId}
             buttonText="Login"
             onSuccess={onLoginSuccess}
-            // onFailure={onLoginFailure}
             cookiePolicy="single_host_origin"
             isSignedIn
           />
