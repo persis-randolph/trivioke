@@ -35,7 +35,7 @@ function Game(props) {
   return (
     <center>
       {/* this line decides the amount of rounds */}
-      {count >= (teams.length * 3) ? (
+      {count >= (teams.length * 1) ? (
         <Redirect to="/endgame" />
       ) : (
         <div>

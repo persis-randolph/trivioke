@@ -39,10 +39,8 @@ const EndGame = () => {
     }
   }, [results]);
 
-  // [[biscuits, 1], [rutabagas, 2]];
-
   const theWinnerIs = results.map((team, i) => (
-    <div key={team + i}>
+    <div key={i + 1}>
       {i === 0 ? (
         <div>
           <h2>And the Winner is... 🥁</h2>
@@ -77,23 +75,44 @@ const EndGame = () => {
     </div>
   ));
 
-  // const itsATie = (
-  //   <div>
-  //     <h2>And the Winner is... 🥁</h2>
-  //     <br />
-  //     <h2>Nobody!!!</h2>
-  //     {results.map((team, i) => (
-  //       <div key={team + 1}>
-  //         {team[2] === 'draws' ? (
-  //           <div>
-  //             {/* this isn't gonna work with map, gotta find another way */}
-  //           </div>
-  //         )}
-  //       </div>
+  // const itsATie = () => {
+  //   const tied = results.filter((team) => team.includes('draws'));
+  //   const losers = results.filter((team) => team.includes('losses'));
 
-  //     ))}
-  //   </div>
-  // );
+  //   return (
+  //     <div>
+  //       <h2>And the Winner is... 🥁</h2>
+  //       <br />
+  //       <h2>Nobody!!!</h2>
+  //       <h2>
+  //         {' '}
+  //         We have a tie between
+  //         {' '}
+  //         {tied.map((t) => t[0]).join(' & ')}
+  //         {' '}
+  //         with a score of
+  //         {' '}
+  //         {tied[0][1]}
+  //       </h2>
+  //       <h3>Better luck next time:</h3>
+  //       {losers.map((team, i) => (
+  //         <div key={i + 1}>
+  //           <h4>
+  //             Team
+  //             {' '}
+  //             {team[0]}
+  //           </h4>
+  //           <h5>
+  //             Final Score:
+  //             {' '}
+  //             {team[1]}
+  //           </h5>
+  //         </div>
+  //       ))}
+  //     </div>
+
+  //   );
+  // };
 
   return (
     <center>
