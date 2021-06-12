@@ -100,9 +100,9 @@ const addTeam = async ({ teamName, googleId }) => {
   }
 };
 
-const updateTeam = (outcome) => {
-  console.log('===> OUTCOME COMING INTO HELPERS ===> ', outcome);
-  outcome.forEach(async (team) => {
+const updateTeam = (teamUpdateData) => {
+  console.log('===> OUTCOME COMING INTO HELPERS ===> ', teamUpdateData);
+  teamUpdateData.forEach(async (team) => {
     const q = `UPDATE teams SET ${team[2]} = ${team[2]} + 1 WHERE teamName = '${team[0]}'`;
     // console.log('THIS IS THE QUERY: ', q);
     // const args = [team[2], team[2], team[0]];

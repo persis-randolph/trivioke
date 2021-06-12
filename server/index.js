@@ -127,9 +127,9 @@ app.get('/teams', async (req, res) => {
 });
 
 app.patch('/teams', async (req, res) => {
-  const { outcome } = req.body;
+  const { gameResults } = req.body;
   try {
-    await updateTeam(outcome);
+    await updateTeam(gameResults);
     res.sendStatus(201);
   } catch (err) {
     console.log(err);
