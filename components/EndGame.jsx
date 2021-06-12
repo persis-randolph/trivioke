@@ -7,7 +7,7 @@ import React, { useContext, useEffect } from 'react';
 import { GameContext } from '../context/gameContext';
 
 const EndGame = () => {
-  const { state } = useContext(GameContext);
+  const { state, modifyTeamCards } = useContext(GameContext);
   const { count, teams, teamCards } = state;
 
   const loadTeamScores = () => {
@@ -32,6 +32,8 @@ const EndGame = () => {
       if (a[1] > b[1]) return -1;
       return 0;
     });
+
+    modifyTeamCards(teamScoreMap);
 
     return (
       teamScoreMap.map((team, i) => (

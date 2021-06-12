@@ -110,8 +110,18 @@ const GameContextProvider = ({ children }) => {
   };
 
   //* Gotta finish this
-  const modifyTeamCard = (teamName) => {
-    axios.patch('/teams', {});
+  const modifyTeamCards = (results) => {
+    console.log('results in context: ', results);
+    const outcome = results.map((team, i) => {
+      if (i === 0) {
+        console.log('team: ', [...team]);
+        return team[1] === results[i + 1][1] ? [...team, 'draws'] : [...team, 'wins'];
+      }
+      return team[1] === results[i - 1][1] ? [...team, 'draws'] : [...team, 'losses'];
+    });
+
+    console.log('****** outcome in context *******', outcome);
+    axios.patch('/teams', { outcome });
   };
 
   // const postTeam = async (teamName) => {
@@ -206,6 +216,7 @@ const GameContextProvider = ({ children }) => {
     addSongsToState,
     increaseCount,
     end,
+    modifyTeamCards,
   };
 
   return (

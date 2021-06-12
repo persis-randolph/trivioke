@@ -68,13 +68,10 @@ const setTeams = async ({ googleId, teams }) => {
     teams.map(async (team) => {
       const args = [team, googleId];
       let checkTeam = await db.connection.query(check, args);
-      console.log('check team', checkTeam[0]);
       if (!checkTeam[0].length) {
         await db.connection.query(add, args);
         checkTeam = await db.connection.query(check, args);
       }
-
-      console.log('added to db: ', checkTeam[0]);
       return checkTeam[0];
     }),
   );
@@ -103,16 +100,19 @@ const addTeam = async ({ teamName, googleId }) => {
   }
 };
 
-// const teamAddWin = async (team) => {
-//   const q = 'UPDATE teams SET ? = ? + 1 WHERE teamName = ?';
-//   // const args = [outcome, outcome, team];
-//   const updatedTeam = await db.connection.query(q, args);
-//   // console.log(updatedTeam);
-// };
-
-const teamAddLoss = async (team) => {
-  const q = 'UPDATE teams SET losses = losses + 1 WHERE teamName = ?';
+const updateTeam = (outcome) => {
+  console.log('===> OUTCOME COMING INTO HELPERS ===> ', outcome);
+  outcome.forEach(async (team) => {
+    const q = `UPDATE teams SET ${team[2]} = ${team[2]} + 1 WHERE teamName = '${team[0]}'`;
+    // console.log('THIS IS THE QUERY: ', q);
+    // const args = [team[2], team[2], team[0]];
+    await db.connection.query(q);
+  });
 };
+
+// const teamAddLoss = async (team) => {
+//   const q = 'UPDATE teams SET losses = losses + 1 WHERE teamName = ?';
+// };
 
 const escapeQuotes = (string) => string.split('/').join(',');
 const escapeHTML = (trivia) => {
@@ -141,4 +141,5 @@ module.exports = {
   getTeams,
   addTeam,
   setTeams,
+  updateTeam,
 };
