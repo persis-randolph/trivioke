@@ -100,14 +100,16 @@ const addTeam = async ({ teamName, googleId }) => {
   }
 };
 
-const updateTeam = (teamUpdateData) => {
+const updateTeams = async (teamUpdateData) => {
   console.log('===> OUTCOME COMING INTO HELPERS ===> ', teamUpdateData);
-  teamUpdateData.forEach(async (team) => {
-    const q = `UPDATE teams SET ${team[2]} = ${team[2]} + 1 WHERE teamName = '${team[0]}'`;
-    // console.log('THIS IS THE QUERY: ', q);
-    // const args = [team[2], team[2], team[0]];
-    await db.connection.query(q);
-  });
+  const updatedTeams = await Promise.all(teamUpdateData.map(async (team) => {
+    const updateQ = `UPDATE teams SET ${team[2]} = ${team[2]} + 1 WHERE teamName = '${team[0]}'`;
+    const getQ = `SELECT * FROM teams WHERE teamName = '${team[0]}'`;
+    await db.connection.query(updateQ);
+    const updatedTeam = await db.connection.query(getQ);
+    return updatedTeam[0][0];
+  }));
+  return updatedTeams;
 };
 
 // const teamAddLoss = async (team) => {
@@ -141,5 +143,5 @@ module.exports = {
   getTeams,
   addTeam,
   setTeams,
-  updateTeam,
+  updateTeams,
 };

@@ -15,7 +15,7 @@ const {
   getTeams,
   addTeam,
   setTeams,
-  updateTeam,
+  updateTeams,
 } = require('./helpers');
 
 const saltRounds = 10;
@@ -129,8 +129,8 @@ app.get('/teams', async (req, res) => {
 app.patch('/teams', async (req, res) => {
   const { gameResults } = req.body;
   try {
-    await updateTeam(gameResults);
-    res.sendStatus(201);
+    const updatedTeams = await updateTeams(gameResults);
+    res.status(201).send(updatedTeams);
   } catch (err) {
     console.log(err);
     res.sendStatus(500);

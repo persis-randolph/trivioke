@@ -77,6 +77,24 @@ const EndGame = () => {
     </div>
   ));
 
+  const itsATie = (
+    <div>
+      <h2>And the Winner is... 🥁</h2>
+      <br />
+      <h2>Nobody!!!</h2>
+      {results.map((team, i) => (
+        <div key={team + 1}>
+          {team[2] === 'draws' ? (
+            <div>
+              {/* this isn't gonna work with map, gotta find another way */}
+            </div>
+          )}
+        </div>
+
+      ))}
+    </div>
+  );
+
   return (
     <center>
       {theWinnerIs}
