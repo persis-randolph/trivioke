@@ -9,7 +9,7 @@ const htmlWebpackPlugin = new HtmlWebPackPlugin({
 });
 
 module.exports = {
-  entry: `${SRC_DIR}/index.jsx`,
+  entry: `${SRC_DIR}/index.js`,
   module: {
     rules: [
       {
