@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-globals */
+/* eslint-disable no-undef */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
@@ -45,7 +47,7 @@ const Teams = () => {
       title: 'Fill Out The Full Form To Begin The Game!',
       width: 500,
       backdrop:
-      'rgba(160, 160, 160, 0.39)'
+      'rgba(160, 160, 160, 0.39)',
     });
   };
 

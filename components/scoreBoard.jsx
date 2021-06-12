@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
