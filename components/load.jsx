@@ -1,6 +1,6 @@
 /* global sessionStorage */
 
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Filters from './filters';
 import Teams from './Teams';
@@ -8,7 +8,9 @@ import Game from './game';
 import { GameContext } from '../context/gameContext';
 
 const Load = () => {
-  const { state, triviaRequest, boolRequest } = useContext(GameContext);
+
+  const { state, triviaRequest, boolRequest, handleTeams, getTeams } = useContext(GameContext);
+
   const {
     teams,
     diff,
@@ -72,12 +74,12 @@ const Load = () => {
           <div key="begin">
             <h5>Choose Your Question Type</h5>
             <Link to="/game">
-              <button type="button" onClick={() => { begin(); triviaRequest(); }}><h5>Multiple Choice</h5></button>
+              <button type="button" onClick={() => { handleTeams(); begin(); triviaRequest(); }}><h5>Multiple Choice</h5></button>
             </Link>
           </div>
           <div key="bool">
             <Link to="/game">
-              <button type="button" onClick={() => { begin(); boolRequest(); }}><h5>True/False</h5></button>
+              <button type="button" onClick={() => { handleTeams(); begin(); boolRequest(); }}><h5>True/False</h5></button>
             </Link>
           </div>
         </div>

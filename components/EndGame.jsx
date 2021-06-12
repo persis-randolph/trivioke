@@ -3,15 +3,15 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { GameContext } from '../context/gameContext';
 
 const EndGame = () => {
   const { state } = useContext(GameContext);
-  const { count, teams } = state;
+  const { count, teams, teamCards } = state;
 
   const loadTeamScores = () => {
-    // console.log(sessionStorage); // => looks like this:
+    console.log('sessionStorage', sessionStorage); // => looks like this:
     // category: "9"
     // diff: "easy"
     // length: 6
