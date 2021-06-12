@@ -34,18 +34,6 @@ const Load = () => {
     setTrivia(true);
   };
 
-  // const categories = {
-  //   9: 'General',
-  //   11: 'Movies',
-  //   14: 'TV',
-  //   15: 'Video Games',
-  //   17: 'Science',
-  //   22: 'Geography',
-  //   23: 'History',
-  //   26: 'Celebs',
-  //   27: 'Animals',
-  // };
-
   const categoryName = categories[category];
 
   if (!trivia) {
