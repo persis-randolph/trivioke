@@ -3,7 +3,6 @@ import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { UserContext } from '../context/userContext';
-import { GameContext } from '../context/gameContext';
 import clientId from '../src/googleConfig';
 
 const Login = () => {

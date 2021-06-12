@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
+/* eslint-disable react/no-array-index-key */
+import React, { useEffect, useContext } from 'react';
 import TeamCard from './TeamCard';
 import { GameContext } from '../context/gameContext';
 
@@ -7,7 +8,7 @@ const LeaderBoard = () => {
   const { allTeams, teamCards } = state;
 
   useEffect(() => {
-    console.log('allTeams: ', allTeams, 'teamCards: ', teamCards);
+    // console.log('allTeams: ', allTeams, 'teamCards: ', teamCards);
   }, []);
 
   const currentTeams = teamCards.map((team, i) => <TeamCard team={team} key={i} />);
