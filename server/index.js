@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
-const express = require("express");
+const express = require('express');
 // const bodyParser = require('body-parser');
-const path = require("path");
+const path = require('path');
 // const cors = require('cors');
-const session = require("express-session");
-const axios = require("axios");
-const db = require("../db/mysql");
+const session = require('express-session');
+const axios = require('axios');
+const db = require('../db/mysql');
 const {
   getSongs,
   escapeHTML,
@@ -15,29 +15,29 @@ const {
   getTeams,
   addTeam,
   setTeams,
-} = require("./helpers");
+} = require('./helpers');
 
 const saltRounds = 10;
 const app = express();
 // app.use(cors());
 app.use(express.json());
 
-app.use(express.static(path.join(__dirname, "../dist")));
-app.use(express.static(path.join(__dirname, "../images")));
+app.use(express.static(path.join(__dirname, '../dist')));
+app.use(express.static(path.join(__dirname, '../images')));
 app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
-    secret: "supersecret",
+    secret: 'supersecret',
     resave: false,
     saveUninitialized: true,
-  })
+  }),
 );
 
 //* TRIVIA ROUTES
-app.get("/trivia/multi", (req, res) => {
+app.get('/trivia/multi', (req, res) => {
   axios
     .get(
-      `https://opentdb.com/api.php?amount=1&category=${req.query.categoryID}&difficulty=${req.query.diff}&type=multiple`
+      `https://opentdb.com/api.php?amount=1&category=${req.query.categoryID}&difficulty=${req.query.diff}&type=multiple`,
     )
     .then(({ data }) => {
       const question = escapeHTML(data.results[0]);
@@ -49,10 +49,10 @@ app.get("/trivia/multi", (req, res) => {
     });
 });
 
-app.get("/trivia/bool", (req, res) => {
+app.get('/trivia/bool', (req, res) => {
   axios
     .get(
-      `https://opentdb.com/api.php?amount=1&category=${req.query.categoryID}&difficulty=${req.query.diff}&type=boolean`
+      `https://opentdb.com/api.php?amount=1&category=${req.query.categoryID}&difficulty=${req.query.diff}&type=boolean`,
     )
     .then(({ data }) => {
       const question = escapeHTML(data.results[0]);
@@ -65,16 +65,16 @@ app.get("/trivia/bool", (req, res) => {
 });
 
 //* SONG ROUTES
-app.get("/songs", async (req, res) => {
+app.get('/songs', async (req, res) => {
   try {
-    const songs = await db.connection.query("SELECT * FROM songs;");
+    const songs = await db.connection.query('SELECT * FROM songs;');
     res.status(200).send(songs[0]);
   } catch (err) {
     console.log(err);
   }
 });
 
-app.post("/songs", async (req, res) => {
+app.post('/songs', async (req, res) => {
   try {
     await getSongs(req, res);
     res.sendStatus(201);
@@ -84,7 +84,7 @@ app.post("/songs", async (req, res) => {
 });
 
 //* USER ROUTES
-app.get("/users", async (req, res) => {
+app.get('/users', async (req, res) => {
   const { googleId, username } = req.query;
 
   const existingUser = await getUser(googleId);
@@ -96,13 +96,13 @@ app.get("/users", async (req, res) => {
     const newUser = await getUser(googleId);
     res.status(200).send(newUser);
   } else {
-    console.log("user not found");
+    console.log('user not found');
     res.sendStatus(404);
   }
 });
 
 //* TEAM ROUTES
-app.get("/teams/set", async (req, res) => {
+app.get('/teams/set', async (req, res) => {
   const { googleId, teams } = req.query;
   try {
     let teamCards = await setTeams({ googleId, teams });
@@ -114,20 +114,19 @@ app.get("/teams/set", async (req, res) => {
   }
 });
 
-app.get("/teams", async (req, res) => {
+app.get('/teams', async (req, res) => {
   const { googleId } = req.query;
   try {
     const teams = await getTeams(googleId);
     res.status(200).send(teams);
-  }
-  catch (err) {
+  } catch (err) {
     console.log(err);
     res.sendStatus(500);
   }
-})
+});
 
-//? need to flesh this out, this will handle updates to a user's stats and update the db
-app.patch("/users/stats:id", async (req, res) => {});
+// ? need to flesh this out, this will handle updates to a user's stats and update the db
+app.patch('/users/stats:id', async (req, res) => {});
 
 const port = 8080;
 app.listen(process.env.PORT || port, () => {
