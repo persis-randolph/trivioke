@@ -10,7 +10,7 @@ const db = require('../db/mysql');
 
 require('dotenv').config();
 
-const { YOUTUBE_API_KEY } = require('../prod-config');
+// const { YOUTUBE_API_KEY } = require('../prod-config');
 
 const createSession = (req, res, user) => {
   req.session.regenerate(() => {
@@ -42,7 +42,7 @@ const getSongs = () => {
       part: 'snippet',
       chart: 'mostPopular',
       type: 'video',
-      key: process.env.YOUTUBE_API_KEY || YOUTUBE_API_KEY,
+      key: process.env.YOUTUBE_API_KEY,
       channelId: 'UCXosPWESPuLZoG66YuHKX9Q',
       maxResults: 50,
     },

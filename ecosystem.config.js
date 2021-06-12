@@ -12,7 +12,7 @@ module.exports = {
       DB_PASS: process.env.DB_PASS,
     },
     env_production: {
-      NODE_ENV: 'development',
+      NODE_ENV: 'production',
       YOUTUBE_API_KEY: process.env.YOUTUBE_API_KEY,
       DB_PASS: process.env.DB_PASS,
     },
@@ -32,7 +32,7 @@ module.exports = {
         DB_PASS: process.env.DB_PASS,
       },
       env_production: {
-        NODE_ENV: 'development',
+        NODE_ENV: 'production',
         YOUTUBE_API_KEY: process.env.YOUTUBE_API_KEY,
         DB_PASS: process.env.DB_PASS,
       },
