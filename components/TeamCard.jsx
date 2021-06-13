@@ -7,7 +7,7 @@ const TeamCard = ({ team }) => {
   // const { state } = useContext(GameContext);
   // const { allTeams, teamCards } = state;
   const {
-    teamName, wins, losses, highScore,
+    teamName, wins, losses, draws, highScore,
   } = team;
 
   return (
@@ -22,6 +22,11 @@ const TeamCard = ({ team }) => {
         Losses:
         {' '}
         {losses}
+      </h6>
+      <h6>
+        Draws:
+        {' '}
+        {draws}
       </h6>
       <h6>
         High Score:

@@ -93,6 +93,7 @@ const GameContextProvider = ({ children }) => {
   const getTeams = (googleId) => {
     axios.get('/teams', { params: { googleId } })
       .then(({ data }) => {
+        // data.sort((a, b) => (a.wins === b.wins ? b.highScore - a.highScore : b.wins - a.wins));
         setAllTeams(data);
       })
       .catch((err) => console.warn(err));
@@ -110,16 +111,18 @@ const GameContextProvider = ({ children }) => {
 
   //* Called from EndGame to update stats of all participating teams
   const modifyTeamCards = async (gameResults) => {
-    const { data: updatedTeams } = await axios.patch('/teams', { gameResults });
-    // checks allTeams in state and replaces the team objects that have just been updated as well as replace
-    // current teams
-    setTeamCards(updatedTeams);
-    setAllTeams((prevTeams) => {
-      if (prevTeams.length) {
-        return prevTeams.map((team) => updatedTeams.find((o) => o.id === team.id) || team);
-      }
-      return updatedTeams;
-    });
+    if (gameResults && gameResults.length) {
+      const { data: updatedTeams } = await axios.patch('/teams', { gameResults });
+      // checks allTeams in state and replaces the team objects that have just been updated as well as replace
+      // current teams
+      setTeamCards(updatedTeams);
+      setAllTeams((prevTeams) => {
+        if (prevTeams.length) {
+          return prevTeams.map((team) => updatedTeams.find((o) => o.id === team.id) || team);
+        }
+        return updatedTeams;
+      });
+    }
   };
 
   const increaseScore = () => {

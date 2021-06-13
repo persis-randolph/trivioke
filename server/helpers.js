@@ -103,8 +103,20 @@ const addTeam = async ({ teamName, googleId }) => {
 };
 
 const updateTeams = async (teamUpdateData) => {
-  console.log('===> OUTCOME COMING INTO HELPERS ===> ', teamUpdateData);
+  // console.log('===> OUTCOME COMING INTO HELPERS ===> ', teamUpdateData);
   const updatedTeams = await Promise.all(teamUpdateData.map(async (team) => {
+    // update highScore, only if the team won
+    if (team[2] === 'wins') {
+      const score = parseInt(team[1]);
+      console.log('team: ', team);
+      let prevHighScore = await db.connection.query(`SELECT highScore FROM teams WHERE teamName = '${team[0]}'`);
+      prevHighScore = prevHighScore[0][0].highScore;
+      console.log('CURRENT SCORE: ', score, 'HIGH SCORE: ', prevHighScore);
+      if (score > prevHighScore) {
+        await db.connection.query(`UPDATE teams SET highScore = ${score} WHERE teamName = '${team[0]}'`);
+      }
+    }
+    // update wins or losses for each team in the db and then return the updated teams
     const updateQ = `UPDATE teams SET ${team[2]} = ${team[2]} + 1 WHERE teamName = '${team[0]}'`;
     const getQ = `SELECT * FROM teams WHERE teamName = '${team[0]}'`;
     await db.connection.query(updateQ);

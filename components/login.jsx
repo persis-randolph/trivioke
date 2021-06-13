@@ -3,15 +3,18 @@ import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { UserContext } from '../context/userContext';
+import { GameContext } from '../context/gameContext';
 import clientId from '../src/googleConfig';
 
 const Login = () => {
   const [showLoginButton, setShowLoginButton] = useState(true);
   const { loginUser, logoutUser, isLoggedIn } = useContext(UserContext);
+  const { getTeams } = useContext(GameContext);
 
   const onLoginSuccess = (res) => {
     if (!isLoggedIn) {
       loginUser(res.profileObj);
+      getTeams(res.profileObj.googleId);
     }
     setShowLoginButton(false);
     sessionStorage.clear();
