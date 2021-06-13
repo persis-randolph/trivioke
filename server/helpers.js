@@ -107,7 +107,7 @@ const updateTeams = async (teamUpdateData) => {
   const updatedTeams = await Promise.all(teamUpdateData.map(async (team) => {
     // update highScore, only if the team won
     if (team[2] === 'wins') {
-      const score = parseInt(team[1]);
+      const score = parseInt(team[1], 10);
       console.log('team: ', team);
       let prevHighScore = await db.connection.query(`SELECT highScore FROM teams WHERE teamName = '${team[0]}'`);
       prevHighScore = prevHighScore[0][0].highScore;

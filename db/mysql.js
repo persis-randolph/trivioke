@@ -8,8 +8,8 @@ require('dotenv').config();
 
 const connection = mysql.createPool({
   host: 'localhost',
-  user: process.env.DB_USERNAME,
-  password: process.env.DB_PASS,
+  user: 'root',
+  password: '',
   database: 'trivioke',
 });
 
