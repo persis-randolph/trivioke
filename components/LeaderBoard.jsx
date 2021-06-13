@@ -3,9 +3,12 @@
 import React, { useContext, useState, useEffect } from 'react';
 import TeamCard from './TeamCard';
 import { GameContext } from '../context/gameContext';
+import { UserContext } from '../context/userContext';
 
 const LeaderBoard = () => {
   const { state } = useContext(GameContext);
+  const { userInfo } = useContext(UserContext);
+  const { username } = userInfo;
   const { allTeams, teamCards } = state;
   const [currentTeams, setCurrentTeams] = useState([]);
   const [allTimeLeaders, setAllTimeLeaders] = useState([]);
@@ -22,7 +25,10 @@ const LeaderBoard = () => {
       <h1>Leader Board</h1>
       <h2>Current Teams</h2>
       {currTeams}
-      <h2>All Time Leaders</h2>
+      <h2>
+        {username}
+        's All Time Leaders
+      </h2>
       {allLeaders}
     </center>
 

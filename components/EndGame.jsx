@@ -9,9 +9,11 @@ import { GameContext } from '../context/gameContext';
 const EndGame = () => {
   const { state, modifyTeamCards } = useContext(GameContext);
   const { count, teams, teamCards } = state;
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     setResults(() => {
       const teamScoreMap = teams.reduce((acc, team, i) => {
         acc.push([team, sessionStorage[`score${i + 1}`]]);
@@ -31,20 +33,19 @@ const EndGame = () => {
         return team[1] === teamScoreMap[i - 1][1] ? [...team, 'draws'] : [...team, 'losses'];
       });
     });
+    setLoading(false);
   }, []);
 
   useEffect(() => {
-    if (results.length) {
-      modifyTeamCards(results);
-    }
+    // if (results.length) {
+    modifyTeamCards(results);
+    // }
   }, [results]);
 
-  const theWinnerIs = results.map((team, i) => (
+  const theWinnerIs = () => (results.map((team, i) => (
     <div key={i + 1}>
       {i === 0 ? (
         <div>
-          <h2>And the Winner is... 🥁</h2>
-          <br />
           <h1>
             Team
             {' '}
@@ -73,51 +74,56 @@ const EndGame = () => {
         </div>
       )}
     </div>
-  ));
+  )));
 
-  // const itsATie = () => {
-  //   const tied = results.filter((team) => team.includes('draws'));
-  //   const losers = results.filter((team) => team.includes('losses'));
+  const itsATie = () => {
+    const tied = results.filter((team) => team.includes('draws'));
+    const losers = results.filter((team) => team.includes('losses'));
 
-  //   return (
-  //     <div>
-  //       <h2>And the Winner is... 🥁</h2>
-  //       <br />
-  //       <h2>Nobody!!!</h2>
-  //       <h2>
-  //         {' '}
-  //         We have a tie between
-  //         {' '}
-  //         {tied.map((t) => t[0]).join(' & ')}
-  //         {' '}
-  //         with a score of
-  //         {' '}
-  //         {tied[0][1]}
-  //       </h2>
-  //       <h3>Better luck next time:</h3>
-  //       {losers.map((team, i) => (
-  //         <div key={i + 1}>
-  //           <h4>
-  //             Team
-  //             {' '}
-  //             {team[0]}
-  //           </h4>
-  //           <h5>
-  //             Final Score:
-  //             {' '}
-  //             {team[1]}
-  //           </h5>
-  //         </div>
-  //       ))}
-  //     </div>
+    return (
+      <div>
+        <h2>Nobody!!!</h2>
+        <h2>
+          {' '}
+          We have a tie between
+          {' '}
+          {tied.map((t) => t[0]).join(' & ')}
+          {' '}
+          with a score of
+          {' '}
+          {tied[0][1]}
+        </h2>
+        <h3>Better luck next time:</h3>
+        {losers.map((team, i) => (
+          <div key={i + 1}>
+            <h4>
+              Team
+              {' '}
+              {team[0]}
+            </h4>
+            <h5>
+              Final Score:
+              {' '}
+              {team[1]}
+            </h5>
+          </div>
+        ))}
+      </div>
 
-  //   );
-  // };
+    );
+  };
 
   return (
     <center>
-      {theWinnerIs}
+      <h2>And the Winner is... 🥁</h2>
+      {results
+      && (
+      <div>
+        {results[0][2] === 'wins' ? theWinnerIs() : itsATie()}
+      </div>
+      )}
     </center>
+
   );
 };
 
