@@ -1,11 +1,10 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useContext } from 'react';
 
 import { GameContext } from '../context/gameContext';
 
 const Lifelines = () => {
-  const { halveChoices, triviaRequest, changeCat } = useContext(GameContext);
+  const { halveChoices, triviaRequest } = useContext(GameContext);
   return (
     <div>
       <h4>Lifelines</h4>
@@ -17,7 +16,6 @@ const Lifelines = () => {
           <tr style={{ border: 'none' }}>
             <td><button type="button" onClick={halveChoices}>50/50</button></td>
             <td><button type="button" onClick={triviaRequest}>Change Question</button></td>
-            <td><button type="button" onClick={changeCat}>Change Category</button></td>
           </tr>
         </thead>
       </table>

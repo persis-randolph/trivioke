@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable max-len */
 /* eslint-disable linebreak-style */
 /* eslint-disable no-unused-vars */
@@ -18,11 +19,14 @@ const GameContextProvider = ({ children }) => {
   const [video, setVideo] = useState({ song: 'Frankie Valli - Can\'t Take My Eyes Off Of You Karaoke Lyrics', uri: 'UXYjQa_osMI' });
   const [videos, setVideos] = useState([]);
   const [visibility, setVisibility] = useState(true);
+
+  // Trivia Question State
   const [question, setQuestion] = useState(null);
 
   // Game Options (Load.jsx) State
   const [diff, setDiff] = useState('medium');
   const [category, setCategory] = useState(9);
+  const [categories, setCategories] = useState({});
   const [timer, setTimer] = useState(30);
 
   // Team State
@@ -66,17 +70,11 @@ const GameContextProvider = ({ children }) => {
     }
   };
 
-  const changeCat = () => {
-    const cats = [9, 11, 14, 15, 17, 22, 23, 26, 27];
+  const random = () => {
+    const cats = Object.keys(categories);
     const rand = cats[Math.floor(Math.random() * cats.length)];
-    const url = `https://opentdb.com/api.php?amount=1&category=${rand}&difficulty=${sessionStorage.diff}&type=multiple`;
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        setQuestion(data.results[0]);
-        sessionStorage.setItem('category', rand);
-      })
-      .catch((err) => {});
+    sessionStorage.setItem('category', parseInt(rand, 10));
+    return triviaRequest() || boolRequest();
   };
 
   const nextTeam = () => {
@@ -163,6 +161,15 @@ const GameContextProvider = ({ children }) => {
     setVisibility((prevVis) => !prevVis);
   };
 
+  const getCategories = async () => {
+    try {
+      const { data } = await axios.get('/categories');
+      setCategories(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const end = () => {
     sessionStorage.clear();
     setTrivia(false);
@@ -193,15 +200,18 @@ const GameContextProvider = ({ children }) => {
     setEndGame,
     setVideo,
     setQuestion,
+    categories,
+    setCategories,
     timer,
     setTimer,
   };
 
   const gameProps = {
     state,
+    getCategories,
     triviaRequest,
     boolRequest,
-    changeCat,
+    random,
     nextTeam,
     getTeams,
     handleTeams,

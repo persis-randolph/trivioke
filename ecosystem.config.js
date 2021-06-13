@@ -5,14 +5,14 @@ dotenv.config();
 module.exports = {
   apps: [{
     name: 'trivioke',
-    script: './src/index.jsx',
+    script: './server/index.js',
     env: {
       NODE_ENV: 'development',
       YOUTUBE_API_KEY: process.env.YOUTUBE_API_KEY,
       DB_PASS: process.env.DB_PASS,
     },
     env_production: {
-      NODE_ENV: 'development',
+      NODE_ENV: 'production',
       YOUTUBE_API_KEY: process.env.YOUTUBE_API_KEY,
       DB_PASS: process.env.DB_PASS,
     },
@@ -20,7 +20,7 @@ module.exports = {
   deploy: {
     production: {
       user: 'ubuntu',
-      host: 'ec2-3-138-183-17.us-east-2.compute.amazonaws.com',
+      host: 'ec2-3-143-215-73.us-east-2.compute.amazonaws.com',
       key: '~/.ssh/trivioke-key.pem',
       ref: 'origin/master',
       repo: 'git@github.com:BiscuitBae/trivioke.git',
@@ -32,7 +32,7 @@ module.exports = {
         DB_PASS: process.env.DB_PASS,
       },
       env_production: {
-        NODE_ENV: 'development',
+        NODE_ENV: 'production',
         YOUTUBE_API_KEY: process.env.YOUTUBE_API_KEY,
         DB_PASS: process.env.DB_PASS,
       },

@@ -9,7 +9,7 @@ import { GameContext } from '../context/gameContext';
 
 const Load = () => {
   const {
-    state, triviaRequest, boolRequest, handleTeams,
+    state, triviaRequest, boolRequest, handleTeams, random,
   } = useContext(GameContext);
 
   const {
@@ -19,6 +19,7 @@ const Load = () => {
     category,
     trivia,
     setTrivia,
+    categories,
     setTimer,
   } = state;
 
@@ -34,18 +35,6 @@ const Load = () => {
     setTrivia(true);
   };
 
-  const categories = {
-    9: 'General',
-    11: 'Movies',
-    14: 'TV',
-    15: 'Video Games',
-    17: 'Science',
-    22: 'Geography',
-    23: 'History',
-    26: 'Celebs',
-    27: 'Animals',
-  };
-
   const categoryName = categories[category];
 
   if (!trivia) {
@@ -55,7 +44,7 @@ const Load = () => {
           <div key="team">
             <Teams />
           </div>
-            <Filters />
+          <Filters />
           <h5>
             Selected Category:
             {' '}
@@ -99,6 +88,9 @@ const Load = () => {
             <Link to="/game">
               <button type="button" onClick={() => { handleTeams(); begin(); boolRequest(); }}><h5>True/False</h5></button>
             </Link>
+            <Link to="/game">
+              <button type="button" onClick={() => { handleTeams(); begin(); random(); }}><h5>Random</h5></button>
+            </Link>
           </div>
         </div>
       </center>
@@ -106,11 +98,9 @@ const Load = () => {
   }
   return (
     <div>
-      <Game category={category} diff={diff} />
+      <Game />
     </div>
   );
 };
 
 export default Load;
-
-

@@ -12,6 +12,7 @@ const {
   escapeHTML,
   getUser,
   createUser,
+  parseCategories,
   getTeams,
   addTeam,
   setTeams,
@@ -58,6 +59,19 @@ app.get('/trivia/bool', (req, res) => {
     .then(({ data }) => {
       const question = escapeHTML(data.results[0]);
       res.status(200).send(question);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(404);
+    });
+});
+
+//* CATEGORY ROUTES
+app.get('/categories', (req, res) => {
+  axios.get('https://opentdb.com/api_category.php')
+    .then(({ data }) => {
+      const categories = parseCategories(data.trivia_categories);
+      res.status(200).send(categories);
     })
     .catch((err) => {
       console.error(err);
