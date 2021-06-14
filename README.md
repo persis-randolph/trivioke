@@ -9,7 +9,9 @@ Trivia quiz game made with React.
 3. [Requirements](#requirements)
 4. [Development](#development)
     1. [Installing Dependencies](#installing-dependencies)
+    2. [Login / Logout](#login-/-logout)
 5.[Deployment](#deployment)
+6.[Known Bugs](#known-bugs)
 
 ## Team
 
@@ -37,6 +39,26 @@ From within the root directory:
 npm install
 ```
 
+## Login / Logout
+
+- Used react-google-login and Oath 2.0 for Login and Logout buttons.
+  Set up credentials for the Google+ API in order to attain the Client ID. Used that client ID in conjunction with
+  the react-google-login package in order to allow logins. Upon login, Google sends back a profile object containing
+  the user's username, full name, profile picture, email, and googleId. Used this information to save new users to
+  our DB, or log them back in if already existing.
+  react-google-login documentation: https://www.npmjs.com/package/react-google-login
+
 ## Deployment
 
-- Attempt to use an Amazon EC2 Instance with Ubuntu 20.04.
+- Used an Amazon EC2 Instance with Ubuntu 20.04.
+  Used PM2 for process management.
+  Tutorial article here: https://hackernoon.com/tutorial-creating-and-managing-a-node-js-server-on-aws-part-1-d67367ac5171
+  Also see part 2 of that article for more steps.
+
+## Known Bugs
+
+1) Open Trivia DB has an API token to limit duplicate questions, but it expires every 6 hours.
+2) Buttons in load menu don't maintain styling after selecting a second button.
+3) Should not be a 50/50 lifeline option when playing T/F questions.
+4) You should not be able to play a game unless you are logged in.
+5) On production - team names are not saving to the associated googleId/userId.
